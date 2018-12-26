@@ -216,11 +216,11 @@ class CommonService
                     'reset_code' => md5($request->get('email') . uniqid() . randomString(5)),
                 ]);
                 UserVerificationCode::create(
-                    ['user_id' => $user->id
-                        , 'type' => 1
-                        , 'code' => $mail_key
-                        , 'expired_at' => date('Y-m-d', strtotime('+10 days'))
-                        , 'status' => STATUS_PENDING]
+                    ['user_id' => $user->id,
+                        'type' => 1,
+                        'code' => $mail_key,
+                        'expired_at' => date('Y-m-d', strtotime('+10 days')),
+                        'status' => STATUS_PENDING]
                 );
 
                 $this->sendVerificationMail($user, $mailTemplet, $mail_key);

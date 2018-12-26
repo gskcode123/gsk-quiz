@@ -30,3 +30,12 @@ Route::post('forget-password-process', 'AuthController@forgetPasswordProcess')->
 Route::get('forget-password-change/{reset_code}', 'AuthController@forgetPasswordChange')->name('forgetPasswordChange');
 Route::get('forget-password-reset', 'AuthController@forgetPasswordReset')->name('forgetPasswordReset');
 Route::post('forget-password-reset-process/{reset_code}', 'AuthController@forgetPasswordResetProcess')->name('forgetPasswordResetProcess');
+
+
+require base_path('routes/link/admin.php');
+require base_path('routes/link/user.php');
+
+Route::group(['middleware' =>['auth']], function () {
+    //logout
+    Route::get('/logout', 'AuthController@logout')->name('logOut');
+});

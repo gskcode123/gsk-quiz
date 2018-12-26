@@ -14,6 +14,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Validator::extend('phone_number', function ($attribute, $value, $parameters, $validator) {
+            $first = substr($value, 0, 1);
+            if ($first == '+') {
+                $value = substr($value, 1);
+            }
+            return ctype_digit($value);
+        });
         Validator::extend('strong_pass', function($attribute, $value, $parameters, $validator) {
             return is_string($value) && preg_match('/^.*(?=.{3,})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[\d\X]).*$/', $value);
         });
