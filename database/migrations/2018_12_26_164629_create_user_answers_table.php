@@ -21,8 +21,8 @@ class CreateUserAnswersTable extends Migration
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');
             $table->bigInteger('question_id')->unsigned();
             $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade')->onUpdate('cascade');
-            $table->tinyInteger('true_ans');
-            $table->tinyInteger('user_ans')->nullable();
+            $table->boolean('is_correct')->default(0);
+            $table->string('given_answer')->nullable();
             $table->integer('point')->default(0);
             $table->integer('coin')->default(0);
             $table->tinyInteger('status')->default(1);

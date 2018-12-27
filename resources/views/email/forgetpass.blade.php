@@ -1,4 +1,6 @@
-<h3>{{__('Hello')}}, {{ $data->first_name }} {{ $data->last_name }} </h3>
+@include('email.header_new')
+
+<h3>{{__('Hello')}}, {{ $data->name }}</h3>
 <p>
     {{__('Please click on the following link or paste the link on address bar of your browser and hit - ')}}
 </p>
@@ -11,4 +13,5 @@
     {{__('Thanks a lot for being with us.')}} <br />
     {{allsetting()['app_title']}}
 </p>
+@include('email.footer_new')
 

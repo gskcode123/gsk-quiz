@@ -20,6 +20,8 @@ class CreateCategoriesTable extends Migration
             $table->string('image')->nullable();
             $table->integer('qs_limit')->nullable();
             $table->integer('time_limit')->nullable();
+            $table->integer('max_limit')->nullable();
+            $table->integer('serial')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });

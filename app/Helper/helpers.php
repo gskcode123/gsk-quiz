@@ -1,29 +1,10 @@
 <?php
 
 use App\Model\AdminSetting;
-use App\Model\Wallet;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
 
-function checkRolePermission($role_task, $my_role)
-{
-
-    $role = Role::findOrFail($my_role);
-    if (!empty($role->actions)) {
-        if (!empty($role->actions)) {
-            $tasks = array_filter(explode('|', $role->actions));
-        }
-        if (isset($tasks)) {
-            if (in_array($role_task, $tasks) && array_key_exists($role_task, actions())) {
-                return 1;
-            } else {
-                return 0;
-            }
-        }
-    }
-    return 0;
-}
 function allsetting($a = null)
 {
     if ($a == null) {
@@ -163,9 +144,9 @@ function path_image()
 {
     return 'uploaded_file/files/img/';
 }
-function path_landing_image()
+function path_category_image()
 {
-    return 'uploaded_file/files/img/landing/';
+    return 'uploaded_file/files/img/category/';
 }
 function path_landing_team_image()
 {
@@ -175,23 +156,7 @@ function path_landing_blog_image()
 {
     return 'uploaded_file/files/img/landing/blog/';
 }
-// Convert currency
-function convertCurrency($amount, $to = 'USD', $from = 'USD')
-{
-    try{
-        $url = "https://min-api.cryptocompare.com/data/price?fsym=$from&tsyms=$to";
-        $json = file_get_contents($url); //,FALSE,$ctx);
-        $jsondata = json_decode($json, TRUE);
-        return $amount * $jsondata[$to];
-    }catch(\Exception $e){
-        return $amount*allsetting()['coin_price'];
-    }
-}
-//function for getting client ip address
-function get_clientIp()
-{
-    return isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '0.0.0.0';
-}
+
 function language()
 {
     $lang = [];
@@ -230,21 +195,6 @@ if (!function_exists('settings')) {
         return Adminsetting::pluck('value', 'slug')->toArray();
     }
 }
-//Call this in every function
-//function set_lang($lang)
-//{
-//    $default = settings('lang');
-//    $lang = strtolower($lang);
-//    $languages = language();
-//    if (in_array($lang, $languages)) {
-//        app()->setLocale($lang);
-//    } else {
-//        if (isset($default)) {
-//            $lang = $default;
-//            app()->setLocale($lang);
-//        }
-//    }
-//}
 function set_lang($lang)
 {
     $lang = strtolower($lang);
@@ -262,122 +212,6 @@ function set_lang($lang)
         }
     }
 }
-//find odd even
-function oddEven($number){
-//    dd($number);
-    if ($number % 2 == 0) {
-        return 'even';
-    }else{
-        return 'odd';
-    }
-}
-function convert_currency($amount, $to = 'USD', $from = 'USD')
-{
-    $url = "https://min-api.cryptocompare.com/data/price?fsym=$from&tsyms=$to";
-    $json = file_get_contents($url); //,FALSE,$ctx);
-    $jsondata = json_decode($json, TRUE);
-    return bcmul($amount,$jsondata[$to]);
-}
-// fees calculation
-function calculate_fees($amount, $method)
-{
-    $settings = allsetting();
-    try {
-        if ($method == SEND_FEES_FIXED) {
-            return $settings['send_fees_fixed'];
-        } elseif ($method == SEND_FEES_PERCENTAGE) {
-            return ($settings['send_fees_percentage'] * $amount) / 100;
-        } elseif ($method == SEND_FEES_BOTH) {
-            return $settings['send_fees_fixed'] + (($settings['send_fees_percentage'] * $amount) / 100);
-        } else {
-            return 0;
-        }
-    } catch (\Exception $e) {
-        return 0;
-    }
-}
-// replace or add language text
-function replace_or_add_lang($new_key,$old_key=null){
-    $path = base_path('resources/lang');
-    foreach (glob($path . '/*.json') as $file) {
-        $langName = basename($file, '.json');
-        try{
-            $content = json_decode(file_get_contents($file), true);
-            if(isset($old_key) && isset($content[$old_key])){
-             unset($content[$old_key]);
-            }
-            $content[$new_key['en']]=$new_key[$langName];
-            $newJsonString = json_encode($content, JSON_PRETTY_PRINT);
-            file_put_contents($file, $newJsonString);
-        }catch(\Exception $e){
-
-        }
-    }
-    return true;
-}
-function remove_text_from_lang_json($old_key){
-    $path = base_path('resources/lang');
-    foreach (glob($path . '/*.json') as $file) {
-        try{
-            $content = json_decode(file_get_contents($file), true);
-            foreach ($old_key as $ok){
-                if(isset($content[$ok])){
-                    unset($content[$ok]);
-                    $newJsonString = json_encode($content, JSON_PRETTY_PRINT);
-                    file_put_contents($file, $newJsonString);
-                }
-            }
-
-        }catch(\Exception $e){}
-    }
-    return true;
-}
-function get_translation($language,$text){
-    $path = base_path('resources/lang/').$language.'.json';
-    $content = json_decode(file_get_contents($path), true);
-    if(isset($content[$text])){
-        return $content[$text];
-    }
-    return '';
-}
-
-if (!function_exists('custom_number_format'))
-{
-    function custom_number_format($value)
-    {
-        if (is_integer($value)) {
-            return number_format($value, 8, '.', '');
-        } elseif (is_string($value)) {
-            $value = floatval($value);
-        }
-        $number = explode('.', number_format($value, 14, '.', ''));
-        return $number[0] . '.' . substr($number[1], 0, 8);
-    }
-}
-
-if (!function_exists('visual_number_format'))
-{
-    function visual_number_format($value)
-    {
-        if (is_integer($value)) {
-            return number_format($value, 2, '.', '');
-        } elseif (is_string($value)) {
-            $value = floatval($value);
-        }
-        $number = explode('.', number_format($value, 14, '.', ''));
-        $intVal = (int)$value;
-        if ($value > $intVal || $value < 0) {
-            $intPart = $number[0];
-            $floatPart = substr($number[1], 0, 8);
-            $floatPart = rtrim($floatPart, '0');
-            if (strlen($floatPart) < 2) {
-                $floatPart = substr($number[1], 0, 2);
-            }
-            return $intPart . '.' . $floatPart;
-        }
-        return $number[0] . '.' . substr($number[1], 0, 2);
-    }
-}
 
 if (!function_exists('role')) {
     function role($val = null)
@@ -393,23 +227,4 @@ if (!function_exists('role')) {
         }
         return $myrole;
     }
-}
-
-if (!function_exists('max_level')) {
-    function max_level()
-    {
-        $max_level = allsetting('max_affiliation_level');
-
-        return $max_level ? $max_level : 3;
-    }
-
-}
-if (!function_exists('user_balance')) {
-    function user_balance($userId)
-    {
-        $balance = Wallet::where('user_id', $userId)->sum(DB::raw('balance + referral_balance'));
-
-        return $balance ? $balance : 0;
-    }
-
 }

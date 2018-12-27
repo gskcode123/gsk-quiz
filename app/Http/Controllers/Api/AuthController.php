@@ -52,18 +52,16 @@ class AuthController extends Controller
             if ($user->active_status == STATUS_SUCCESS) {
                 if ($user->email_verified == STATUS_SUCCESS) {
                     $user->update();
-                    if(!empty($user->photo)){
-                        $user->photo = asset(path_image() . $user->photo);
-                    }
+
                     $data['success'] = true;
-                    $data['data'] = ['access_token' => $token, 'access_type' => "Bearer", 'user_info' => $user];
+                    $data['data'] = ['access_token' => $token, 'access_type' => "Bearer"];
                     $data['message'] = __('Successfully Logged in');
 
                 } else {
                     $mail_key = randomNumber(6);
                     $mailService = app(MailService::class);
                     UserVerificationCode::create(['user_id' => $user->id, 'code' => $mail_key, 'type' => 1, 'status' => STATUS_PENDING, 'expired_at' => date('Y-m-d', strtotime('+15 days'))]);
-                    $userName = $user->first_name . ' ' . $user->last_name;
+                    $userName = $user->name;
                     $userEmail = $user->email;
                     $companyName = isset($default['company']) && !empty($default['company']) ? $default['company'] : __('Quiz Test');
                     $subject = __('Email Verification | :companyName', ['companyName' => $companyName]);
@@ -72,9 +70,8 @@ class AuthController extends Controller
 
                     $mailService->send('email.verifyapp', $data, $userEmail, $userName, $subject);
 
-                    $user->photo = asset(path_image() . $user->photo);
                     $data['success'] = true;
-                    $data['data'] = ['access_token' => $token, 'access_type' => "Bearer", 'user_info' => $user];
+                    $data['data'] = ['access_token' => $token, 'access_type' => "Bearer"];
                     $data['message'] = __('Your email is not verified. Please verify your email to get full access.');
                 }
             } elseif ($user->active_status == STATUS_SUSPENDED) {
@@ -109,22 +106,23 @@ class AuthController extends Controller
     {
         $data = ['success' => false, 'data' => [], 'message' => __('Something Went wrong !')];
         $rules = [
-            'first_name' => 'required|max:255',
-            'last_name' => 'required|max:255',
+            'name' => 'required|max:255',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:8|strong_pass|confirmed',
             'password_confirmation' => 'required',
         ];
-
+        if ($request->phone) {
+            $rules['phone'] = 'numeric|phone_number';
+        }
         $messages = [
-            'first_name.required' => __('First Name field can not be empty'),
-            'last_name.required' => __('Last Name field can not be empty'),
+            'name.required' => __('Name field can not be empty'),
             'password.required' => __('Password field can not be empty'),
             'password.min' => __('Password length must be above 8 characters.'),
             'password.strong_pass' => __('Password must be consist of one Uppercase, one Lowercase and one Number!'),
             'email.required' => __('Email field can not be empty'),
             'email.unique' => __('Email Address already exists'),
-            'email.email' => __('Invalid email address')
+            'email.email' => __('Invalid email address'),
+            'phone.phone_number' => __('Invalid Phone Number'),
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
@@ -144,8 +142,8 @@ class AuthController extends Controller
         $mail_key = $this->generate_email_verification_key();
 
         $user = User::create([
-            'first_name' => $request->get('first_name'),
-            'last_name' => $request->get('last_name'),
+            'name' => $request->get('name'),
+            'phone' => $request->get('phone'),
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
             'role' => USER_ROLE_USER,
@@ -161,7 +159,7 @@ class AuthController extends Controller
             'expired_at' => date('Y-m-d', strtotime('+10 days'))
         ]);
         $mailService = app(MailService::class);
-        $userName = $user->first_name.' '.$user->last_name ;
+        $userName = $user->name ;
         $userEmail = $user->email;
         $companyName = isset($default['company']) && !empty($default['company']) ? $default['company'] : __('Quiz Test');
         $subject = __('Email Verification | :companyName', ['companyName' => $companyName]);
@@ -235,13 +233,12 @@ class AuthController extends Controller
             ]);
             $user_data = [
                 'email' => $user->email,
-                'first_name' => $user->first_name,
-                'last_name' => $user->last_name,
+                'name' => $user->name,
                 'token' => $token,
             ];
             try {
                 Mail::send('email.password_reset', $user_data, function ($message) use ($user) {
-                    $message->to($user->email, $user->name)->subject('Email confirmation');
+                    $message->to($user->email, $user->name)->subject('Forgot Password');
                 });
             } catch (\Exception $e) {
                 $response = [

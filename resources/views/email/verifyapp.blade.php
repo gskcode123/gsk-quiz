@@ -1,6 +1,6 @@
 @include('email.header_new')
 
-<h3>{{__('Hello')}}, {{ $data->first_name }} {{ $data->last_name }} </h3>
+<h3>{{__('Hello')}}, {{ $data->name }} </h3>
 
 <p>
   Your {{allsetting()['app_title']}} email verification code is {{$key}}.</p>

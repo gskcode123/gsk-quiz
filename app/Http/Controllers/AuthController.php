@@ -42,16 +42,17 @@ class AuthController extends Controller
     {
         if ($request->isMethod('post')) {
             $rules = [
-                'first_name' => 'required|max:255',
-                'last_name' => 'required|max:255',
+                'name' => 'required|max:255',
                 'email' => 'required|email|unique:users',
                 'password' => 'required|min:8|strong_pass|confirmed',
                 'password_confirmation' => 'required',
             ];
 
+            if ($request->phone) {
+                $rules['phone'] = 'numeric|phone_number';
+            }
             $messages = [
-                'first_name.required' => __('First Name field can not be empty'),
-                'last_name.required' => __('Last Name field can not be empty'),
+                'name.required' => __('Name field can not be empty'),
                 'password.required' => __('Password field can not be empty'),
                 'password_confirmation.required' => __('Password confirmed field can not be empty'),
                 'password.min' => __('Password length must be above 8 characters.'),
@@ -59,6 +60,7 @@ class AuthController extends Controller
                 'email.required' => __('Email field can not be empty'),
                 'email.unique' => __('Email Address already exists'),
                 'email.email' => __('Invalid email address'),
+                'phone.phone_number' => __('Invalid Phone Number'),
             ];
 
             $this->validate($request, $rules,$messages);
@@ -259,7 +261,7 @@ class AuthController extends Controller
 
             if ($user) {
                 // send verifyemail
-                $userName = $user->first_name. ' '.$user->last_name;
+                $userName = $user->name;
                 $userEmail = $request->email;
                 $subject = __('Forget Password');
                 $defaultmail = allsetting()['primary_email'];

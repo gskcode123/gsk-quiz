@@ -1,6 +1,6 @@
 @include('email.header_new')
 
-<h3>{{__('Hello')}}, {{ $first_name }} {{ $last_name }}</h3>
+<h3>{{__('Hello')}}, {{ $name }}</h3>
 
 <p>
   You are receiving this email because we received a password reset request for your account.

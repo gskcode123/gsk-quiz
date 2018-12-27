@@ -49,27 +49,6 @@ class CommonService
         ];
     }
 
-    /*Phone verification check*/
-    public function phonesecurity($request)
-    {
-        $sms_ver_code = UserVerificationCode::where(['code' => $request->phone_verification, 'status' => STATUS_PENDING, 'type' => 2])
-            ->where('expired_at', '>=', date('Y-m-d'))->first();
-        if (isset($sms_ver_code)) {
-            UserVerificationCode::where('id', $sms_ver_code->id)->update(['status' => STATUS_SUCCESS]);
-            User::where(['id' => $sms_ver_code->user_id])->update(['phone_verified' => STATUS_SUCCESS]);
-        } else {
-            return [
-                'success' => false,
-                'message' => __("Code doesn't match!"),
-            ];
-        }
-
-        return [
-            'success' => true,
-            'message' => __("Phone verified successfully."),
-        ];
-    }
-
     /*Email Verification check*/
     public function emailcurity($request)
     {
@@ -82,71 +61,6 @@ class CommonService
             return ['success' => false, 'message' => __("Code doesn't match!"),];
         }
         return ['success' => true, 'message' => __("Email verified successfully.")];
-    }
-
-    public function save_setting($request)
-    {
-
-        if (!is_null($request->phone)) {
-            $rules['phone'] = 'numeric|required|regex:/[0-9]{10}/|phone_number|unique:users,phone,' . Auth::user()->id;
-        }else{
-            $data = ['success' => false, 'data' => ['is_phone_updated' => false], 'message' => __('Something Went Wrong.')];
-            $rules = ['first_name' => 'required|max:256', 'last_name' => 'required|max:256'];
-        }
-
-        $validator = Validator::make($request->all(), $rules);
-        if ($validator->fails()) {
-            $errors = [];
-            $e = $validator->errors()->all();
-            foreach ($e as $error) {
-                $errors[] = $error;
-            }
-            $data['message'] = $errors;
-            return $data;
-        }
-        $user = User::where(['id' => Auth::user()->id]);
-
-        if(empty($request->phone)){
-            $firstName = $request->first_name;
-            $lastName = $request->last_name;
-            $update ['first_name'] = $firstName;
-            $update ['last_name'] = $lastName;
-            $data['update_type']='profile';
-        }else{
-
-            $code = $request->code;
-            $phone = $request->phone;
-            $phone_marge = $request->code . $request->phone;
-            $update ['country_code'] = $code;
-            $update ['phone'] = $phone;
-            if ($user->first()->phone != $phone) {
-                if (!is_null($phone)) {
-                    $randno = randomNumber(6);
-                    $smsText = 'Your '.allsetting()['app_title'].' verification code is here ' . $randno;
-                    $sendSms = app(SmsService::class)->send($phone_marge, $smsText);
-                    if (!$sendSms) {
-                        $data['success'] = false;
-                        $data['data']['is_phone_updated'] = false;
-                        $data['message'] = __('Failed to send verification code');
-                    }
-                    if (!is_null($request->phone)) {
-                        User::where(['id' => Auth::user()->id])->update(['phone_verified' => STATUS_PENDING]);
-                        UserVerificationCode::create(['user_id' => Auth::user()->id, 'type' => 2, 'code' => $randno, 'expired_at' => date('Y-m-d', strtotime('+15 days')), 'status' => STATUS_PENDING]);
-
-                        $data['data']['is_phone_updated'] = true;
-                    }
-                }
-                $update ['phone'] = $phone;
-            }
-            $data['update_type']='phone';
-        }
-
-        if ($user->update($update)) {
-            $data['success'] = true;
-            $data['message'] = __('Information Updated Successfully');
-        }
-
-        return $data;
     }
 
     public function save_login_setting($request)
@@ -206,8 +120,8 @@ class CommonService
         try {
             DB::transaction(function () use ($request, $mailTemplet, $mail_key, $randno) {
                 $user = User::create([
-                    'first_name' => $request->first_name,
-                    'last_name' => $request->last_name,
+                    'name' => $request->name,
+                    'phone' => $request->phone,
                     'email' => $request->email,
                     'password' => Hash::make($request->password),
                     'role' => isset($request->role) ? $request->role : USER_ROLE_USER,
@@ -242,7 +156,7 @@ class CommonService
     {
 
         $mailService = app(MailService::class);
-        $userName = $user->first_name. ' '.$user->last_name;
+        $userName = $user->name;
         $userEmail = $user->email;
         $companyName = isset(allsetting()['app_title']) && !empty(allsetting()['app_title']) ? allsetting()['app_title'] : __('Coin Wallet');
         $subject = __('Email Verification | :companyName', ['companyName' => $companyName]);
