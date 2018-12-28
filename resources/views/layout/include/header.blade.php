@@ -18,11 +18,12 @@
                         @if(isset(Auth::user()->name)) {{ Auth::user()->name }} @endif
                         <span class="flaticon-angle-arrow-down"></span>
                         <span class="qz-user-avater">
-                            <img src="{{asset('assets/images/avater.jpg')}}" alt="" class="img-fluid">
+                            <img @if(isset(Auth::user()->photo)) src="{{ asset(pathUserImage().Auth::user()->photo)}}" @else src="{{asset('assets/images/avater.jpg')}}" @endif alt="" class="img-fluid">
+
                         </span>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a href="#" class="dropdown-item">{{__('Profile')}}</a>
+                        <a href="{{route('passwordChange')}}" class="dropdown-item">{{__('Change Password')}}</a>
                         <a href="{{ route('logOut') }}" class="dropdown-item">{{__('Logout')}}</a>
                     </div>
                 </div>

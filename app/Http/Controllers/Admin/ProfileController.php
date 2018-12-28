@@ -25,7 +25,25 @@ class ProfileController extends Controller
         $data['pageTitle'] = __('Profile');
         $data['user'] = User::where('id', Auth::user()->id)->first();
 
-        return view('user.profile.profile', $data);
+        return view('admin.profile', $data);
+    }
+
+    /*
+     * passwordChange
+     *
+     * password change page
+     *
+     *
+     *
+     *
+     */
+
+    public function passwordChange()
+    {
+        $data['pageTitle'] = __('Change Password');
+        $data['user'] = User::where('id', Auth::user()->id)->first();
+
+        return view('admin.change-password', $data);
     }
 
     /*

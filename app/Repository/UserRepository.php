@@ -40,14 +40,28 @@ class UserRepository
         if ($user) {
             $userData = [
                 'name' => $request['name'],
-                'country' => $request['country'],
-                'language' => $request['language'],
-                'phone' => $request['phone'],
-                'city' => $request['city'],
-                'state' => $request['state'],
-                'zip' => $request['zip'],
-                'address' => $request['address'],
             ];
+            if (!empty($request['country'])) {
+                $userData['country'] = $request['country'];
+            }
+            if (!empty($request['address'])) {
+                $userData['address'] = $request['address'];
+            }
+            if (!empty($request['state'])) {
+                $userData['state'] = $request['state'];
+            }
+            if (!empty($request['zip'])) {
+                $userData['zip'] = $request['zip'];
+            }
+            if (!empty($request['language'])) {
+                $userData['language'] = $request['language'];
+            }
+            if (!empty($request['phone'])) {
+                $userData['phone'] = $request['phone'];
+            }
+            if (!empty($request['city'])) {
+                $userData['city'] = $request['city'];
+            }
             if (!empty($request['photo'])) {
                 $old_img = '';
                 if (!empty($user->photo)) {
@@ -77,9 +91,9 @@ class UserRepository
         $user = User::find($user_id);
 
         if ($user) {
-            $old_password = $request->old_password;
-            if (Hash::check($old_password, $user['password'])) {
-                $user->password = bcrypt($request->password);
+            $old_password = $request['old_password'];
+            if (Hash::check($old_password, $user->password)) {
+                $user->password = bcrypt($request['password']);
                 $user->save();
 
                 $affected_row = $user->save();

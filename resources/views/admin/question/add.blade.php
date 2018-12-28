@@ -88,6 +88,9 @@
                                         <div class="form-group">
                                             <label>{{__('Thumbnail image')}} ({{__('If Necessary')}})</label>
                                             <input type="file" name="image" class="d-block">
+                                            @if(isset($question))
+                                            <img width="50" @if(isset($question->image)) src="{{ asset(path_question_image().$question->image)}}" @endif alt="">
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -95,8 +98,10 @@
                                             <label>{{__('Activation Status')}}</label>
                                             <div class="qz-question-category">
                                                 <select name="status" class="form-control">
-                                                    <option value="1">{{__('Active')}}</option>
-                                                    <option value="0">{{__('Inactive')}}</option>
+                                                    @foreach(active_statuses() as $key => $value)
+                                                        <option @if(isset($question) && ($question->status == $key)) selected
+                                                                @elseif((old('status') != null) && (old('status') == $key)) @endif value="{{ $key }}">{{$value}}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>

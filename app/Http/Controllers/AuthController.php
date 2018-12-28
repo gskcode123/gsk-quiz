@@ -136,15 +136,6 @@ class AuthController extends Controller
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             if (auth::user()->role == USER_ROLE_ADMIN) {
-                return redirect()->route('adminDashboardView');
-            } elseif (auth::user()->role == USER_ROLE_USER) {
-                if (auth::user()->active_status == STATUS_SUSPENDED) {
-                    Auth::logout();
-                    return redirect()->route('login')->with(['dismiss' => __('Your account has been suspended. Please contact with support team to active again.')]);
-                } elseif (auth::user()->active_status == STATUS_DELETED) {
-                    Auth::logout();
-                    return redirect()->route('login')->with(['dismiss' => __('Your account has been deleted. Please conta   ct with support team to active again.')]);
-                }
                 if (auth::user()->email_verified == STATUS_PENDING) {
                     $mailTemplet = 'email.verify';
                     $mail_key = randomNumber(6);
@@ -154,7 +145,7 @@ class AuthController extends Controller
                     Auth::logout();
                     return redirect()->route('login')->with(['dismiss' => 'Your email is not verified Yet. A verification link has been send to your email. Click on the verification link to verify your email.</a>']);
                 }
-                return redirect()->route('userDashboardView');
+                return redirect()->route('adminDashboardView');
             } else {
                 Auth::logout();
                 return redirect()->route('login')->with(['dismiss' => __('You are not authorised')]);

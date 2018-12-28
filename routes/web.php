@@ -33,7 +33,6 @@ Route::post('forget-password-reset-process/{reset_code}', 'AuthController@forget
 
 
 require base_path('routes/link/admin.php');
-require base_path('routes/link/user.php');
 
 Route::group(['middleware' =>['auth']], function () {
     //logout

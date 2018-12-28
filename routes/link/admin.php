@@ -1,10 +1,11 @@
 <?php
 
-Route::group(['middleware' => ['auth','admin'], 'prefix' => 'admin'], function() {
-    Route::get('/dashboard', 'Admin\DashboardController@adminDashboardView')->name('adminDashboardView');
+Route::group(['middleware' => ['auth','admin']], function() {
+    Route::get('/', 'Admin\DashboardController@adminDashboardView')->name('adminDashboardView');
 
     //profile setting
     Route::get('/profile','Admin\ProfileController@userProfile')->name('userProfile');
+    Route::get('/password-change','Admin\ProfileController@passwordChange')->name('passwordChange');
     Route::post('/update-profile','Admin\ProfileController@updateProfile')->name('updateProfile');
     Route::post('/change-password','Admin\ProfileController@changePassword')->name('changePassword');
 

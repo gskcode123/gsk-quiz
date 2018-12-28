@@ -16,12 +16,10 @@
     <!-- Owl Carousel -->
     <link rel="stylesheet" href="{{asset('assets/css/owl.carousel.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/owl.theme.default.min.css')}}">
-    <!-- Slicknav -->
-    <link rel="stylesheet" href="{{asset('assets/css/metisMenu.min.css')}}">
     <!-- magnific popup -->
     <link rel="stylesheet" href="{{asset('assets/css/magnific-popup.css')}}">
     <!-- Swiper Slider -->
-    <link rel="stylesheet" href="{{asset('vendors/swiper-master/css/swiper.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/vendors/swiper-master/css/swiper.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/iconfont/flaticon.css')}}">
     <!-- font family -->
     <link rel="stylesheet" href="{{asset('assets/css/proxima-nova.css')}}">
@@ -42,12 +40,13 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
+            @include('layout.message')
             <div class="card text-center">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-8 offset-lg-2">
                             <div class="logo">
-                                <a href="index.html">
+                                <a href="#">
                                     <img src="{{asset('assets/images/logo2.png')}}" alt="" class="img-fluid">
                                 </a>
                             </div>
@@ -55,7 +54,6 @@
                                 <h1>{{__('Sign Up')}}</h1>
                             </div>
                             <h5>{{__('Hello there, Sign up and Join with Us')}}</h5>
-                            @include('layout.message')
 
                             {{ Form::open(['route' => 'userSave']) }}
                             {{csrf_field()}}

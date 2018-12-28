@@ -23,7 +23,7 @@ class SettingController extends Controller
         $data['pageTitle'] = __('General Setting');
         $data['adm_setting'] = allsetting();
 
-        return view('admin.setting.general-setting', $data);
+        return view('admin.setting', $data);
     }
 
     /*

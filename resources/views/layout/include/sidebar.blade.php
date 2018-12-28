@@ -10,12 +10,12 @@
     <nav>
 
         <ul id="metismenu">
-            <li class="mm-active"><a href="{{ route('adminDashboardView') }}"><span class="flaticon-dashboard"></span> Dashboard</a></li>
-            <li><a href="{{ route('qsCategoryList') }}"><span class="flaticon-menu"></span> Category</a></li>
-            <li><a href="{{ route('questionList') }}"><span class="flaticon-info"></span> Question</a></li>
-            <li><a href="{{ route('leaderBoard') }}"><span class="flaticon-statistics"></span> Leaderboard</a></li>
-            <li><a href="#"><span class="flaticon-user"></span> Profile</a></li>
-            <li><a href="#"><span class="flaticon-settings-work-tool"></span> Settings</a></li>
+            <li class="mm-active"><a href="{{ route('adminDashboardView') }}"><span class="flaticon-dashboard"></span>{{__('Dashboard')}} </a></li>
+            <li><a href="{{ route('qsCategoryList') }}"><span class="flaticon-menu"></span>{{__('Category')}} </a></li>
+            <li><a href="{{ route('questionList') }}"><span class="flaticon-info"></span>{{__('Question')}} </a></li>
+            <li><a href="{{ route('leaderBoard') }}"><span class="flaticon-statistics"></span>{{__('Leaderboard')}} </a></li>
+            <li><a href="{{ route('userProfile') }}"><span class="flaticon-user"></span>{{__('Profile')}} </a></li>
+            <li><a href="{{ route('generalSetting') }}"><span class="flaticon-settings-work-tool"></span>{{__('Settings')}} </a></li>
         </ul>
 
     </nav>

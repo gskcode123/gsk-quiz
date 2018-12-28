@@ -1,6 +1,7 @@
 <?php
 
 use App\Model\AdminSetting;
+use App\Model\Question;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
@@ -240,6 +241,30 @@ if (!function_exists('question_type')) {
         } else {
             return $data[$val];
         }
+    }
+}
+if (!function_exists('active_statuses')) {
+    function active_statuses($val = null)
+    {
+        $data = array(
+            1 => __('Active'),
+            0 => __('Inactive'),
+        );
+        if ($val == null) {
+            return $data;
+        } else {
+            return $data[$val];
+        }
+    }
+}
+
+if (!function_exists('count_question')) {
+    function count_question($cat_id)
+    {
+        $qs = 0;
+        $qs = Question::where(['status' => 1, 'category_id' => $cat_id])->count();
+
+        return $qs;
     }
 }
 
