@@ -10,14 +10,15 @@
 @endsection
 
 @section('main-body')
+    @include('layout.message')
     <!-- Start page title -->
     <div class="qz-page-title">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
                     <div class="d-flex justify-content-between">
-                        <h2>Question</h2>
-                        <a href="{{ route('questionCreate') }}" class="btn btn-primary px-3">Add New</a>
+                        <h2>{{__('Question')}}</h2>
+                        <a href="{{ route('questionCreate') }}" class="btn btn-primary px-3">{{__('Add New')}}</a>
                     </div>
                 </div>
             </div>
@@ -36,13 +37,13 @@
                                 <table id="qz-question-table" class="table category-table table-bordered  text-center mb-0">
                                     <thead>
                                     <tr>
-                                        <th>Sl.</th>
-                                        <th>Category</th>
-                                        <th>Question</th>
-                                        <th>Answer</th>
-                                        <th>Point</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
+                                        <th>{{__('Sl.')}}</th>
+                                        <th>{{__('Category')}}</th>
+                                        <th>{{__('Question')}}</th>
+                                        <th>{{__('Answer')}}</th>
+                                        <th>{{__('Point')}}</th>
+                                        <th>{{__('Status')}}</th>
+                                        <th>{{__('Action')}}</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -59,8 +60,7 @@
                                                 <td>
                                                     <ul class="d-flex justify-content-center">
                                                         <a href="{{ route('questionEdit', $item->id) }}"><li class="qz-edit"><span class="flaticon-pencil"></span></li></a>
-                                                        <li class="qz-check"><span class="flaticon-check-mark"></span></li>
-                                                        <li class="qz-close"><span class="flaticon-error"></span></li>
+                                                        <a href="{{ route('questionDelete', $item->id) }}" onclick="return confirm('Are you sure to delete this ?');"><li class="ml-2 qz-close"><span class="flaticon-error"></span></li></a>
                                                     </ul>
                                                 </td>
                                             </tr>

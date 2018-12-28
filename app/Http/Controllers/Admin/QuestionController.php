@@ -181,6 +181,12 @@ class QuestionController extends Controller
 
     public function questionDelete($id)
     {
-        return view('admin.');
-    }
+        $item = Question::where('id', $id)->first();
+        $destroy = $item->delete();
+        if ($destroy) {
+            QuestionOption::where('question_id', $id)->delete();
+            return redirect()->back()->with('success', __('Question Deleted successfully'));
+        } else {
+            return redirect()->back()->with('dismiss', __('Something went wrong!'));
+        }    }
 }

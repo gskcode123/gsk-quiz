@@ -10,6 +10,7 @@
 @endsection
 
 @section('main-body')
+    @include('layout.message')
     <!-- Start page title -->
     <div class="qz-page-title">
         <div class="container-fluid">
@@ -76,8 +77,7 @@
                                     <td>
                                         <ul class="d-flex justify-content-center">
                                             <a href="{{ route('qsCategoryEdit', $item->id) }}"><li class="qz-edit"><span class="flaticon-pencil"></span></li></a>
-                                            <li class="qz-check"><span class="flaticon-check-mark"></span></li>
-                                            <li class="qz-close"><span class="flaticon-error"></span></li>
+                                            <a href="{{ route('qsCategoryDelete', $item->id) }}" onclick="return confirm('Are you sure to delete this ?');"><li class="ml-2 qz-close"><span class="flaticon-error"></span></li></a>
                                         </ul>
                                     </td>
                                 </tr>
