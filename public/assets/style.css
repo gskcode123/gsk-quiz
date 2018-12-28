@@ -91,7 +91,7 @@ ul#metismenu {
     margin-top: 50px;
 }
 ul#metismenu li a,
-ul#metismenu li.mm-active a{
+ul#metismenu li.qz-active a{
     padding: 15px 15px 15px 23px;
     color: #5d5d5f;
     font-size: 16px;    
@@ -99,12 +99,12 @@ ul#metismenu li.mm-active a{
     font-weight: 500;
 }
 ul#metismenu li > a:hover,
-ul#metismenu li.mm-active a{
+ul#metismenu li.qz-active a{
     background: #f0f1f6;
     position: relative;
 }
-ul#metismenu li:hover > a::after,
-ul#metismenu li.mm-active a::after {
+/*ul#metismenu li:hover > a::after,*/
+ul#metismenu li.qz-active a::after {
     position: absolute;
     content: '';
     background: linear-gradient(#3276f1, #26b9e5);
@@ -190,7 +190,7 @@ ul#metismenu li span:before {
 .qz-user-profile-btn {
     border: none;
     padding: 0;
-    font-size: 20px;
+    font-size: 18px;
 }
 .qz-user-profile-btn,
 .qz-user-profile-btn:hover,
@@ -240,13 +240,17 @@ ul#metismenu li span:before {
     background: url(images/Bg2.png)no-repeat center center / cover;    
 }
 .qz-blance{
-    font-size: 50px;
+    font-size: 34px;
     font-weight: 700;
     margin-bottom: 10px;
 }
 .qz-total-qustions {
-    font-size: 40px;
+    font-size: 26px;
     font-weight: 500;
+}
+
+.dropdown-menu.show {
+    top: 20px !important;
 }
 
 /* start sec title */
@@ -265,11 +269,11 @@ table.table.category-table thead{
 }
 table.table.category-table thead th{
     border-bottom: none;
-    font-size: 16px;
+    font-size: 14px;
     color: #595d69;
 }
 table.table.category-table tbody td{
-    font-size: 18px;
+    font-size: 15px;
     padding: 25px 15px;
     border-color: #ecf1ff;
 }
@@ -283,10 +287,11 @@ table.table.category-table tbody td span{
 .qz-table-footer{
     background: #F6F6FE;
 }
-.qz-table-footer a{
+.qz-table-footer a {
     border-bottom: 1px solid #4f66b2;
     padding-top: 8px;
     display: inline-block;
+    font-size: 16px;
 }
 
 /*Start laderboard area*/
@@ -297,13 +302,16 @@ table.table.category-table tbody td span{
     color: #fff;
     border-radius: 8px 8px 0 0;
 }
+.qz-laderboard-title h4 {
+    font-size: 20px;
+}
 
 .qz-laderboard-area thead{
     background: #e1e1f9;
 }
 .qz-laderboard-area thead th{
     border-bottom: none;
-    font-size: 18px;
+    font-size: 15px;
     color: #595d69;
 }
 .qz-laderboard-area table th,
@@ -319,7 +327,7 @@ table td .people img{
     vertical-align: middle;
 }
 .qz-laderboard-area table td .people{
-    font-size: 18px;
+    font-size: 15px;
     text-transform: capitalize;
     
 }
@@ -337,7 +345,7 @@ table td .people img{
     border-radius: 0 0 5px 5px;
 }
 .qz-laderboard-footer a{
-    font-size: 20px;
+    font-size: 16px;
     border-bottom: 1px solid #4f66b2;
     font-weight: 400;
 }
@@ -419,7 +427,7 @@ table td .people img{
 }
 .add-category form label{
     font-weight: 700;
-    font-size: 18px;
+    font-size: 16px;
     text-transform: capitalize;
     color: #858585;
 }
@@ -466,6 +474,101 @@ a.paginate_button {
 
 table.table.category-table tbody td {
     vertical-align: middle;
+}
+
+
+/* Start profile image */
+
+.qz-profile-card{
+    background: #3865F6;
+    color: #fff;
+    padding: 80px 0 50px;
+}
+
+.qz-profile-user-avater img{
+    border-radius: 50%;
+    height: 120px;
+    width: 120px;
+}
+.qz-profile-user-avater{
+    position: relative;
+    z-index: 1;
+}
+.qz-profile-user-avater::after{
+    position: absolute;
+    content: '';
+    width: 145px;
+    height: 145px;
+    border-radius: 50%;
+    background: #4972F7;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+}
+.qz-profile-user-avater::before{
+    position: absolute;
+    content: '';
+    width: 165px;
+    height: 165px;
+    border-radius: 50%;
+    background: #406BF6;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+}
+
+.qz-edit-icon{
+    position: absolute;
+    top:30px;
+    right: 50px;
+}
+
+.qz-user-info{
+    margin-top: 50px;
+}
+
+.qz-user-status-card{
+    text-align: center;
+    color: #fff;
+    padding: 30px 15px;
+    margin-top: 30px;
+    border-radius: 5px;
+}
+.qz-user-status-card h4 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+.qz-user-status-card h6 {
+    font-size: 16px;
+}
+.qz-user-status-card-bg1{
+    background: #FFCA00;
+}
+.qz-user-status-card-bg2{
+    background: #6189F4;
+}
+.qz-user-status-card-bg3{
+    background: #FF6766;
+}
+
+.qz-user-profile-from .form-control{
+    height: 65px;
+    border-radius: 50px;
+    box-shadow: none;
+    padding-left: 15px;
+    border-color: #e8e8e8;
+}
+.qz-user-profile-from label {
+    margin-left: 30px;
+    font-weight: 700;
+    font-size: 16px;
+    color: #8f8f8f;
+}
+.qz-profile-area{
+    padding: 50px 0;
 }
 
 /*==================== (03). End main content ====================*/
@@ -574,3 +677,16 @@ table.table.category-table tbody td {
     background: #dd4b39;
 }
 /*==================== (04). End user area ====================*/
+
+
+/*==================== (05). Start Data table ====================*/
+table.dataTable{
+    width: 100% !important;
+}
+table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>td:first-child:before, 
+table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>th:first-child:before {
+    top: 50%;
+    left: 8px;
+    transform: translateY(-50%);
+}
+/*==================== (05). End Data table ====================*/

@@ -1,406 +1,141 @@
+
+
+/*-------------- Start device screen 1440 --------------*/
+@media screen and (max-width: 1440px) {
+    .qz-topbar {
+        padding: 34px 0 23px 0;
+    }
+    .qz-content-area {
+        padding: 0 15px;
+    }
+    .qz-page-title {
+        padding: 30px 0;
+    }
+    .qz-total-qustions {
+        font-size: 28px;
+    }
+    .qz-blance {
+        font-size: 40px;
+    }
+    .qz-user-status-card h6 {
+        font-size: 18px;
+    }
+}
+
+/*-------------- Start device screen 1366 --------------*/
+@media screen and (max-width: 1366px) {
+    .qz-topbar {
+        padding: 34px 0 23px 0;
+    }
+    .qz-content-area {
+        padding: 0 15px;
+    }
+    .qz-page-title {
+        padding: 30px 0;
+    }
+    .qz-total-qustions {
+        font-size: 24px;
+    }
+    .qz-blance {
+        font-size: 26px;
+    }
+    .qz-user-status-card h6 {
+        font-size: 14px;
+    }
+}
+
 /*-------------- Start device screen 1024 --------------*/
 
 @media screen and (max-width: 1024px) {
-    /* Start banner section */
-    .page-banner .single-item {
-        height: 570px;
+    .qz-table-footer a {
+        font-size: 18px;
     }
-    .single-item-overlay {
-        left: 3.2%;
-    }
-    /* Start company status */
-    .welcome-text p {
-        font-size: 16px;
-        margin-bottom: 10px;
-    }
-    .aboutus img {
-        width: 262px;
-        right: 15px;
+    .qz-user-profile-from{
+        margin-top: 50px;
     }
 
 
-    /* Start company status */
-    .status-box {
-        width: 31.1%;
-        margin-right: 10px;
-        min-height: 160px;
-    }
-    /* Start testimonial */
-    .testimoni p {
-        font-size: 14px;
-        line-height: 22px;
-    }
-    /* Start faq section */
-    .faq img {
-        bottom: -25px;
-    }
-    .faq-page {
-        padding-bottom: 25px;
-    }
-    /* Start footer section */
-    .info-text {
-        font-size: 14px;
-        line-height: 22px;
-        margin: 12px 0 10px;
-    }
-    .ig-post a {
-        width: 31.33%;
-    }
-    /* Start blog page */
-    .tags ul li {
-        margin: 5px 1.4px;
-    }
-    .blog.blog-sidebar {
-        padding-bottom: 100px;
-    }
-    .blog.blog-sidebar .blog-pagination {
-        margin: 20px 0 60px;
-    }
 }
+
+/*-------------- Start device screen 991 --------------*/
+
+@media screen and (max-width: 991px) {}
 
 /*-------------- Start device screen 768 --------------*/
 
 @media screen and (max-width: 768px) {
-    .site-menu {
-        padding: 15px 0;
+    .qz-sidebar {
+        left: -261px;
+        z-index: 9;
+        transition: all 0.3s ease;
+        box-shadow: 0 0 5px rgba(0,0,0,0.2);
     }
-    .site-menu .logo img {
-        margin-top: 4px;
+    .sidebarToggle{
+        left: 0;
     }
-    /* Start sitemenu */
-    .slicknav_menu {
-        font-size: 16px;
-        background: transparent;
-        padding: 5px 0;
+    .qz-main-content {
+        margin-left: 0;
     }
-    .slicknav_nav a {
-        text-transform: uppercase;
-    }
-    .slicknav_nav {
-        background: #212121;
-        clear: both;
-        color: #fff;
-        margin: 0;
-        font-size: .875em;
-        width: 114%;
-        position: absolute;
-        top: 133%;
-        z-index: 999;
-        right: 50%;
-        -webkit-transform: translateX(41.4%);
-        transform: translateX(41.4%);
-    }
-    .slicknav_btn .slicknav_menutxt {
-        display: none;
-    }
-    .slicknav_menu .slicknav_icon {
-        float: none;
-        width: initial;
-        height: initial;
-        margin: 0;
-    }
-    .slicknav_btn {
-        border-radius: 0;
-        background: #212121;
-        margin-right: 0;
-    }
-    .slicknav_nav li:hover a {
-        border-radius: 0;
-        background: #ffcf10;
-        color: #212121;
-    }
-    .slicknav_nav .slicknav_row,
-    .slicknav_nav a {
-        padding: 5px 15px;
-        margin: 0;
-    }
-    .slicknav_nav .slicknav_row:hover {
-        border-radius: 0;
-        background: #ffcf10;
-    }
-    .slicknav_nav li a {
-        position: relative;
-    }
-    .slicknav_arrow {
-        right: 15px;
-        position: absolute;
-        top: 50%;
-        -webkit-transform: translateY(-50%);
-        transform: translateY(-50%);
-    }
-    .slicknav_nav ul {
-        margin: 0;
-    }
-    /* Start banner section */
-    .page-banner .single-item {
-        height: 430px;
-    }
-    .single-item-overlay h2 {
-        font-size: 28px;
-    }
-    .single-item-overlay p {
-        font-size: 16px;
-        line-height: 25px;
-        margin-top: 10px;
-    }
-    /* Start about us section */
-    .aboutus img,
-    .status-img img {
-        display: none;
-    }
-    /* Start service section */
-    .single-service p {
-        font-size: 14px;
-    }
-    /* Start company status */
-    .company-status .section-title h3:after,
-    .company-status .section-title h3:before {
-        left: 50%;
-    }
-    .status-box {
-        width: 32.3%;
-    }
-    /* Start team section */
-    .member-info {
-        bottom: 20px;
-    }
-    .team-member:after {
-        top: 70%;
-        left: -30%;
-    }
-    .faq img {
-        display: none;
-    }
-    /* Start faq section */
-
-    .faq-page {
-        padding-bottom: 70px;
-    }
-    /* Start gallery section */
-    .glry-img {
-        width: 50%;
-    }
-    /* Start blog page */
-    .tags ul li {
-        width: 32.03%;
-        margin: 5px 3.1px;
-    }
-    .reply-area {
-        margin-bottom: 50px;
-    }
-    .reply-area2 {
-        margin-bottom: 0;
-    }
-    /* Start google map */
-    #googleMap {
-        margin-top: 100px;
+    span.sidebarToggler {
+        /*background: #327cf1;*/
+        background: #26416c;
+        height: 32px;
+        width: 32px;
+        font-size: 20px;
+        color: #ffffff;
+        border-radius: 5px;
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        cursor: pointer;
     }
 }
 
 /*-------------- Start device screen 425 --------------*/
 
 @media screen and (max-width: 425px) {
-    /* Start top header section */
-    .top-header {
-        padding: 0;
+    .card-body{
+        padding: 15px 0;
     }
-    .top-header .col-md-6 {
-        padding-left: 0;
-        padding-right: 0;
+    .user-body .card-body{
+        padding: 15px;
     }
-    .top-header:after,
-    .top-header:before {
-        display: none;
+    span.sidebarToggler {
+        /*background: #26416c;*/
+        position: absolute;
+        right: 15px;
+        top: -230%;
     }
-    .top-social {
-        background: #212121;
+    .qz-laderboard-area table td .people {
+        font-size: 14px;
     }
-    .top-time {
-        background: #ffcf10;
+    table td .people img {
+        height: 40px;
+        width: 40px;
     }
-    .top-time,
-    .top-social {
-        text-align: center;
-        padding: 10px 0;
-    }
-    .slicknav_menu {
-        padding: 8px 0;
-    }
-    .slicknav_nav {
-        width: 140%;
-        top: 130%;
-        -webkit-transform: translateX(32%);
-        transform: translateX(32%);
-    }
-    /* Start banner section */
-    .single-item-overlay {
-        left: 0;
-        width: 100%;
-    }
-    .page-banner .single-item {
-        height: 240px;
-    }
-    .page-banner .owl-theme .owl-dots .owl-dot {
-        display: inline-block;
-    }
-    .page-banner .owl-dots {
-        top: 80%;
-        -webkit-transform: translateY(-50%);
-        transform: translateY(-50%);
-    }
-    /* Start about section */
-    .welcome-text h3 {
-        font-size: 26px;
-        margin-bottom: 20px;
-    }
-    .welcome-text p {
-        font-size: 15px;
-        line-height: 25px;
-        margin-bottom: 20px;
-    }
-    .welcome-text .more-btn {
+    .qz-user-avater img {
+        height: 40px;
+        width: 40px;
         margin-top: 0;
-    }
-    .aboutus {
-        padding: 95px 0 100px;
-    }
-    /* Start company status section */
-    .status-box {
-        width: 48.7%;
-    }
-    .status-box:nth-child(even) {
-        margin-right: 0;
-    }
-    .status-box:nth-child(3) {
-        margin-right: 10px;
-    }
-    /* Start testimonial section */
-    .testimoni p {
-        text-align: center;
-    }
-    .testimoni p.name {
-        border-right: none;
-    }
-    .testimoni-img {
-        margin-bottom: 15px;
-    }
-    .testimonial .owl-dots {
-        right: 50%;
-        -webkit-transform: translateX(50%);
-        transform: translateX(50%);
-    }
-    /* Start gallery section */
-    .glry-img {
-        width: 100%;
-    }
-    /* Start faq section */
-    .faq .btn-link:before {
-        left: 86%;
-    }
-    /* Start footer section */
-    .ig-post a {
-        width: 32.73%;
-    }
-    .ig-post a img {
-        width: 100%;
-    }
-    /* Start blog page */
-    .tags ul li {
-        width: 47.73%;
-    }
-    .reply-area .btn-primary {
-        min-width: 100%;
-    }
-    .blog-comment .single-comment {
-        margin-top: 15px;
-    }
-    .blog-comment .single-comment:nth-child(odd) {
-        margin-left: 5px;
-    }
-    .page-title-layer {
-        padding: 50px 0;
     }
 }
 
 /*-------------- Start device screen 375 --------------*/
 
 @media screen and (max-width: 375px) {
-    /* Start banner section */
-    .page-banner .single-item {
-        height: 210px;
-    }
-    .single-item-overlay p {
-        display: none;
-    }
-    /* Start company status section */
-    .status-box {
-        width: 100%;
-        margin-right: 0;
-    }
-    /* Start footer section */
-    .ig-post a {
-        width: 32.63%;
-    }
-    /* Start blog page */
-    .tags ul li {
-        width: 47.43%;
-    }
-    .page-title h3 {
-        font-size: 22px;
+    .qz-edit-icon {
+        top: 20px;
+        right: 30px;
     }
 }
 
 /*-------------- Start device screen 320 --------------*/
 
 @media screen and (max-width: 320px) {
-    .subscribe h1 {
-        font-size: 22px;
+    .qz-total-qustions {
+        font-size: 24px;
     }
-    .section-title h3 {
-        font-size: 26px;
-    }
-    /* Start banner section */
-    .page-banner .single-item {
-        height: 180px;
-    }
-    .page-banner .more-btn {
-        font-size: 11px;
-        min-width: 94px;
-        height: 30px;
-        line-height: 30px;
-    }
-    /* Start welcome section */
-    .welcome-text h3 {
-        font-size: 20px;
-        margin-bottom: 15px;
-    }
-    .welcome-text p {
-        font-size: 14px;
-    }
-    /* Start service section */
-    .single-service p {
-        font-size: 13px;
-        line-height: 20px;
-    }
-    /* Start gallery section */
-    .gallery {
-        padding: 97px 0 100px;
-    }
-    /* Start subscribe section */
-    .subscribe .btn-primary {
-        padding: 0;
-        width: 120px;
-        font-size: 14px;
-    }
-    .subscribe .form-control {
-        padding: 15px 125px 15px 15px;
-    }
-    /* Start footer section */
-    .ig-post a {
-        width: 32.53%;
-    }
-    /* Start blog page */
-    .tags ul li {
-        width: 46.93%;
+    .user-body .card h5 {
+        font-size: 16px;
     }
 }

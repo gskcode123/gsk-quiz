@@ -148,9 +148,9 @@ function path_category_image()
 {
     return 'uploaded_file/files/img/category/';
 }
-function path_landing_team_image()
+function path_question_image()
 {
-    return 'uploaded_file/files/img/landing/team/';
+    return 'uploaded_file/files/img/question/';
 }
 function path_landing_blog_image()
 {
@@ -228,3 +228,18 @@ if (!function_exists('role')) {
         return $myrole;
     }
 }
+if (!function_exists('question_type')) {
+    function question_type($val = null)
+    {
+        $data = array(
+            1 => __('Multiple Choise'),
+//            2 => __('Text Answer'),
+        );
+        if ($val == null) {
+            return $data;
+        } else {
+            return $data[$val];
+        }
+    }
+}
+

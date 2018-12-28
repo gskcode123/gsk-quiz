@@ -22,7 +22,6 @@ $(document).ready(function() {
 
     $('#category-table').DataTable();
     $('#qz-question-table').DataTable();
-    $("#metismenu").metisMenu();
 
 
 

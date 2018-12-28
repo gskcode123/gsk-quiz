@@ -19,8 +19,12 @@
     <!-- magnific popup -->
     <link rel="stylesheet" href="{{asset('assets/css/magnific-popup.css')}}">
     <!-- Swiper Slider -->
-    <link rel="stylesheet" href="{{asset('vendors/swiper-master/css/swiper.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/vendors/swiper-master/css/swiper.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/iconfont/flaticon.css')}}">
+    <!-- Start data table -->
+    <link rel="stylesheet" href="{{asset('assets/DataTables/css/jquery.dataTables.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/DataTables/css/responsive.dataTables.min.css')}}">
+
     <!-- font family -->
     <link rel="stylesheet" href="{{asset('assets/css/proxima-nova.css')}}">
     <!-- Site Style -->
@@ -58,13 +62,17 @@
 <script src="{{asset('assets/js/waypoints.min.js')}}"></script>
 <script src="{{asset('assets/js/counterup.min.js')}}"></script>
 <!-- Slicknav -->
-<script src="{{asset('assets/js/metisMenu.min.js')}}"></script>
 <!-- magnific popup -->
 <script src="{{asset('assets/js/magnific-popup.min.js')}}"></script>
 <!-- Swiper Slider -->
 <script src="{{asset('assets/vendors/swiper-master/js/swiper.min.js')}}"></script>
 <!-- main js -->
 <script src="{{asset('assets/js/main.js')}}"></script>
-</body>
+<!-- Start data table -->
+<script src="{{asset('assets/DataTables/js/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('assets/DataTables/js/dataTables.responsive.min.js')}}"></script>
 
+@yield('script')
+
+</body>
 </html>

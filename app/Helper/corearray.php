@@ -13,6 +13,21 @@ function userRole($input = null)
         return $output[$input];
     }
 }
+
+//status type
+function statusType($input = null)
+{
+    $output = [
+        STATUS_ACTIVE => __('Active'),
+        STATUS_INACTIVE => __('Inactive')
+    ];
+    if (is_null($input)) {
+        return $output;
+    } else {
+        return $output[$input];
+    }
+}
+
 //User Activity Array
 function userActivity($input = null)
 {

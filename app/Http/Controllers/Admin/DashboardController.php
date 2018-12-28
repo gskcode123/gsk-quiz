@@ -19,4 +19,10 @@ class DashboardController extends Controller
         return view('user.dashboard', $data);
     }
 
+    public function leaderBoard()
+    {
+        $data['pageTitle'] = __('Leader Board');
+        return view('admin.leaderboard', $data);
+    }
+
 }

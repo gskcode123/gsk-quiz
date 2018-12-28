@@ -94,7 +94,7 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <input type="text" name="name" class="form-control" placeholder="Phone">
+                                            <input type="text" name="phone" class="form-control" placeholder="Phone">
                                             <div class="qz-input-icon">
                                                 <span class="flaticon-phone-call"></span>
                                             </div>

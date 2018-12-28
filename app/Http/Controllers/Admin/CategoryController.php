@@ -21,9 +21,9 @@ class CategoryController extends Controller
     public function qsCategoryList()
     {
         $data['pageTitle'] = __('Category List');
-        $data['categories'] = Category::orderBy('id', 'DESC')->get();
+        $data['categories'] = Category::orderBy('serial', 'ASC')->get();
 
-        return view('admin.', $data);
+        return view('admin.category.list', $data);
     }
 
     /*
@@ -39,7 +39,7 @@ class CategoryController extends Controller
     public function qsCategoryCreate()
     {
         $data['pageTitle'] = __('Add Category');
-        return view('admin.', $data);
+        return view('admin.category.add', $data);
     }
 
     /*
@@ -55,8 +55,8 @@ class CategoryController extends Controller
     public function qsCategorySave(Request $request)
     {
         $rules = [
-            'name' => ['required', Rule::unique('categories')->ignore($this->id, 'id')],
-            'serial' => ['required', Rule::unique('categories')->ignore($this->id, 'id')],
+            'name' => ['required', Rule::unique('categories')->ignore($request->edit_id, 'id')],
+            'serial' => ['required', Rule::unique('categories')->ignore($request->edit_id, 'id')],
             'qs_limit' => 'required|numeric|min:1',
             'max_limit' => 'required|numeric|min:1',
             'time_limit' => 'required|numeric|between:0,10',
@@ -68,12 +68,12 @@ class CategoryController extends Controller
             'serial.unique' => __('This Serial already taken'),
             'qs_limit.required' => __('Quiz Limit field can not be empty'),
             'max_limit.required' => __('Max Limit field can not be empty'),
-            'time_limit.required' => __('Max Limit field can not be empty'),
+            'time_limit.required' => __('Time Limit field can not be empty'),
             'serial.required' => __('Serial field can not be empty'),
         ];
 
         if (!empty($request->image)) {
-            $rules['image'] = 'mimes:jpeg,jpg,JPG,png,PNG,gif|max:20000';
+//            $rules['image'] = 'mimes:jpeg,jpg,JPG,png,PNG,gif|max:20000';
         }
         $this->validate($request, $rules, $messages);
         try {
@@ -101,19 +101,20 @@ class CategoryController extends Controller
                 if ($update) {
                     return redirect()->back()->with('success', __('Category Updated Successfully'));
                 } else {
-                    return redirect()->back()->with('dissmiss', __('Update Failed'));
+                    return redirect()->back()->with('dismiss', __('Update Failed'));
                 }
             } else {
                 $insert = Category::create($data);
                 if ($insert) {
                     return redirect()->back()->with('success', __('Category Created Successfully'));
                 } else {
-                    return redirect()->back()->with('dissmiss', __('Save Failed'));
+                    return redirect()->back()->with('dismiss', __('Save Failed'));
                 }
             }
 
         } catch (\Exception $e) {
-            return redirect()->back()->with('dissmiss', __('Something went wrong'));
+            dd($e->getMessage());
+            return redirect()->back()->with('dismiss', __('Something went wrong'));
         }
 
     }
@@ -134,7 +135,7 @@ class CategoryController extends Controller
         if (!empty($id) && is_numeric($id)) {
             $data['category'] = Category::findOrFail($id);
         }
-        return view('admin.', $data);
+        return view('admin.category.add', $data);
     }
 
     /*

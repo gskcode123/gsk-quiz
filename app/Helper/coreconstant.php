@@ -8,6 +8,9 @@ const COIN_DEFAULT =1;
 const WALLET_IS_PRIMARY=1;
 const WALLET_IS_NOT_PRIMARY=0;
 
+// Status type
+const STATUS_ACTIVE = 1;
+const STATUS_INACTIVE = 0;
 // ICO
 const ICO_IS_ACTIVE=1;
 const ICO_IS_NOT_ACTIVE=0;

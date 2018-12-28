@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Model\Category;
 use App\Model\Question;
+use App\Model\QuestionOption;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Validation\Rule;
@@ -24,7 +25,7 @@ class QuestionController extends Controller
         $data['pageTitle'] = __('Question List');
         $data['items'] = Question::orderBy('id', 'DESC')->get();
 
-        return view('admin.', $data);
+        return view('admin.question.list', $data);
     }
 
     /*
@@ -40,7 +41,9 @@ class QuestionController extends Controller
     public function questionCreate()
     {
         $data['pageTitle'] = __('Add Question');
-        return view('admin.', $data);
+        $data['categories'] = Category::where('status', STATUS_ACTIVE)->orderBy('id','ASC')->get();
+
+        return view('admin.question.add', $data);
     }
 
     /*
@@ -55,27 +58,94 @@ class QuestionController extends Controller
 
     public function questionSave(Request $request)
     {
+//        dd($request->all(),$request->options, $request->ans_type);
+
         $rules = [
-            'name' => ['required', Rule::unique('categories')->ignore($this->id, 'id')],
-            'qs_limit' => 'required|numeric|min:1',
-            'time_limit' => 'required|numeric|between:0,10',
+            'title' => ['required', Rule::unique('questions')->ignore($request->edit_id, 'id')],
+            'category_id' => 'required',
+            'type' => 'required',
+            'status' => 'required',
+            'options' => 'required',
+            'point' => 'required|numeric|between:0,100',
         ];
 
         $messages = [
-            'name.required' => __('Name field can not be empty'),
-            'name.unique' => __('This Name already taken'),
-            'qs_limit.required' => __('Quiz Limit field can not be empty'),
-            'password_confirmation.required' => __('Password confirmed field can not be empty'),
-            'password.min' => __('Password length must be above 8 characters.'),
-            'password.strong_pass' => __('Password must be consist of one Uppercase, one Lowercase and one Number!'),
-            'email.required' => __('Email field can not be empty'),
-            'email.unique' => __('Email Address already exists'),
-            'email.email' => __('Invalid email address'),
+            'title.required' => __('Question Title field can not be empty'),
+            'point.required' => __('Question point field can not be empty'),
+            'status.required' => __('Status field can not be empty'),
+            'options.required' => __('Option field can not be empty'),
+            'category_id.required' => __('Must be select a category'),
+            'type.required' => __('Must be select a question type'),
         ];
 
         $this->validate($request, $rules,$messages);
-        return view('admin.');
-    }
+        try {
+            $data = [
+                'title' => $request->title,
+                'category_id' => $request->category_id,
+                'type' => $request->type,
+                'time_limit' => $request->time_limit,
+                'answer' => $request->answer,
+                'point' => $request->point,
+                'serial' => $request->serial,
+                'status' => $request->status,
+            ];
+            if (!empty($request->edit_id)) {
+                $qs = Question::where('id', $request->edit_id)->first();
+            }
+            if (!empty($request['image'])) {
+                $old_img = '';
+                if (!empty($qs->image)) {
+                    $old_img = $qs->image;
+                }
+                $data['image'] = fileUpload($request['image'], path_question_image(), $old_img);
+            }
+            if (!empty($request->edit_id)) {
+                $update = Question::where(['id' => $request->edit_id])->update($data);
+                if ($update) {
+                    $questionOption = QuestionOption::where('question_id', $request->edit_id)->delete();
+                    if ($questionOption) {
+                        $options = $request->options;
+                        $types = $request->ans_type;
+                        $size = sizeof($options);
+                        for ($i = 0; $i < $size; $i++) {
+                            $insertOption = QuestionOption::insert([
+                                'question_id' => $request->edit_id,
+                                'option_title' => $options[$i],
+                                'is_answer' => $types[$i]
+                            ]);
+
+                        }
+                    }
+
+                    return redirect()->back()->with('success', __('Question Updated Successfully'));
+                } else {
+                    return redirect()->back()->with('dismiss', __('Update Failed'));
+                }
+            } else {
+                $insert = Question::create($data);
+                if ($insert) {
+                    $options = $request->options;
+                    $types = $request->ans_type;
+                    $size = sizeof($options);
+                    for ($i = 0; $i < $size; $i++) {
+                        $insertOption = QuestionOption::insert([
+                            'question_id' => $insert->id,
+                            'option_title' => $options[$i],
+                            'is_answer' => $types[$i]
+                        ]);
+
+                    }
+                    return redirect()->back()->with('success', __('Question Created Successfully'));
+                } else {
+                    return redirect()->back()->with('dismiss', __('Save Failed'));
+                }
+            }
+
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+            return redirect()->back()->with('dismiss', __('Something went wrong'));
+        }    }
 
     /*
      * questionEdit
@@ -90,7 +160,13 @@ class QuestionController extends Controller
     public function questionEdit($id)
     {
         $data['pageTitle'] = __('Edit Question');
-        return view('admin.', $data);
+        $data['categories'] = Category::where('status', STATUS_ACTIVE)->orderBy('id','ASC')->get();
+
+        if (!empty($id) && is_numeric($id)) {
+            $data['question'] = Question::findOrFail($id);
+            $data['qsOptions'] = QuestionOption::where('question_id', $id)->get();
+        }
+        return view('admin.question.add', $data);
     }
 
     /*

@@ -2,7 +2,7 @@
 <div class="qz-topbar">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-10">
+            <div class="col-xl-9 col-lg-8 col-md-7 col-12">
                 <form class="qz-search-from">
                     <button type="submit" class="btn btn-primary qz-search-btn">
                         <span class="flaticon-magnifying-glass"></span>
@@ -12,19 +12,18 @@
                     </div>
                 </form>
             </div>
-            <div class="col-lg-2">
-                <div class="btn-group">
+            <div class="col-xl-3 col-lg-4 col-md-5 col-12 mt-md-0 mt-5">
+                <div class="btn-group d-md-inline-flex d-flex justify-content-left">
                     <button type="button" class="btn btn-secondary dropdown-toggle qz-user-profile-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Theodor Herzl
+                        @if(isset(Auth::user()->name)) {{ Auth::user()->name }} @endif
                         <span class="flaticon-angle-arrow-down"></span>
                         <span class="qz-user-avater">
-                                        <img src="images/avater.jpg" alt="" class="img-fluid">
-                                    </span>
+                            <img src="{{asset('assets/images/avater.jpg')}}" alt="" class="img-fluid">
+                        </span>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <button class="dropdown-item" type="button">Action</button>
-                        <button class="dropdown-item" type="button">Another action</button>
-                        <button class="dropdown-item" type="button">Something else here</button>
+                        <a href="#" class="dropdown-item">{{__('Profile')}}</a>
+                        <a href="{{ route('logOut') }}" class="dropdown-item">{{__('Logout')}}</a>
                     </div>
                 </div>
             </div>
