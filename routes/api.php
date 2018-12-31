@@ -26,7 +26,7 @@ Route::group(['middleware' =>['auth:api'],'namespace'=>'Api'],function (){
 
     //Category
     Route::get('category', 'QuestionController@questionCategory');
-    Route::get('category/{id}', 'QuestionController@singleCategory');
+    Route::get('category/{id}', 'QuestionController@singleCategoryQuestion');
 
     //Question
     Route::get('question/{id}', 'QuestionController@singleQuestion');

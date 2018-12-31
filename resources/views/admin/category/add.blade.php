@@ -33,7 +33,7 @@
                             {{ Form::open(['route' => 'qsCategorySave', 'files' => 'true']) }}
                                 <div class="form-group">
                                     <label>{{__('Title')}}</label>
-                                    <input type="text" name="name" @if(isset($category)) value="{{$category->name}}" @else value="{{old('name')}}" @endif class="form-control" placeholder="">
+                                    <input type="text" name="name" @if(isset($category)) value="{{$category->name}}" @else value="{{old('name')}}" @endif class="form-control" placeholder="Title">
                                 </div>
                                 <div class="form-group">
                                     <label>{{__('Description')}}</label>
@@ -41,19 +41,19 @@
                                 </div>
                                 <div class="form-group">
                                     <label>{{__('Question limit')}}</label>
-                                    <input type="text" @if(isset($category)) value="{{$category->max_limit}}" @else value="{{old('max_limit')}}" @endif name="max_limit" class="form-control" placeholder="">
+                                    <input type="text" @if(isset($category)) value="{{$category->max_limit}}" @else value="{{old('max_limit')}}" @endif name="max_limit" class="form-control" placeholder="Question Limit for category">
                                 </div>
                                 <div class="form-group">
                                     <label>{{__('Quize limit')}}</label>
-                                    <input type="text" @if(isset($category)) value="{{$category->qs_limit}}" @else value="{{old('qs_limit')}}" @endif name="qs_limit" class="form-control" placeholder="">
+                                    <input type="text" @if(isset($category)) value="{{$category->qs_limit}}" @else value="{{old('qs_limit')}}" @endif name="qs_limit" class="form-control" placeholder="Question limit for per Quiz test">
                                 </div>
                                 <div class="form-group">
                                     <label>{{__('Time limit')}}</label>
-                                    <input type="text" @if(isset($category)) value="{{$category->time_limit}}" @else value="{{old('time_limit')}}" @endif name="time_limit" class="form-control" placeholder="">
+                                    <input type="text" @if(isset($category)) value="{{$category->time_limit}}" @else value="{{old('time_limit')}}" @endif name="time_limit" class="form-control" placeholder="Time limit(in minute) for per question in category">
                                 </div>
                                 <div class="form-group">
                                     <label>{{__('Serial')}}</label>
-                                    <input type="text" @if(isset($category)) value="{{$category->serial}}" @else value="{{old('serial')}}" @endif name="serial" class="form-control" placeholder="">
+                                    <input type="text" @if(isset($category)) value="{{$category->serial}}" @else value="{{old('serial')}}" @endif name="serial" class="form-control" placeholder="Priority">
                                 </div>
                                 <div class="form-group">
                                     <label>{{__('Activation Status')}}</label>

@@ -72,7 +72,7 @@ class QuestionController extends Controller
      *
      */
 
-    public function singleCategory($id)
+    public function singleCategoryQuestion($id)
     {
         try {
             $id = decrypt($id);
@@ -86,31 +86,58 @@ class QuestionController extends Controller
         }
         $data = ['success' => false, 'data' => [], 'message' => __('Something went wrong')];
 
-        $limit = Category::where('id',$id)->first()->qs_limit;
-        $questions = Question::where(['category_id' => $id, 'status' => STATUS_ACTIVE])
+        $category = Category::where('id',$id)->first();
+        $limit = $category->qs_limit;
+        $timeLimit = $category->time_limit;
+        $availableQuestions = '';
+
+        $availableQuestions = Question::with('question_option')
+            ->where(['questions.category_id' => $id,'questions.status'=> STATUS_ACTIVE])
+            ->whereNotIn('questions.id', UserAnswer::select('question_id')->where(['user_id' => Auth::id()]))
+            ->select('questions.*')
             ->limit($limit)
-            ->orderBy('id','ASC')
             ->get();
-        if (isset($questions)) {
-            foreach ($questions as $item) {
-                $list[] = [
-                    'category' => $item->qsCategory->name,
-                    'id' => $item->id,
-                    'question_id' => encrypt($item->id),
-                    'title' => $item->title,
-                    'type' => $item->type,
-                    'image' => asset(path_question_image() . $item->image),
-                    'time_limit' => $item->time_limit,
-                    'point' => $item->point,
-                    'coin' => $item->coin,
-                    'status' => $item->status,
+//        dd($availableQuestions);
+        $lists = [];
+        if (isset($availableQuestions)) {
+            foreach ($availableQuestions as $question) {
+                $item = [];
+                foreach ($question->question_option as $option) {
+                    $item[] = [
+                        'id' => $option->id,
+                        'option_title' => $option->option_title
+                    ];
+                }
+                $lists[] = [
+                    'category' => $question->qsCategory->name,
+                    'category_id' => $question->qsCategory->id,
+                    'id' => $question->id,
+                    'question_id' => encrypt($question->id),
+                    'title' => $question->title,
+                    'type' => $question->type,
+                    'image' => asset(path_question_image() . $question->image),
+                    'point' => $question->point,
+                    'coin' => $question->coin,
+                    'time_limit' => isset($question->time_limit) ? $question->time_limit : $timeLimit,
+                    'status' => $question->status,
+                    'options' => $item,
+//                    'options' => $question->question_option->toArray()
                 ];
+
+//                dd($question->question_option->toArray());
             }
 
-            if (!empty($list)) {
+
+            if (!empty($lists)) {
                 $data = [
                     'success' => true,
-                    'question_list' => $list
+                    'availableQuestionList' => $lists,
+//                    'options' => $item
+                ];
+            } else {
+                $data = [
+                    'success' => false,
+                    'message' => __('No data found')
                 ];
             }
         } else {
@@ -240,21 +267,27 @@ class QuestionController extends Controller
         }
         try {
             $question = Question::where(['id' => $id])->first();
-            $userAnswer = UserAnswer::where(['question_id' => $id, 'user_id' => Auth::user()->id])->first();
+//            $userAnswer = UserAnswer::where(['question_id' => $id, 'user_id' => Auth::user()->id])->first();
             $option = QuestionOption::where(['id'=> $request->answer, 'question_id'=> $id])->first();
 //            dd($question);
+            $input =[
+                'user_id' => Auth::user()->id,
+                'category_id' => $question->qsCategory->id,
+                'question_id' => $question->id,
+                'type' => $question->type,
+            ];
             if ($option) {
-                $viewTime = Carbon::parse($userAnswer->created_at);
-                $checkTime = Carbon::parse(Carbon::now());
-                $diffTime = $checkTime->diffInSeconds($viewTime);
-                //dd($sendTime,$checkTime, $diffTime);
-                if ($diffTime <= (60 * $request->time_limit)) {
+
+//                $viewTime = Carbon::parse($userAnswer->created_at);
+//                $checkTime = Carbon::parse(Carbon::now());
+//                $diffTime = $checkTime->diffInSeconds($viewTime);
+//                //dd($sendTime,$checkTime, $diffTime);
+//                if ($diffTime <= (60 * $request->time_limit)) {
                     if ($question->type == MULTIPLE_ANSWER) {
                         if ($option->is_answer == ANSWER_TRUE) {
-                            $userAnswer->is_correct = ANSWER_TRUE;
-                            $userAnswer->point = $question->point;
-                            $userAnswer->status = 1;
-                            $userAnswer->update();
+                            $input['is_correct'] = ANSWER_TRUE;
+                            $input['point'] = $question->point;
+
                             $data = [
                                 'success' => true,
                                 'message' => __('Right Answer'),
@@ -266,18 +299,19 @@ class QuestionController extends Controller
                             ];
                         }
                     }
-                } else {
-                    $data = [
-                        'success' => false,
-                        'message' => __('Sorry Time out!')
-                    ];
-                }
+//                } else {
+//                    $data = [
+//                        'success' => false,
+//                        'message' => __('Sorry Time out!')
+//                    ];
+//                }
             } else {
                 $data = [
                     'success' => false,
                     'message' => __('Wrong Answer')
                 ];
             }
+            $insert = UserAnswer::create($input);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,

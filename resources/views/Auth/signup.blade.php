@@ -40,8 +40,8 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
-            @include('layout.message')
             <div class="card text-center">
+                @include('layout.message')
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-8 offset-lg-2">

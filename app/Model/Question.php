@@ -12,4 +12,9 @@ class Question extends Model
     {
         return $this->belongsTo(Category::class,'category_id');
     }
+
+    public function question_option()
+    {
+        return $this->hasMany(QuestionOption::class);
+    }
 }

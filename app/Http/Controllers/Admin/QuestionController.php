@@ -109,7 +109,7 @@ class QuestionController extends Controller
                         $types = $request->ans_type;
                         $size = sizeof($options);
                         for ($i = 0; $i < $size; $i++) {
-                            $insertOption = QuestionOption::insert([
+                            $insertOption = QuestionOption::create([
                                 'question_id' => $request->edit_id,
                                 'option_title' => $options[$i],
                                 'is_answer' => $types[$i]
@@ -129,7 +129,7 @@ class QuestionController extends Controller
                     $types = $request->ans_type;
                     $size = sizeof($options);
                     for ($i = 0; $i < $size; $i++) {
-                        $insertOption = QuestionOption::insert([
+                        $insertOption = QuestionOption::update([
                             'question_id' => $insert->id,
                             'option_title' => $options[$i],
                             'is_answer' => $types[$i]
