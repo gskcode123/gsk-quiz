@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Model\Category;
 use App\Model\Question;
+use App\Model\UserAnswer;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -18,7 +20,12 @@ class DashboardController extends Controller
         $data['totalQuestion'] = Question::where('status', STATUS_ACTIVE)->count();
         $data['totalCategory'] = Category::where('status', STATUS_ACTIVE)->count();
         $data['categories'] = Category::where('status', STATUS_ACTIVE)->orderBy('id', 'DESC')->limit(4)->get();
-        $data['leaders'] = User::where(['active_status' => STATUS_ACTIVE, 'role' => 2])->orderBy('id', 'DESC')->limit(5)->get();
+        $data['leaders'] = UserAnswer::select(
+            DB::raw('SUM(point) as score, user_id'))
+            ->groupBy('user_id')
+            ->orderBy('score', 'DESC')
+            ->limit(5)
+            ->get();
 
         return view('admin.dashboard', $data);
     }
@@ -26,7 +33,23 @@ class DashboardController extends Controller
     public function leaderBoard()
     {
         $data['pageTitle'] = __('Leader Board');
+        $data['leaders'] = UserAnswer::select(
+            DB::raw('SUM(point) as score, user_id'))
+            ->groupBy('user_id')
+            ->orderBy('score', 'DESC')
+            ->get();
+
         return view('admin.leaderboard', $data);
+    }
+
+    public function qsSearch(Request $request)
+    {
+        $data['pageTitle'] = __('Rearch Result');
+        $data['questions'] = Question::where('status',1)
+            ->where('title','LIKE','%'.$request->item.'%')
+            ->get();
+
+        return view('admin.search-item', $data);
     }
 
 }

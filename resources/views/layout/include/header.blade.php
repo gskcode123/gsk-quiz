@@ -3,12 +3,12 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-xl-9 col-lg-8 col-md-7 col-12">
-                <form class="qz-search-from">
+                <form action="{{route('qsSearch')}}" class="qz-search-from">
                     <button type="submit" class="btn btn-primary qz-search-btn">
                         <span class="flaticon-magnifying-glass"></span>
                     </button>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search here anything">
+                        <input type="text" required name="item" class="form-control" placeholder="Search here anything">
                     </div>
                 </form>
             </div>

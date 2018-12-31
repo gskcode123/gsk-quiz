@@ -52,9 +52,9 @@
                                         @foreach($items as $item)
                                             <tr>
                                                 <td>{{ $sl++ }}</td>
-                                                <td>{{ $item->category_id }}</td>
+                                                <td>{{ $item->qsCategory->name }}</td>
                                                 <td>{{ $item->title }}</td>
-                                                <td>{{ $item->category_id }}</td>
+                                                <td>{{ answers($item->id) }}</td>
                                                 <td>{{ $item->point }}</td>
                                                 <td><span class="">{{ statusType($item->status) }}</span></td>
                                                 <td>

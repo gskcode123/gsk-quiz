@@ -38,90 +38,30 @@
                             <table id="category-table" class="table category-table table-bordered  text-center mb-0">
                                 <thead>
                                 <tr>
-                                    <th>SL.</th>
-                                    <th>People</th>
-                                    <th>Score</th>
-                                    <th>Rank</th>
+                                    <th>{{__('SL.')}}</th>
+                                    <th>{{__('People')}}</th>
+                                    <th>{{__('Score')}}</th>
+                                    <th>{{__('Rank')}}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>1.</td>
-                                    <td align="left">
-                                        <div class="people">
-                                            <img src="images/avater.jpg" alt="" class="img-fluid mr-2">
-                                            charles Dickens
-                                        </div>
-                                    </td>
-                                    <td>4000</td>
-                                    <td><span class="text-success">1</span></td>
-                                </tr>
-                                <tr>
-                                    <td>2.</td>
-                                    <td align="left">
-                                        <div class="people">
-                                            <img src="images/avater.jpg" alt="" class="img-fluid mr-2">
-                                            charles Dickens
-                                        </div>
-                                    </td>
-                                    <td>4000</td>
-                                    <td><span class="text-warning">2</span></td>
-                                </tr>
-                                <tr>
-                                    <td>3.</td>
-                                    <td align="left">
-                                        <div class="people">
-                                            <img src="images/avater.jpg" alt="" class="img-fluid mr-2">
-                                            charles Dickens
-                                        </div>
-                                    </td>
-                                    <td>4000</td>
-                                    <td><span class="text-info">3</span></td>
-                                </tr>
-                                <tr>
-                                    <td>4.</td>
-                                    <td align="left">
-                                        <div class="people">
-                                            <img src="images/avater.jpg" alt="" class="img-fluid mr-2">
-                                            charles Dickens
-                                        </div>
-                                    </td>
-                                    <td>4000</td>
-                                    <td><span class="text-dark">4</span></td>
-                                </tr>
-                                <tr>
-                                    <td>5.</td>
-                                    <td align="left">
-                                        <div class="people">
-                                            <img src="images/avater.jpg" alt="" class="img-fluid mr-2">
-                                            charles Dickens
-                                        </div>
-                                    </td>
-                                    <td>5000</td>
-                                    <td><span class="text-dark">5</span></td>
-                                </tr>
-                                <tr>
-                                    <td>6.</td>
-                                    <td align="left">
-                                        <div class="people">
-                                            <img src="images/avater.jpg" alt="" class="img-fluid mr-2">
-                                            charles Dickens
-                                        </div>
-                                    </td>
-                                    <td>4000</td>
-                                    <td><span class="text-dark">6</span></td>
-                                </tr>
-                                <tr>
-                                    <td>7.</td>
-                                    <td align="left">
-                                        <div class="people">
-                                            <img src="images/avater.jpg" alt="" class="img-fluid mr-2">
-                                            charles Dickens
-                                        </div>
-                                    </td>
-                                    <td>7000</td>
-                                    <td><span class="text-dark">7</span></td>
-                                </tr>
+                                @if(isset($leaders))
+                                    @php ($sl = 1)
+                                    @php ($rank = 1)
+                                    @foreach($leaders as $item)
+                                        <tr>
+                                            <td>{{ $sl++ }}</td>
+                                            <td align="left">
+                                                <div class="people">
+                                                    <img @if(isset($item->user->photo)) src="{{ asset(pathUserImage().$item->user->photo)}}" @else src="{{asset('assets/images/avater.jpg')}}" @endif alt="" class="img-fluid mr-2">
+                                                    {{ $item->user->name }}
+                                                </div>
+                                            </td>
+                                            <td>{{ $item->score }}</td>
+                                            <td class="text-center"><span class="text-success">{{ $rank++ }}</span></td>
+                                        </tr>
+                                    @endforeach
+                                @endif
                                 </tbody>
                             </table>
                             <!-- </div> -->

@@ -2,6 +2,7 @@
 
 Route::group(['middleware' => ['auth','admin']], function() {
     Route::get('/', 'Admin\DashboardController@adminDashboardView')->name('adminDashboardView');
+    Route::get('/search', 'Admin\DashboardController@qsSearch')->name('qsSearch');
 
     //profile setting
     Route::get('/profile','Admin\ProfileController@userProfile')->name('userProfile');

@@ -148,7 +148,8 @@ class AuthController extends Controller
             'password' => Hash::make($request->get('password')),
             'role' => USER_ROLE_USER,
             'active_status' => STATUS_SUCCESS,
-            'email_verified' => STATUS_PENDING
+            'email_verified' => STATUS_PENDING,
+            'reset_code' => md5($request->get('email') . uniqid() . randomString(5)),
         ]);
 
         UserVerificationCode::create([

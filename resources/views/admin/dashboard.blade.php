@@ -107,14 +107,14 @@
                                         @php ($sl = 1)
                                         @foreach($leaders as $item)
                                             <tr>
-                                                <td>
+                                                <td align="left">
                                                     <div class="people">
-                                                        <img @if(isset($item)) src="{{ asset(pathUserImage().$item->image)}}" @else src="{{asset('assets/images/avater.jpg')}}" @endif alt="" class="img-fluid mr-2">
-                                                        {{ $item->name }}
+                                                        <img @if(isset($item->user->photo)) src="{{ asset(pathUserImage().$item->user->photo)}}" @else src="{{asset('assets/images/avater.jpg')}}" @endif alt="" class="img-fluid mr-2">
+                                                        {{ $item->user->name }}
                                                     </div>
                                                 </td>
-                                                <td>4320</td>
-                                                <td class="text-center"><span class="text-success">1</span></td>
+                                                <td>{{ $item->score }}</td>
+                                                <td class="text-center"><span class="text-success">{{ $sl++ }}</span></td>
                                             </tr>
                                         @endforeach
                                    @endif

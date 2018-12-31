@@ -24,4 +24,12 @@ Route::group(['middleware' =>['auth:api'],'namespace'=>'Api'],function (){
     Route::get('profile', 'ProfileController@profile');
     Route::post('update-profile', 'ProfileController@profileUpdate');
 
+    //Category
+    Route::get('category', 'QuestionController@questionCategory');
+    Route::get('category/{id}', 'QuestionController@singleCategory');
+
+    //Question
+    Route::get('question/{id}', 'QuestionController@singleQuestion');
+    Route::post('submit-answer/{id}', 'QuestionController@submitAnswer');
+
 });

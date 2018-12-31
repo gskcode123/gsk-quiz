@@ -24,6 +24,7 @@ class CreateUserAnswersTable extends Migration
             $table->boolean('is_correct')->default(0);
             $table->string('given_answer')->nullable();
             $table->integer('point')->default(0);
+            $table->integer('type')->default(1);
             $table->integer('coin')->default(0);
             $table->tinyInteger('status')->default(1);
             $table->timestamps();

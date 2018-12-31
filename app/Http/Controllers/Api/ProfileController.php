@@ -64,7 +64,7 @@ class ProfileController extends Controller
      */
     public function profileUpdate(Request $request)
     {
-        $data = ['success' => false, 'data' => [], 'message' => __('Something Went wrong.')];
+        $data = ['success' => false, 'message' => __('Something Went wrong.')];
         $rules=[
             'name' => 'required',
         ];

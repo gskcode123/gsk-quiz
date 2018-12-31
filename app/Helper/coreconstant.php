@@ -1,8 +1,13 @@
 <?php
 
 
-//Default Coin
-const COIN_DEFAULT =1;
+//Answer
+const ANSWER_TRUE =1;
+const ANSWER_FALSE =0;
+
+//Question type
+const MULTIPLE_ANSWER =1;
+const TEXT_ANSWER =2;
 
 // Wallet
 const WALLET_IS_PRIMARY=1;

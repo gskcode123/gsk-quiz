@@ -2,6 +2,7 @@
 
 use App\Model\AdminSetting;
 use App\Model\Question;
+use App\Model\QuestionOption;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
@@ -265,6 +266,18 @@ if (!function_exists('count_question')) {
         $qs = Question::where(['status' => 1, 'category_id' => $cat_id])->count();
 
         return $qs;
+    }
+}
+
+if (!function_exists('answers')) {
+    function answers($question_id)
+    {
+        $ans = '';
+        $answer = QuestionOption::where(['is_answer' => 1, 'question_id' => $question_id])->orderBy('id', 'ASC')->first();
+        if (isset($answer)) {
+            $ans = $answer->option_title;
+        }
+        return $ans;
     }
 }
 
