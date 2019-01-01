@@ -48,9 +48,9 @@
                                             <label>{{__('Language')}}</label>
                                             <div class="qz-question-category">
                                                 <select name="lang" class="form-control">
-                                                    <option>English</option>
-                                                    <option>Spanish</option>
-                                                    <option>Japanees</option>
+                                                    @foreach(language() as $val)
+                                                        <option @if(isset($adm_setting['lang']) && $adm_setting['lang']==$val) selected @endif value="{{$val}}">{{langName($val)}}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>

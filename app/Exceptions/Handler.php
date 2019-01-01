@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -48,6 +49,11 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if($exception instanceof ApiException) {
+//            return $this->unauthenticated();
+            return response()->json(['error' => 'Unauthenticated.'], 401);
+        }
         return parent::render($request, $exception);
     }
+    
 }

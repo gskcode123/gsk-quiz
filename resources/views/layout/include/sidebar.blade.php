@@ -14,6 +14,7 @@
             <li><a href="{{ route('qsCategoryList') }}"><span class="flaticon-menu"></span>{{__('Category')}} </a></li>
             <li><a href="{{ route('questionList') }}"><span class="flaticon-info"></span>{{__('Question')}} </a></li>
             <li><a href="{{ route('leaderBoard') }}"><span class="flaticon-statistics"></span>{{__('Leaderboard')}} </a></li>
+            <li><a href="{{ route('userList') }}"><span class="flaticon-user"></span>{{__('User Management')}} </a></li>
             <li><a href="{{ route('userProfile') }}"><span class="flaticon-user"></span>{{__('Profile')}} </a></li>
             <li><a href="{{ route('generalSetting') }}"><span class="flaticon-settings-work-tool"></span>{{__('Settings')}} </a></li>
         </ul>

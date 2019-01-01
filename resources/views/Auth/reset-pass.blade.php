@@ -1,59 +1,108 @@
-<!-- login area start -->
-<div class="login-area">
-    <div class="container">
-        <div class="login-box ptb--100">
-            {{ Form::open(['route' => ['forgetPasswordResetProcess', 'reset_code'=>$reset_code]]) }}
-            <div class="login-form-head">
-                <h4>Reset Password</h4>
-                <p></p>
-            </div>
-            <!-- start: status -->
-            <div class="error-success-message">
-                @if(Session::has('success'))
-                    <div class="alert-float alert alert-success alert-dismissable">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
-                        {{Session::get('success')}}
-                    </div>
-                @endif
 
-                @if(Session::has('dismiss'))
-                    <div class="alert-float alert alert-danger alert-dismissable">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
-                        {!! Session::get('dismiss') !!}
-                    </div>
-                @endif
 
-                @if(count($errors) > 0)
-                    <div class="alert-float alert alert-danger alert-dismissable">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
-                        <ul class="list-unstyled">
-                            @foreach($errors->all() as $error)
-                                <li>
-                                    {{ $error }}
-                                </li>
-                            @endforeach
-                        </ul>
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{{__('Reset Password')}}</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{asset('assets/css/bootstrap.min.css')}}">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{asset('assets/css/font-awesome.min.css')}}">
+    <!-- Owl Carousel -->
+    <link rel="stylesheet" href="{{asset('assets/css/owl.carousel.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/owl.theme.default.min.css')}}">
+    <!-- magnific popup -->
+    <link rel="stylesheet" href="{{asset('assets/css/magnific-popup.css')}}">
+    <!-- Swiper Slider -->
+    <link rel="stylesheet" href="{{asset('assets/vendors/swiper-master/css/swiper.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/iconfont/flaticon.css')}}">
+    <!-- font family -->
+    <link rel="stylesheet" href="{{asset('assets/css/proxima-nova.css')}}">
+    <!-- Site Style -->
+    <link rel="stylesheet" href="{{asset('assets/style.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/responsive.css')}}">
+    <!-- Modernizr Js -->
+    <script src="{{asset('assets/vendors/modernizr-js/modernizr.js')}}"></script>
+    <!--[if lt IE 8]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+</head>
+
+<body class="user-body">
+
+
+<!-- Start user area -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card">
+                    <div class="card-body">
+                        @include('layout.message')
                     </div>
-                @endif
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-lg-4 offset-lg-4">
+                            <div class="logo">
+                                <a href="#">
+                                    <img src="{{asset('assets/images/logo2.png')}}" alt="" class="img-fluid">
+                                </a>
+                            </div>
+                            <div class="qz-user-title">
+                                <h1>{{__('Reset Password')}}</h1>
+                            </div>
+
+                            {{ Form::open(['route' => ['forgetPasswordResetProcess', 'reset_code'=>$reset_code]]) }}                            {{csrf_field()}}
+                            <div class="form-group">
+                                <input type="password" class="form-control" name ="password" placeholder="New Password">                                <div class="qz-input-icon">
+                                    <span class="flaticon-lock"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="password" name="password_confirmation" class="form-control" placeholder=" Confirm Password">
+                                <div class="qz-input-icon">
+                                    <span class="flaticon-lock"></span>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">{{__('Submit')}}</button>
+                            {{ Form::close() }}
+                        </div>
+                    </div>
+                </div>
             </div>
-            <!-- end: status -->
-            <div class="login-form-body">
-                <div class="form-gp">
-                    <label for="exampleInputPassword1">New Password</label>
-                    <input type="password" id="exampleInputPassword1" name = "password">
-                    <i class="fa fa-lock"></i>
-                </div>
-                <div class="form-gp">
-                    <label for="exampleInputPassword2">Confirm Password</label>
-                    <input type="password" id="exampleInputPassword2" name ="password_confirmation">
-                    <i class="fa fa-lock"></i>
-                </div>
-                <div class="submit-btn-area">
-                    <button id="form_submit" type="submit">Submit <i class="ti-arrow-right"></i></button>
-                </div>
-            </div>
-            {{ Form::close() }}
         </div>
     </div>
 </div>
-<!-- login area end -->
+
+<!-- End user area -->
+
+
+
+<!-- Jquery plugins -->
+<script src="{{asset('assets/js/jquery.min.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<!-- Bootstrap -->
+<script src="{{asset('assets/js/bootstrap.min.js')}}"></script>
+<!-- Owl Carousel -->
+<script src="{{asset('assets/js/owl.carousel.min.js')}}"></script>
+<!-- Counterup -->
+<script src="{{asset('assets/js/waypoints.min.js')}}"></script>
+<script src="{{asset('assets/js/counterup.min.js')}}"></script>
+<!-- Slicknav -->
+<script src="{{asset('assets/js/metisMenu.min.js')}}"></script>
+<!-- magnific popup -->
+<script src="{{asset('assets/js/magnific-popup.min.js')}}"></script>
+<!-- Swiper Slider -->
+<script src="{{asset('assets/vendors/swiper-master/js/swiper.min.js')}}"></script>
+<!-- main js -->
+<script src="{{asset('assets/js/main.js')}}"></script>
+</body>
+
+</html>

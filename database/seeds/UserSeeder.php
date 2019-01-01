@@ -21,6 +21,7 @@ class UserSeeder extends Seeder
             'active_status'=>1,
             'email_verified'=>1,
             'reset_code' => md5('admin@email.com' . uniqid() . randomString(5)),
+            'language' => 'en'
         ]);
 
         User::create([
@@ -31,7 +32,7 @@ class UserSeeder extends Seeder
             'active_status'=>1,
             'email_verified'=>1,
             'reset_code' => md5('user@email.com' . uniqid() . randomString(5)),
-
+            'language' => 'en'
         ]);
     }
 }

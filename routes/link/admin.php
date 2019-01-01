@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['middleware' => ['auth','admin']], function() {
+Route::group(['middleware' => ['auth','admin','lang']], function() {
     Route::get('/', 'Admin\DashboardController@adminDashboardView')->name('adminDashboardView');
     Route::get('/search', 'Admin\DashboardController@qsSearch')->name('qsSearch');
 
@@ -20,6 +20,8 @@ Route::group(['middleware' => ['auth','admin']], function() {
     //User Management
     Route::get('user-list', 'Admin\UserController@userList')->name('userList');
     Route::get('user-details/{id}', 'Admin\UserController@userDetails')->name('userDetails');
+    Route::get('user-make-admin/{id}', 'Admin\UserController@userMakeAdmin')->name('userMakeAdmin');
+    Route::get('user-make-user/{id}', 'Admin\UserController@userMakeUser')->name('userMakeUser');
 
     //Question Category
     Route::get('question-category-list', 'Admin\CategoryController@qsCategoryList')->name('qsCategoryList');
@@ -27,6 +29,8 @@ Route::group(['middleware' => ['auth','admin']], function() {
     Route::post('question-category-save', 'Admin\CategoryController@qsCategorySave')->name('qsCategorySave');
     Route::get('question-category-edit/{id}', 'Admin\CategoryController@qsCategoryEdit')->name('qsCategoryEdit');
     Route::get('question-category-delete/{id}', 'Admin\CategoryController@qsCategoryDelete')->name('qsCategoryDelete');
+    Route::get('question-category-activate/{id}', 'Admin\CategoryController@qsCategoryActivate')->name('qsCategoryActivate');
+    Route::get('question-category-deactivate/{id}', 'Admin\CategoryController@qsCategoryDeactivate')->name('qsCategoryDeactivate');
 
     //Question
     Route::get('question-list', 'Admin\QuestionController@questionList')->name('questionList');
@@ -34,5 +38,7 @@ Route::group(['middleware' => ['auth','admin']], function() {
     Route::post('question-save', 'Admin\QuestionController@questionSave')->name('questionSave');
     Route::get('question-edit/{id}', 'Admin\QuestionController@questionEdit')->name('questionEdit');
     Route::get('question-delete/{id}', 'Admin\QuestionController@questionDelete')->name('questionDelete');
+    Route::get('question-activate/{id}', 'Admin\QuestionController@questionActivate')->name('questionActivate');
+    Route::get('question-deactivate/{id}', 'Admin\QuestionController@questionDectivate')->name('questionDectivate');
 
 });

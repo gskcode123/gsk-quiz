@@ -162,4 +162,44 @@ class CategoryController extends Controller
             return redirect()->back()->with(['success'=>__('Category not found')]);
         }
     }
+
+    /*
+     * qsCategoryActivate
+     *
+     * Activate the question category
+     *
+     *
+     *
+     *
+     */
+
+    public function qsCategoryActivate($id) {
+        $affected_row = Category::where('id', $id)
+            ->update(['status' => STATUS_ACTIVE]);
+
+        if (!empty($affected_row)) {
+            return redirect()->back()->with('success', 'Activated successfully.');
+        }
+        return redirect()->back()->with('dismiss', 'Operation failed !');
+    }
+
+    /*
+     * qsCategoryDeactivate
+     *
+     * Deactivate the question category
+     *
+     *
+     *
+     *
+     */
+
+    public function qsCategoryDeactivate($id) {
+        $affected_row = Category::where('id', $id)
+            ->update(['status' => STATUS_INACTIVE]);
+
+        if (!empty($affected_row)) {
+            return redirect()->back()->with('success', 'Deactivated successfully.');
+        }
+        return redirect()->back()->with('dismiss', 'Operation failed !');
+    }
 }

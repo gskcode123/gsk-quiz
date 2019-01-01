@@ -160,72 +160,72 @@ class QuestionController extends Controller
      *
      */
 
-    public function singleQuestion($id)
-    {
-        try {
-            $id = decrypt($id);
-        } catch (\Exception $e) {
-            $data = [
-                'success' => false,
-                'message' => __('Invalid Category id')
-            ];
-
-            return response()->json($data);
-        }
-        $data = ['success' => false, 'data' => [], 'message' => __('Something went wrong')];
-
-//        $question = Question::join('user_answers', 'user_answers.question_id', '=', 'questions.id')
-//            ->where(['questions.id' => $id, 'questions.status'=> STATUS_ACTIVE])
-//            ->whereNotIn('user_answers.question_id',[$id])
-//            ->whereNotIn('user_answers.user_id',[Auth::user()->id])
-//            ->first();
-        $question = Question::where(['questions.id' => $id, 'questions.status'=> STATUS_ACTIVE])->first();
-//        dd($id,$question);
-        $answers = QuestionOption::where('question_id', $id)->get();
-
-        if (isset($question) && isset($answers)) {
-            $list = [
-                'category' => $question->qsCategory->name,
-                'category_id' => $question->qsCategory->id,
-                'id' => $question->id,
-                'question_id' => encrypt($question->id),
-                'title' => $question->title,
-                'type' => $question->type,
-                'image' => asset(path_question_image() . $question->image),
-                'point' => $question->point,
-                'coin' => $question->coin,
-                'status' => $question->status,
-            ];
-
-            $timeLimit = Category::where('id', $question->category_id)->first()->time_limit;
-            $list['time_limit'] = isset($question->time_limit) ? $question->time_limit : $timeLimit;
-            foreach ($answers as $option) {
-                $item[] = [
-                    'id' => $option->id,
-                    'option_title' => $option->option_title
-                ];
-            }
-            $insert = UserAnswer::create([
-                'user_id' => Auth::user()->id,
-                'category_id' => $question->qsCategory->id,
-                'question_id' => $question->id,
-                'type' => $question->type,
-                'status' => 0
-            ]);
-            $data = [
-                'success' => true,
-                'question' => $list,
-                'options' => $item
-            ];
-        } else {
-            $data = [
-                'success' => false,
-                'message' => __('No data found')
-            ];
-        }
-
-        return response()->json($data);
-    }
+//    public function singleQuestion($id)
+//    {
+//        try {
+//            $id = decrypt($id);
+//        } catch (\Exception $e) {
+//            $data = [
+//                'success' => false,
+//                'message' => __('Invalid Category id')
+//            ];
+//
+//            return response()->json($data);
+//        }
+//        $data = ['success' => false, 'data' => [], 'message' => __('Something went wrong')];
+//
+////        $question = Question::join('user_answers', 'user_answers.question_id', '=', 'questions.id')
+////            ->where(['questions.id' => $id, 'questions.status'=> STATUS_ACTIVE])
+////            ->whereNotIn('user_answers.question_id',[$id])
+////            ->whereNotIn('user_answers.user_id',[Auth::user()->id])
+////            ->first();
+//        $question = Question::where(['questions.id' => $id, 'questions.status'=> STATUS_ACTIVE])->first();
+////        dd($id,$question);
+//        $answers = QuestionOption::where('question_id', $id)->get();
+//
+//        if (isset($question) && isset($answers)) {
+//            $list = [
+//                'category' => $question->qsCategory->name,
+//                'category_id' => $question->qsCategory->id,
+//                'id' => $question->id,
+//                'question_id' => encrypt($question->id),
+//                'title' => $question->title,
+//                'type' => $question->type,
+//                'image' => asset(path_question_image() . $question->image),
+//                'point' => $question->point,
+//                'coin' => $question->coin,
+//                'status' => $question->status,
+//            ];
+//
+//            $timeLimit = Category::where('id', $question->category_id)->first()->time_limit;
+//            $list['time_limit'] = isset($question->time_limit) ? $question->time_limit : $timeLimit;
+//            foreach ($answers as $option) {
+//                $item[] = [
+//                    'id' => $option->id,
+//                    'option_title' => $option->option_title
+//                ];
+//            }
+//            $insert = UserAnswer::create([
+//                'user_id' => Auth::user()->id,
+//                'category_id' => $question->qsCategory->id,
+//                'question_id' => $question->id,
+//                'type' => $question->type,
+//                'status' => 0
+//            ]);
+//            $data = [
+//                'success' => true,
+//                'question' => $list,
+//                'options' => $item
+//            ];
+//        } else {
+//            $data = [
+//                'success' => false,
+//                'message' => __('No data found')
+//            ];
+//        }
+//
+//        return response()->json($data);
+//    }
 
     /*
      * submitAnswer
@@ -252,7 +252,7 @@ class QuestionController extends Controller
 
         $validator = Validator::make($request->all(), [
             'answer' => 'required',
-            'time_limit' => 'required',
+//            'time_limit' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -266,8 +266,15 @@ class QuestionController extends Controller
             return response()->json($data);
         }
         try {
+            $rightAnswer = [];
+            $correctAnswer = QuestionOption::where(['question_id'=> $id, 'is_answer' => ANSWER_TRUE])->first();
+            if(isset($correctAnswer)) {
+                $rightAnswer = [
+                    'option_id' => $correctAnswer->id,
+                    'option_title' => $correctAnswer->option_title,
+                ];
+            }
             $question = Question::where(['id' => $id])->first();
-//            $userAnswer = UserAnswer::where(['question_id' => $id, 'user_id' => Auth::user()->id])->first();
             $option = QuestionOption::where(['id'=> $request->answer, 'question_id'=> $id])->first();
 //            dd($question);
             $input =[
@@ -296,6 +303,7 @@ class QuestionController extends Controller
                             $data = [
                                 'success' => false,
                                 'message' => __('Wrong Answer'),
+                                'right_answer' => $rightAnswer
                             ];
                         }
                     }
@@ -308,10 +316,18 @@ class QuestionController extends Controller
             } else {
                 $data = [
                     'success' => false,
-                    'message' => __('Wrong Answer')
+                    'message' => __('Wrong Answer'),
+                    'right_answer' => $rightAnswer
                 ];
             }
-            $insert = UserAnswer::create($input);
+            $userAnswer = UserAnswer::where(['question_id' => $id, 'user_id' => Auth::user()->id])->first();
+
+            if ($userAnswer) {
+                $userAnswer->update($input);
+            } else {
+                $insert = UserAnswer::create($input);
+            }
+
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,

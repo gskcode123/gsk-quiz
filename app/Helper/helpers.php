@@ -3,8 +3,10 @@
 use App\Model\AdminSetting;
 use App\Model\Question;
 use App\Model\QuestionOption;
+use App\Model\UserAnswer;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image;
 
 function allsetting($a = null)
@@ -278,6 +280,58 @@ if (!function_exists('answers')) {
             $ans = $answer->option_title;
         }
         return $ans;
+    }
+}
+
+if (!function_exists('calculate_ranking')) {
+    function calculate_ranking($user_id)
+    {
+        $scores = UserAnswer::select(
+            DB::raw('user_id, SUM(point) as score'))
+            ->groupBy('user_id')
+            ->orderBy('score', 'DESC')
+            ->get();
+        if(isset($scores)) {
+            foreach ($scores as $score) {
+                $items[] = [
+                    'user_id' => $score->user_id,
+                    'score' => $score->score
+                ];
+            }
+            $ranking = array_search($user_id, array_column($items, 'user_id'));
+//dd($ranking);
+            if($ranking === false) {
+                $ranking= 0;
+            } else {
+                $ranking = $ranking+1;;
+            }
+        } else {
+            $ranking = 0;
+        }
+
+        return $ranking;
+    }
+}
+
+if (!function_exists('calculate_score')) {
+    function calculate_score($user_id)
+    {
+        $score = 0;
+        $scores = UserAnswer::select(
+            DB::raw('SUM(point) as score'))
+            ->where('user_id',$user_id)
+            ->first();
+        if(isset($scores)) {
+            if ($scores->score > 0) {
+                $score = $scores->score;
+            } else {
+                $score = 0;
+            }
+        } else {
+            $score = 0;
+        }
+
+        return $score;
     }
 }
 

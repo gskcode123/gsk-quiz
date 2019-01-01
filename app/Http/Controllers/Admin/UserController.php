@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -19,8 +21,10 @@ class UserController extends Controller
 
     public function userList()
     {
-        $data['pageTitle'] = __('Admin|User List');
-        return view('admin.', $data);
+        $data['pageTitle'] = __('User List');
+        $data['users'] = User::where('id','<>', Auth::user()->id)->orderBy('id', 'desc')->get();
+
+        return view('admin.user.list', $data);
     }
     /*
      * userDetails
@@ -33,7 +37,49 @@ class UserController extends Controller
      */
     public function userDetails($id)
     {
-        $data['pageTitle'] = __('Admin|User Details');
-        return view('admin.', $data);
+        $data['pageTitle'] = __('User Details');
+        $data['user'] = User::where('id', $id)->first();
+
+        return view('admin.user.user-profile', $data);
+    }
+
+    /*
+     * userMakeAdmin
+     *
+     * Make the user to admin
+     *
+     *
+     *
+     *
+     */
+
+    public function userMakeAdmin($id) {
+        $affected_row = User::where('id', $id)
+            ->update(['role' => USER_ROLE_ADMIN]);
+
+        if (!empty($affected_row)) {
+            return redirect()->back()->with('success', 'Made Admin successfully.');
+        }
+        return redirect()->back()->with('dismiss', 'Operation failed !');
+    }
+
+    /*
+     * userMakeUser
+     *
+     * Make the user to General User
+     *
+     *
+     *
+     *
+     */
+
+    public function userMakeUser($id) {
+        $affected_row = User::where('id', $id)
+            ->update(['role' => USER_ROLE_USER]);
+
+        if (!empty($affected_row)) {
+            return redirect()->back()->with('success', 'Made user successfully.');
+        }
+        return redirect()->back()->with('dismiss', 'Operation failed !');
     }
 }

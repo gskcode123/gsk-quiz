@@ -128,6 +128,7 @@ class CommonService
                     'active_status' => STATUS_SUCCESS,
                     'email_verified' => STATUS_PENDING,
                     'reset_code' => md5($request->get('email') . uniqid() . randomString(5)),
+                    'language' => 'en'
                 ]);
                 UserVerificationCode::create(
                     ['user_id' => $user->id,

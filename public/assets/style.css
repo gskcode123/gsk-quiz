@@ -592,6 +592,7 @@ table.table.category-table tbody td {
     text-transform: capitalize;
     margin-top: 40px;
     margin-bottom: 15px;
+    font-size: 30px;
 }
 .user-body .card h5{
     color: #838383;
@@ -690,3 +691,36 @@ table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>th:first-child:before 
     transform: translateY(-50%);
 }
 /*==================== (05). End Data table ====================*/
+/*.qz-topbar {*/
+    /*position: fixed;*/
+    /*width: 100%;*/
+    /*z-index: 999;*/
+/*}*/
+
+button.btn.btn-primary.btn-block.add-category-btn.mt-4 {
+    margin-top: 40px!important;
+}
+.user-details-info li{
+    padding: 5px 10px;
+    border:1px solid #e5e5e5;
+    margin-top: -1px;
+    font-size: 16px;
+}
+.user-details-info li div.col-md-4{
+    font-weight: 600;
+}
+
+.card .alert button.close {
+    width: inherit !important;
+    height: 30px !important;
+    line-height: 30px !important;
+}
+
+.card > .card{
+    padding-bottom: 0;
+}
+
+.card .alert{
+    margin-bottom: 0;
+    margin-top: 5rem;
+}

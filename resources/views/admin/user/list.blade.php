@@ -17,13 +17,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="d-flex justify-content-between">
-                        <h2>{{__('Category')}}</h2>
-                        <div class="d-flex align-items-center">
-                            <a href="{{route('qsCategoryCreate')}}" class="btn btn-primary px-3">{{__('Add New')}}</a>
-                            <span class="sidebarToggler ml-4">
-                                <i class="fa fa-bars d-lg-none d-block"></i>
-                            </span>
-                        </div>
+                        <h2>{{__('User List')}}</h2>
                     </div>
                 </div>
             </div>
@@ -43,38 +37,37 @@
                                 <thead>
                                 <tr>
                                     <th class="all">{{__('SL.')}}</th>
-                                    <th class="teblet">{{__('Title')}}</th>
-                                    <th class="desktop">{{__('Questions')}}</th>
-                                    <th class="desktop">{{__('Priority')}}</th>
+                                    <th class="teblet">{{__('Name')}}</th>
+                                    <th class="desktop">{{__('Email')}}</th>
+                                    <th class="desktop">{{__('Role')}}</th>
                                     <th class="desktop">{{__('Added On')}}</th>
                                     <th class="teblet">{{__('Status')}}</th>
                                     <th class="all">{{__('Action')}}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @if(isset($categories))
+                                @if(isset($users))
                                     @php ($sl = 1)
-                                    @foreach($categories as $item)
+                                    @foreach($users as $item)
                                 <tr>
                                     <td>{{ $sl++ }}</td>
                                     <td>{{ $item->name }}</td>
-                                    <td>{{ count_question($item->id) }}</td>
-                                    <td>{{ $item->serial }}</td>
+                                    <td>{{ $item->email }}</td>
+                                    <td>{{ role($item->role) }}</td>
                                     <td>{{ date('d M y', strtotime($item->created_at)) }}</td>
-                                    <td><span @if($item->status == 1) class="text-success" @else class="text-danger" @endif>{{ statusType($item->status) }}</span></td>
+                                    <td><span @if($item->active_status == 1) class="text-success" @else class="text-danger" @endif>{{ statusAction($item->active_status) }}</span></td>
                                     <td>
                                         <ul class="d-flex justify-content-center">
-                                            <a href="{{ route('qsCategoryEdit', $item->id) }}"><li class="qz-edit"><span class="flaticon-pencil"></span></li></a>
-                                            @if($item->status == STATUS_INACTIVE)
-                                                <a href="{{ route('qsCategoryActivate', $item->id) }}" data-toggle="tooltip" title="Activate">
-                                                    <li class="ml-2 qz-edit"><span class="flaticon-check-mark"></span></li>
-                                                </a>
-                                            @else
-                                                <a href="{{ route('qsCategoryDeactivate', $item->id) }}" data-toggle="tooltip" title="Dectivate">
+                                            <a href="{{ route('userDetails', $item->id) }}"><li class="qz-edit"><span class="flaticon-pencil"></span></li></a>
+                                            @if($item->role == USER_ROLE_USER)
+                                                <a href="{{ route('userMakeAdmin', $item->id) }}" data-toggle="tooltip" title="Make Admin">
                                                     <li class="ml-2 qz-check"><span class="flaticon-check-mark"></span></li>
                                                 </a>
+                                            @else
+                                                <a href="{{ route('userMakeUser', $item->id) }}" data-toggle="tooltip" title="Make User">
+                                                    <li class="ml-2 qz-edit"><span class="flaticon-check-mark"></span></li>
+                                                </a>
                                             @endif
-                                            <a href="{{ route('qsCategoryDelete', $item->id) }}" onclick="return confirm('Are you sure to delete this ?');"><li class="ml-2 qz-close"><span class="flaticon-error"></span></li></a>
                                         </ul>
                                     </td>
                                 </tr>

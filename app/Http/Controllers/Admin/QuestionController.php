@@ -188,5 +188,46 @@ class QuestionController extends Controller
             return redirect()->back()->with('success', __('Question Deleted successfully'));
         } else {
             return redirect()->back()->with('dismiss', __('Something went wrong!'));
-        }    }
+        }
+    }
+
+    /*
+     * questionActivate
+     *
+     * Activate the question
+     *
+     *
+     *
+     *
+     */
+
+    public function questionActivate($id) {
+        $affected_row = Question::where('id', $id)
+            ->update(['status' => STATUS_ACTIVE]);
+
+        if (!empty($affected_row)) {
+            return redirect()->back()->with('success', 'Activated successfully.');
+        }
+        return redirect()->back()->with('dismiss', 'Operation failed !');
+    }
+
+    /*
+     * questionDectivate
+     *
+     * Deactivate the question
+     *
+     *
+     *
+     *
+     */
+
+    public function questionDectivate($id) {
+        $affected_row = Question::where('id', $id)
+            ->update(['status' => STATUS_INACTIVE]);
+
+        if (!empty($affected_row)) {
+            return redirect()->back()->with('success', 'Deactivated successfully.');
+        }
+        return redirect()->back()->with('dismiss', 'Operation failed !');
+    }
 }

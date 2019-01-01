@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Exceptions\ApiException;
 use App\Model\UserVerificationCode;
 use App\Services\MailService;
 use App\User;
@@ -150,6 +151,7 @@ class AuthController extends Controller
             'active_status' => STATUS_SUCCESS,
             'email_verified' => STATUS_PENDING,
             'reset_code' => md5($request->get('email') . uniqid() . randomString(5)),
+            'language' => 'en'
         ]);
 
         UserVerificationCode::create([

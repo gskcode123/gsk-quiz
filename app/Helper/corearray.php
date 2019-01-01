@@ -54,7 +54,7 @@ function statusAction($input = null)
         STATUS_PENDING => __('Pending'),
         STATUS_SUCCESS => __('Active'),
         STATUS_FINISHED => __('Finished'),
-        STATUS_SUSPENDED => __('Suspended'),
+        STATUS_SUSPENDED => __('Deactive'),
         STATUS_REJECT => __('Rejected'),
         STATUS_DELETED => __('Deleted'),
     ];
