@@ -45,6 +45,9 @@ class SettingController extends Controller
             if (isset($request->lang)) {
                 AdminSetting::where(['slug' => 'lang'])->update(['value' => $request->lang]);
             }
+            if (isset($request->user_registration)) {
+                AdminSetting::where(['slug' => 'user_registration'])->update(['value' => $request->user_registration]);
+            }
             if (isset($request->app_title)) {
                 AdminSetting::where(['slug' => 'app_title'])->update(['value' => $request->app_title]);
             }

@@ -12,6 +12,15 @@ use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
+    /*
+     * adminDashboardView
+     *
+     * Basic view of admin dashboard
+     *
+     *
+     *
+     *
+     */
     public function adminDashboardView()
     {
         $data['pageTitle'] = __('Admin|Dashboard');
@@ -30,6 +39,15 @@ class DashboardController extends Controller
         return view('admin.dashboard', $data);
     }
 
+    /*
+     * leaderBoard
+     *
+     * Leader board who have attend the quiz
+     * And show their score and ranking
+     *
+     *
+     *
+     */
     public function leaderBoard()
     {
         $data['pageTitle'] = __('Leader Board');
@@ -41,6 +59,16 @@ class DashboardController extends Controller
 
         return view('admin.leaderboard', $data);
     }
+
+    /*
+     * qsSearch
+     *
+     * Search the question in any page
+     *
+     *
+     *
+     *
+     */
 
     public function qsSearch(Request $request)
     {

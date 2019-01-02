@@ -16,7 +16,7 @@
 //});
 
 //userSignUp
-Route::get('/signup','AuthController@userSignUp')->name('userSignUp');
+Route::get('/signup','AuthController@userSignUp')->name('userSignUp')->middleware('registration');
 Route::post('/save','AuthController@userSave')->name('userSave');
 
 //userLogin

@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class QuestionController extends Controller
@@ -97,7 +98,7 @@ class QuestionController extends Controller
             ->select('questions.*')
             ->limit($limit)
             ->get();
-//        dd($availableQuestions);
+
         $lists = [];
         if (isset($availableQuestions)) {
             foreach ($availableQuestions as $question) {
@@ -124,7 +125,6 @@ class QuestionController extends Controller
 //                    'options' => $question->question_option->toArray()
                 ];
 
-//                dd($question->question_option->toArray());
             }
 
 
@@ -276,7 +276,7 @@ class QuestionController extends Controller
             }
             $question = Question::where(['id' => $id])->first();
             $option = QuestionOption::where(['id'=> $request->answer, 'question_id'=> $id])->first();
-//            dd($question);
+
             $input =[
                 'user_id' => Auth::user()->id,
                 'category_id' => $question->qsCategory->id,
@@ -338,4 +338,57 @@ class QuestionController extends Controller
 
         return response()->json($data);
     }
+
+    /*
+     * leaderBoard
+     *
+     * Leader board who have attend the quiz
+     * And show their score and ranking
+     *
+     *
+     *
+     */
+    public function leaderBoard()
+    {
+        $data = ['success' => false, 'data' => [], 'message' => __('Something Went wrong !')];
+        $leaders = UserAnswer::select(
+            DB::raw('SUM(point) as score, user_id'))
+            ->groupBy('user_id')
+            ->orderBy('score', 'DESC')
+            ->get();
+
+        $lists = [];
+        if (isset($leaders)) {
+            $rank = 1;
+            foreach ($leaders as $item) {
+
+                $lists[] = [
+                    'user_id' => $item->user_id,
+                    'photo' => asset(pathUserImage() . $item->user->photo),
+                    'name' => $item->user->name,
+                    'score' => $item->score,
+                    'ranking' => $rank++,
+                ];
+            }
+            if (!empty($lists)) {
+                $data = [
+                    'success' => true,
+                    'leaderList' => $lists,
+                ];
+            } else {
+                $data = [
+                    'success' => false,
+                    'message' => __('No data found')
+                ];
+            }
+        } else {
+            $data = [
+                'success' => false,
+                'message' => __('No data found')
+            ];
+        }
+
+        return response()->json($data);
+    }
+
 }

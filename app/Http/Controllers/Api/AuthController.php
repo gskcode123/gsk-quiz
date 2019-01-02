@@ -8,6 +8,7 @@ use App\Services\MailService;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -49,42 +50,49 @@ class AuthController extends Controller
         if (isset($user) && Hash::check($request->password, $user->password)) {
 
             $token = $user->createToken($request->email)->accessToken;
-            //Check email verification
-            if ($user->active_status == STATUS_SUCCESS) {
-                if ($user->email_verified == STATUS_SUCCESS) {
-                    $user->update();
+            if ($user->role == USER_ROLE_USER) {
+                //Check email verification
+                if ($user->active_status == STATUS_SUCCESS) {
+                    if ($user->email_verified == STATUS_SUCCESS) {
+                        $user->update();
 
-                    $data['success'] = true;
-                    $data['data'] = ['access_token' => $token, 'access_type' => "Bearer"];
-                    $data['message'] = __('Successfully Logged in');
+                        $data['success'] = true;
+                        $data['data'] = ['access_token' => $token, 'access_type' => "Bearer"];
+                        $data['message'] = __('Successfully Logged in');
 
-                } else {
-                    $mail_key = randomNumber(6);
-                    $mailService = app(MailService::class);
-                    UserVerificationCode::create(['user_id' => $user->id, 'code' => $mail_key, 'type' => 1, 'status' => STATUS_PENDING, 'expired_at' => date('Y-m-d', strtotime('+15 days'))]);
-                    $userName = $user->name;
-                    $userEmail = $user->email;
-                    $companyName = isset($default['company']) && !empty($default['company']) ? $default['company'] : __('Quiz Test');
-                    $subject = __('Email Verification | :companyName', ['companyName' => $companyName]);
-                    $data['data'] = $user;
-                    $data['key'] = $mail_key;
+                    } else {
+                        $mail_key = randomNumber(6);
+                        $mailService = app(MailService::class);
+                        UserVerificationCode::create(['user_id' => $user->id, 'code' => $mail_key, 'type' => 1, 'status' => STATUS_PENDING, 'expired_at' => date('Y-m-d', strtotime('+15 days'))]);
+                        $userName = $user->name;
+                        $userEmail = $user->email;
+                        $companyName = isset($default['company']) && !empty($default['company']) ? $default['company'] : __('Quiz Test');
+                        $subject = __('Email Verification | :companyName', ['companyName' => $companyName]);
+                        $data['data'] = $user;
+                        $data['key'] = $mail_key;
 
-                    $mailService->send('email.verifyapp', $data, $userEmail, $userName, $subject);
+                        $mailService->send('email.verifyapp', $data, $userEmail, $userName, $subject);
 
-                    $data['success'] = true;
-                    $data['data'] = ['access_token' => $token, 'access_type' => "Bearer"];
-                    $data['message'] = __('Your email is not verified. Please verify your email to get full access.');
+                        $data['success'] = true;
+                        $data['data'] = ['access_token' => $token, 'access_type' => "Bearer"];
+                        $data['message'] = __('Your email is not verified. Please verify your email to get full access.');
+                    }
+                } elseif ($user->active_status == STATUS_SUSPENDED) {
+                    $data['success'] = false;
+                    $data['message'] = __("Your Account has been suspended. please contact support team to active again");
+                } elseif ($user->active_status == STATUS_DELETED) {
+                    $data['success'] = false;
+                    $data['message'] = __("Your Account has been deleted. please contact support team to active again");
+                } elseif ($user->active_status == STATUS_PENDING) {
+                    $data['success'] = false;
+                    $data['message'] = __("Your Account has been Pending for admin approval. please contact support team to active again");
                 }
-            } elseif ($user->active_status == STATUS_SUSPENDED) {
-                $data['success'] = false;
-                $data['message'] = __("Your Account has been suspended. please contact support team to active again");
-            } elseif ($user->active_status == STATUS_DELETED) {
-                $data['success'] = false;
-                $data['message'] = __("Your Account has been deleted. please contact support team to active again");
-            } elseif ($user->active_status == STATUS_PENDING) {
-                $data['success'] = false;
-                $data['message'] = __("Your Account has been Pending for admin approval. please contact support team to active again");
             }
+            else {
+                $data['success'] = false;
+                $data['message'] = __("You are not authorised");
+            }
+
 
         } else {
             $data['success'] = false;

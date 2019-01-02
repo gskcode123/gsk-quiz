@@ -18,7 +18,7 @@ Route::post('registration','Api\AuthController@postRegistration');
 Route::post('send-reset-password-code','Api\AuthController@sendToken');
 Route::post('reset-password','Api\AuthController@resetPassword');
 
-Route::group(['middleware' =>['auth:api','api.lang', 'user'],'namespace'=>'Api'],function (){
+Route::group(['middleware' =>['auth:api','api.lang'],'namespace'=>'Api'],function (){
 
     //Profile
     Route::get('profile', 'ProfileController@profile');
@@ -34,5 +34,8 @@ Route::group(['middleware' =>['auth:api','api.lang', 'user'],'namespace'=>'Api']
     //Question
 //    Route::get('question/{id}', 'QuestionController@singleQuestion');
     Route::post('submit-answer/{id}', 'QuestionController@submitAnswer');
+
+    //Leader Board
+    Route::get('leader-board', 'QuestionController@leaderBoard');
 
 });

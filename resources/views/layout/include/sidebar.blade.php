@@ -3,7 +3,8 @@
 
     <div class="qz-logo">
         <a href="{{ route('adminDashboardView') }}">
-            <img src="{{asset('assets/images/logo.png')}}" alt="" class="img-fluid">
+            <img @if(!empty(allsetting('logo'))) src ="{{ asset(path_image().allsetting('logo')) }}"
+                 @else src="{{asset('assets/images/logo.png')}}" @endif alt="" class="img-fluid">
         </a>
     </div>
 

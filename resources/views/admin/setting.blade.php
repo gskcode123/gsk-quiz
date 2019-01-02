@@ -63,6 +63,17 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
+                                            <label>{{__('User Registration')}}</label>
+                                            <div class="qz-question-category">
+                                                <select name="user_registration" class="form-control">
+                                                    <option @if(isset($adm_setting['user_registration']) && $adm_setting['user_registration']== 1) selected @endif value="1">{{__('Enable')}}</option>
+                                                    <option @if(isset($adm_setting['user_registration']) && $adm_setting['user_registration']== 2) selected @endif value="2">{{__('Disable')}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
                                             <label>{{__('Primary Email')}}</label>
                                             <input type="text" name="primary_email" value ="@if(isset($adm_setting['primary_email'])) {{ $adm_setting['primary_email'] }} @endif" class="form-control" placeholder="">
                                         </div>
@@ -78,6 +89,14 @@
                                             <label>{{__('Company logo')}}</label>
                                             <input type="file" name="logo" class="d-block">
                                             <img @if(isset($adm_setting['logo'])) src ="{{ asset(path_image().$adm_setting['logo']) }}"
+                                                 @endif width="100" class="img-fluid" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>{{__('Login logo')}}</label>
+                                            <input type="file" name="login_logo" class="d-block">
+                                            <img @if(isset($adm_setting['login_logo'])) src ="{{ asset(path_image().$adm_setting['login_logo']) }}"
                                                  @endif width="100" class="img-fluid" alt="">
                                         </div>
                                     </div>

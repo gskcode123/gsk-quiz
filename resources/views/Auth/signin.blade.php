@@ -51,7 +51,7 @@
                         <div class="col-lg-4 offset-lg-4">
                             <div class="logo">
                                 <a href="#">
-                                    <img src="{{asset('assets/images/logo2.png')}}" alt="" class="img-fluid">
+                                    <img @if(!empty(allsetting('login_logo'))) src ="{{ asset(path_image().allsetting('login_logo')) }}" @else src="{{asset('assets/images/logo2.png')}}" @endif  alt="" class="img-fluid">
                                 </a>
                             </div>
                             <div class="qz-user-title">

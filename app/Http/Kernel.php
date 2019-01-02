@@ -62,5 +62,6 @@ class Kernel extends HttpKernel
         'lang' => \App\Http\Middleware\Language::class,
         'api.lang' => \App\Http\Middleware\ApiLanguage::class,
         'user' => \App\Http\Middleware\User::class,
+        'registration' => \App\Http\Middleware\Registration::class,
     ];
 }
