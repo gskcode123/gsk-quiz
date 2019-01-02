@@ -64,7 +64,7 @@
                                     <td><span @if($item->status == 1) class="text-success" @else class="text-danger" @endif>{{ statusType($item->status) }}</span></td>
                                     <td>
                                         <ul class="d-flex justify-content-center">
-                                            <a href="{{ route('qsCategoryEdit', $item->id) }}"><li class="qz-edit"><span class="flaticon-pencil"></span></li></a>
+                                            <a href="{{ route('qsCategoryEdit', $item->id) }}" data-toggle="tooltip" title="Edit"><li class="qz-edit"><span class="flaticon-pencil"></span></li></a>
                                             @if($item->status == STATUS_INACTIVE)
                                                 <a href="{{ route('qsCategoryActivate', $item->id) }}" data-toggle="tooltip" title="Activate">
                                                     <li class="ml-2 qz-edit"><span class="flaticon-check-mark"></span></li>
@@ -74,7 +74,7 @@
                                                     <li class="ml-2 qz-check"><span class="flaticon-check-mark"></span></li>
                                                 </a>
                                             @endif
-                                            <a href="{{ route('qsCategoryDelete', $item->id) }}" onclick="return confirm('Are you sure to delete this ?');"><li class="ml-2 qz-close"><span class="flaticon-error"></span></li></a>
+                                            <a href="{{ route('qsCategoryDelete', $item->id) }}" data-toggle="tooltip" title="Delete" onclick="return confirm('Are you sure to delete this ?');"><li class="ml-2 qz-close"><span class="flaticon-error"></span></li></a>
                                         </ul>
                                     </td>
                                 </tr>

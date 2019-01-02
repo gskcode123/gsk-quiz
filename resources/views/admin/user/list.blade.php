@@ -58,7 +58,7 @@
                                     <td><span @if($item->active_status == 1) class="text-success" @else class="text-danger" @endif>{{ statusAction($item->active_status) }}</span></td>
                                     <td>
                                         <ul class="d-flex justify-content-center">
-                                            <a href="{{ route('userDetails', $item->id) }}"><li class="qz-edit"><span class="flaticon-pencil"></span></li></a>
+                                            <a href="{{ route('userDetails', $item->id) }}" data-toggle="tooltip" title="User Details"><li class="qz-edit"><span class="flaticon-pencil"></span></li></a>
                                             @if($item->role == USER_ROLE_USER)
                                                 <a href="{{ route('userMakeAdmin', $item->id) }}" data-toggle="tooltip" title="Make Admin">
                                                     <li class="ml-2 qz-check"><span class="flaticon-check-mark"></span></li>
