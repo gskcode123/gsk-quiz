@@ -31,32 +31,57 @@
                     <div class="row">
                         <div class="col-lg-6 offset-lg-3">
                             {{ Form::open(['route' => 'qsCategorySave', 'files' => 'true']) }}
-                                <div class="form-group">
-                                    <label>{{__('Title')}}</label>
+                                <div class="form-group {{ $errors->has('name') ? ' has-error' : '' }}">
+                                    <label>{{__('Title')}}<span class="text-danger">*</span></label>
                                     <input type="text" name="name" @if(isset($category)) value="{{$category->name}}" @else value="{{old('name')}}" @endif class="form-control" placeholder="Title">
+                                    @if ($errors->has('name'))
+                                        <span class="text-danger">
+                                            <strong>{{ $errors->first('name') }}</strong>
+                                        </span>
+                                    @endif
                                 </div>
                                 <div class="form-group">
                                     <label>{{__('Description')}}</label>
                                     <textarea name="description" id="" rows="6" class="form-control">@if(isset($category)){{$category->description}}@else{{old('description')}}@endif</textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label>{{__('Question limit')}}</label>
+                                    <label>{{__('Question limit')}}<span class="text-danger">*</span></label>
                                     <input type="text" @if(isset($category)) value="{{$category->max_limit}}" @else value="{{old('max_limit')}}" @endif name="max_limit" class="form-control" placeholder="Question Limit for category">
+                                    @if ($errors->has('max_limit'))
+                                        <span class="text-danger">
+                                            <strong>{{ $errors->first('max_limit') }}</strong>
+                                        </span>
+                                    @endif
                                 </div>
                                 <div class="form-group">
-                                    <label>{{__('Quize limit')}}</label>
+                                    <label>{{__('Quize limit')}}<span class="text-danger">*</span></label>
                                     <input type="text" @if(isset($category)) value="{{$category->qs_limit}}" @else value="{{old('qs_limit')}}" @endif name="qs_limit" class="form-control" placeholder="Question limit for per Quiz test">
+                                    @if ($errors->has('qs_limit'))
+                                        <span class="text-danger">
+                                            <strong>{{ $errors->first('qs_limit') }}</strong>
+                                        </span>
+                                    @endif
                                 </div>
                                 <div class="form-group">
-                                    <label>{{__('Time limit')}}</label>
+                                    <label>{{__('Time limit')}}<span class="text-danger">*</span></label>
                                     <input type="text" @if(isset($category)) value="{{$category->time_limit}}" @else value="{{old('time_limit')}}" @endif name="time_limit" class="form-control" placeholder="Time limit(in minute) for per question in category">
+                                    @if ($errors->has('time_limit'))
+                                        <span class="text-danger">
+                                            <strong>{{ $errors->first('time_limit') }}</strong>
+                                        </span>
+                                    @endif
                                 </div>
                                 <div class="form-group">
-                                    <label>{{__('Serial')}}</label>
+                                    <label>{{__('Serial')}}<span class="text-danger">*</span></label>
                                     <input type="text" @if(isset($category)) value="{{$category->serial}}" @else value="{{old('serial')}}" @endif name="serial" class="form-control" placeholder="Priority">
+                                    @if ($errors->has('serial'))
+                                        <span class="text-danger">
+                                            <strong>{{ $errors->first('serial') }}</strong>
+                                        </span>
+                                    @endif
                                 </div>
                                 <div class="form-group">
-                                    <label>{{__('Activation Status')}}</label>
+                                    <label>{{__('Activation Status')}}<span class="text-danger">*</span></label>
                                     <div class="qz-question-category">
                                         <select name="status" class="form-control">
                                             @foreach(active_statuses() as $key => $value)

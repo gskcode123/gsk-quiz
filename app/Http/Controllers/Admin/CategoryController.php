@@ -63,7 +63,7 @@ class CategoryController extends Controller
         ];
 
         $messages = [
-            'name.required' => __('Name field can not be empty'),
+            'name.required' => __('Title field can not be empty'),
             'name.unique' => __('This Name already taken'),
             'serial.unique' => __('This Serial already taken'),
             'qs_limit.required' => __('Quiz Limit field can not be empty'),
@@ -106,9 +106,9 @@ class CategoryController extends Controller
             } else {
                 $insert = Category::create($data);
                 if ($insert) {
-                    return redirect()->back()->with('success', __('Category Created Successfully'));
+                    return redirect()->route('qsCategoryList')->with('success', __('Category Created Successfully'));
                 } else {
-                    return redirect()->back()->with('dismiss', __('Save Failed'));
+                    return redirect()->route('qsCategoryList')->with('dismiss', __('Save Failed'));
                 }
             }
 

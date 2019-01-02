@@ -36,6 +36,11 @@
                                         <div class="form-group">
                                             <label>{{__('Question')}} <span class="text-danger">*</span></label>
                                             <input type="text" name="title" @if(isset($question)) value="{{ $question->title }}" @else value="{{ old('title') }}" @endif class="form-control" placeholder="Question">
+                                            @if ($errors->has('title'))
+                                                <span class="text-danger">
+                                                    <strong>{{ $errors->first('title') }}</strong>
+                                                </span>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -49,9 +54,14 @@
                                                         <option value="">{{__('Select Category')}}</option>
                                                         @foreach($categories as $category)
                                                             <option @if(isset($question) && ($question->category_id == $category->id)) selected
-                                                                    @elseif((old('category_id') != null) && (old('category_id') == $category->id)) @endif value="{{$category->id}}">{{$category->name}}</option>
+                                                                    @elseif((old('category_id') != null) && (old('category_id') == $category->id)) selected @endif value="{{$category->id}}">{{$category->name}}</option>
                                                         @endforeach
                                                     </select>
+                                                @endif
+                                                @if ($errors->has('category_id'))
+                                                    <span class="text-danger">
+                                                        <strong>{{ $errors->first('category_id') }}</strong>
+                                                    </span>
                                                 @endif
                                             </div>
                                         </div>
@@ -64,9 +74,14 @@
                                                     <option value="">{{__('Select Type')}}</option>
                                                     @foreach(question_type() as $key => $value)
                                                         <option @if(isset($question) && ($question->type == $key)) selected
-                                                            @elseif((old('type') != null) && (old('type') == $key)) @endif value="{{ $key }}">{{$value}}</option>
+                                                            @elseif((old('type') != null) && (old('type') == $key)) selected @endif value="{{ $key }}">{{$value}}</option>
                                                     @endforeach
                                                 </select>
+                                                @if ($errors->has('type'))
+                                                    <span class="text-danger">
+                                                        <strong>{{ $errors->first('type') }}</strong>
+                                                    </span>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -76,12 +91,22 @@
                                         <div class="form-group">
                                             <label>{{__('Point')}} <span class="text-danger">*</span></label>
                                             <input type="text" @if(isset($question)) value="{{ $question->point }}" @else value="{{ old('point') }}" @endif name ="point" class="form-control" placeholder="Point">
+                                            @if ($errors->has('point'))
+                                                <span class="text-danger">
+                                                        <strong>{{ $errors->first('point') }}</strong>
+                                                </span>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>{{__('Time Limit')}}</label>
                                             <input type="text" @if(isset($question)) value="{{ $question->time_limit }}" @else value="{{ old('time_limit') }}" @endif name="time_limit" class="form-control" placeholder="Time limit in Minute">
+                                            @if ($errors->has('time_limit'))
+                                                <span class="text-danger">
+                                                    <strong>{{ $errors->first('time_limit') }}</strong>
+                                                </span>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -103,6 +128,11 @@
                                                                 @elseif((old('status') != null) && (old('status') == $key)) @endif value="{{ $key }}">{{$value}}</option>
                                                     @endforeach
                                                 </select>
+                                                @if ($errors->has('status'))
+                                                    <span class="text-danger">
+                                                        <strong>{{ $errors->first('status') }}</strong>
+                                                    </span>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -115,7 +145,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <div class="row" id="dynamic_field">
+                                        <div class="row" id="">
                                             <div class="col-lg-6">
                                                 <div class="form-group">
                                                     <label>{{__('Options')}}<span class="text-danger"></span></label>
@@ -131,7 +161,25 @@
                                                 <button type="button" class="btn btn-primary btn-block" name="add" id="add">{{__('Add More')}}</button>
                                             </div>
                                         </div>
-
+                                            @if(empty($qsOptions))
+                                            <div class="row" id="dynamic_field">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <input type="text" required name="options[]" class="form-control" placeholder="Answer">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div class="form-group">
+                                                        <div class="qz-question-category">
+                                                            <select name="ans_type[]" class="form-control" >
+                                                                <option value="0">{{__('Wrong')}}</option>
+                                                                <option value="1">{{__('Right')}}</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @endif
                                             @if(isset($qsOptions))
                                                 @php ($sl = 1)
                                                 @foreach($qsOptions as $opt)
@@ -158,25 +206,6 @@
                                                     </div>
                                                 </div>
                                                 @endforeach
-                                            @else
-                                            <div class="row" id="dynamic_field">
-                                                <div class="col-lg-6">
-                                                    <div class="form-group">
-                                                        <input type="text" required name="options[]" class="form-control" placeholder="Answer">
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-3">
-                                                    <div class="form-group">
-                                                        <div class="qz-question-category">
-                                                            <select name="ans_type[]" class="form-control" >
-                                                                <option value="0">{{__('Wrong')}}</option>
-                                                                <option value="1">{{__('Right')}}</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
                                             @endif
                                             <div class="row">
                                                 <div class="col-lg-4">
@@ -213,7 +242,7 @@
                 $('#dynamic_field').append(
                     '<div class="col-lg-6 dynamic-added" id="row'+i+'" >' +
                         '<div class="form-group">' +
-                            '<input type="text" name="options[]" placeholder="" class="form-control name_list" />' +
+                            '<input type="text" name="options[]" placeholder="Answer" class="form-control name_list" />' +
                         '</div>' +
                     '</div>' +
                     '<div class="col-lg-3 dynamic-added" id="rows'+i+'" >' +

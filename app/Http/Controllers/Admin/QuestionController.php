@@ -129,16 +129,16 @@ class QuestionController extends Controller
                     $types = $request->ans_type;
                     $size = sizeof($options);
                     for ($i = 0; $i < $size; $i++) {
-                        $insertOption = QuestionOption::update([
+                        $insertOption = QuestionOption::create([
                             'question_id' => $insert->id,
                             'option_title' => $options[$i],
                             'is_answer' => $types[$i]
                         ]);
 
                     }
-                    return redirect()->back()->with('success', __('Question Created Successfully'));
+                    return redirect()->route('questionList')->with('success', __('Question Created Successfully'));
                 } else {
-                    return redirect()->back()->with('dismiss', __('Save Failed'));
+                    return redirect()->route('questionList')->with('dismiss', __('Save Failed'));
                 }
             }
 
