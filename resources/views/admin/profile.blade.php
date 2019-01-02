@@ -76,6 +76,11 @@
                                     <div class="form-group">
                                         <label>{{__('Name')}}</label>
                                         <input type="text" name="name" value="{{$user->name}}" class="form-control" placeholder="">
+                                        @if ($errors->has('name'))
+                                            <span class="text-danger">
+                                            <strong>{{ $errors->first('name') }}</strong>
+                                        </span>
+                                        @endif
                                     </div>
                                     <div class="form-group">
                                         <label>{{__('Phone')}}</label>
