@@ -206,6 +206,8 @@
                                                     </div>
                                                 </div>
                                                 @endforeach
+                                            <div class="row" id="dynamic_field">
+                                            </div>
                                             @endif
                                             <div class="row">
                                                 <div class="col-lg-4">
