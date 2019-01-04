@@ -369,6 +369,9 @@ table td .people img{
 .category-table td ul li.qz-edit span:before{
     color: #FC9C2C;
 }
+.category-table td ul li.qz-details span:before{
+    color: #007bff;
+}
 .category-table td ul li.qz-check span:before{
     color: #27C24C;
 }
@@ -723,4 +726,7 @@ button.btn.btn-primary.btn-block.add-category-btn.mt-4 {
 .card .alert{
     margin-bottom: 0;
     margin-top: 5rem;
+}
+.userlist-image img{
+    margin-right: 10px;
 }

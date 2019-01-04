@@ -22,6 +22,7 @@ class UserController extends Controller
     public function userList()
     {
         $data['pageTitle'] = __('User List');
+        $data['menu'] = 'userlist';
         $data['users'] = User::where('id','<>', Auth::user()->id)->orderBy('id', 'desc')->get();
 
         return view('admin.user.list', $data);
@@ -38,6 +39,7 @@ class UserController extends Controller
     public function userDetails($id)
     {
         $data['pageTitle'] = __('User Details');
+        $data['menu'] = 'userlist';
         $data['user'] = User::where('id', $id)->first();
 
         return view('admin.user.user-profile', $data);

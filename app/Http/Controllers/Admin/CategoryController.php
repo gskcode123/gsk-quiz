@@ -21,6 +21,7 @@ class CategoryController extends Controller
     public function qsCategoryList()
     {
         $data['pageTitle'] = __('Category List');
+        $data['menu'] = 'category';
         $data['categories'] = Category::orderBy('serial', 'ASC')->get();
 
         return view('admin.category.list', $data);
@@ -39,6 +40,8 @@ class CategoryController extends Controller
     public function qsCategoryCreate()
     {
         $data['pageTitle'] = __('Add Category');
+        $data['menu'] = 'category';
+
         return view('admin.category.add', $data);
     }
 
@@ -132,9 +135,11 @@ class CategoryController extends Controller
     public function qsCategoryEdit($id)
     {
         $data['pageTitle'] = __('Edit Category');
+        $data['menu'] = 'category';
         if (!empty($id) && is_numeric($id)) {
             $data['category'] = Category::findOrFail($id);
         }
+
         return view('admin.category.add', $data);
     }
 
@@ -180,6 +185,7 @@ class CategoryController extends Controller
         if (!empty($affected_row)) {
             return redirect()->back()->with('success', 'Activated successfully.');
         }
+
         return redirect()->back()->with('dismiss', 'Operation failed !');
     }
 
@@ -200,6 +206,7 @@ class CategoryController extends Controller
         if (!empty($affected_row)) {
             return redirect()->back()->with('success', 'Deactivated successfully.');
         }
+
         return redirect()->back()->with('dismiss', 'Operation failed !');
     }
 }

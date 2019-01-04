@@ -24,6 +24,7 @@ class DashboardController extends Controller
     public function adminDashboardView()
     {
         $data['pageTitle'] = __('Admin|Dashboard');
+        $data['menu'] = 'dashboard';
         $data['totalQuestion'] = 0;
         $data['totalCategory'] = 0;
         $data['totalQuestion'] = Question::where('status', STATUS_ACTIVE)->count();
@@ -51,6 +52,7 @@ class DashboardController extends Controller
     public function leaderBoard()
     {
         $data['pageTitle'] = __('Leader Board');
+        $data['menu'] = 'leaderboard';
         $data['leaders'] = UserAnswer::select(
             DB::raw('SUM(point) as score, user_id'))
             ->groupBy('user_id')

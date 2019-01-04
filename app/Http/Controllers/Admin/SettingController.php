@@ -21,6 +21,7 @@ class SettingController extends Controller
     public function generalSetting()
     {
         $data['pageTitle'] = __('General Setting');
+        $data['menu'] = 'setting';
         $data['adm_setting'] = allsetting();
 
         return view('admin.setting', $data);

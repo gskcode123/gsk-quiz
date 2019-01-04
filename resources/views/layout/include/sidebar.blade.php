@@ -11,13 +11,13 @@
     <nav>
 
         <ul id="metismenu">
-            <li class="mm-active"><a href="{{ route('adminDashboardView') }}"><span class="flaticon-dashboard"></span>{{__('Dashboard')}} </a></li>
-            <li><a href="{{ route('qsCategoryList') }}"><span class="flaticon-menu"></span>{{__('Category')}} </a></li>
-            <li><a href="{{ route('questionList') }}"><span class="flaticon-info"></span>{{__('Question')}} </a></li>
-            <li><a href="{{ route('leaderBoard') }}"><span class="flaticon-statistics"></span>{{__('Leaderboard')}} </a></li>
-            <li><a href="{{ route('userList') }}"><span class="flaticon-user"></span>{{__('User Management')}} </a></li>
-            <li><a href="{{ route('userProfile') }}"><span class="flaticon-user"></span>{{__('Profile')}} </a></li>
-            <li><a href="{{ route('generalSetting') }}"><span class="flaticon-settings-work-tool"></span>{{__('Settings')}} </a></li>
+            <li class="@if(isset($menu) && $menu == 'dashboard') qz-active @endif"><a href="{{ route('adminDashboardView') }}"><span class="flaticon-dashboard"></span>{{__('Dashboard')}} </a></li>
+            <li class="@if(isset($menu) && $menu == 'category') qz-active @endif"><a href="{{ route('qsCategoryList') }}"><span class="flaticon-menu"></span>{{__('Category')}} </a></li>
+            <li class="@if(isset($menu) && $menu == 'question') qz-active @endif"><a href="{{ route('questionList') }}"><span class="flaticon-info"></span>{{__('Question')}} </a></li>
+            <li class="@if(isset($menu) && $menu == 'leaderboard') qz-active @endif"><a href="{{ route('leaderBoard') }}"><span class="flaticon-statistics"></span>{{__('Leaderboard')}} </a></li>
+            <li class="@if(isset($menu) && $menu == 'userlist') qz-active @endif"><a class="userlist-image" href="{{ route('userList') }}"><img src={{asset('assets/images/friend.jpg')}}>{{__('User Management')}} </a></li>
+            <li class="@if(isset($menu) && $menu == 'profile') qz-active @endif"><a href="{{ route('userProfile') }}"><span class="flaticon-user"></span>{{__('Profile')}} </a></li>
+            <li class="@if(isset($menu) && $menu == 'setting') qz-active @endif"><a href="{{ route('generalSetting') }}"><span class="flaticon-settings-work-tool"></span>{{__('Settings')}} </a></li>
         </ul>
 
     </nav>

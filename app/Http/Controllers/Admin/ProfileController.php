@@ -23,6 +23,7 @@ class ProfileController extends Controller
     public function userProfile()
     {
         $data['pageTitle'] = __('Profile');
+        $data['menu'] = 'profile';
         $data['user'] = User::where('id', Auth::user()->id)->first();
 
         return view('admin.profile', $data);
@@ -41,6 +42,7 @@ class ProfileController extends Controller
     public function passwordChange()
     {
         $data['pageTitle'] = __('Change Password');
+        $data['menu'] = 'profile';
         $data['user'] = User::where('id', Auth::user()->id)->first();
 
         return view('admin.change-password', $data);

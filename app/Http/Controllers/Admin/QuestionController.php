@@ -23,6 +23,7 @@ class QuestionController extends Controller
     public function questionList()
     {
         $data['pageTitle'] = __('Question List');
+        $data['menu'] = 'question';
         $data['items'] = Question::orderBy('id', 'DESC')->get();
 
         return view('admin.question.list', $data);
@@ -41,6 +42,7 @@ class QuestionController extends Controller
     public function questionCreate()
     {
         $data['pageTitle'] = __('Add Question');
+        $data['menu'] = 'question';
         $data['categories'] = Category::where('status', STATUS_ACTIVE)->orderBy('id','ASC')->get();
 
         return view('admin.question.add', $data);
@@ -160,6 +162,7 @@ class QuestionController extends Controller
     public function questionEdit($id)
     {
         $data['pageTitle'] = __('Edit Question');
+        $data['menu'] = 'question';
         $data['categories'] = Category::where('status', STATUS_ACTIVE)->orderBy('id','ASC')->get();
 
         if (!empty($id) && is_numeric($id)) {
