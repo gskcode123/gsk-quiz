@@ -327,6 +327,7 @@ class QuestionController extends Controller
             } else {
                 $insert = UserAnswer::create($input);
             }
+            $data['score'] = calculate_score( Auth::user()->id);
 
         } catch (\Exception $e) {
             return response()->json([

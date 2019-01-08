@@ -7,6 +7,7 @@ use App\Repository\UserRepository;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -25,20 +26,30 @@ class ProfileController extends Controller
 
     public function profile()
     {
-        $scores = UserAnswer::select(
-            DB::raw('user_id, SUM(point) as score'))
-            ->groupBy('user_id')
-            ->orderBy('score', 'DESC')
+        $data = ['success' => false, 'data' => [], 'message' => __('Invalid User')];
+
+ /*       $scores = UserAnswer::select(DB::raw('SUM(point) as score'), DB::raw('DATE_FORMAT(created_at,\'%Y-%m-%d\') AS "date"'))
+            ->where('user_id', Auth::user()->id)
+            ->where('created_at', '>=', DB::raw('DATE(NOW()) - INTERVAL 7 DAY'))
+            ->groupBy(DB::raw('DATE_FORMAT(created_at,\'%Y-%m-%d\')'))
+            ->get();*/
+        $scores = UserAnswer::join('questions', 'questions.id', '=', 'user_answers.question_id')
+            ->select(DB::raw('SUM(questions.point) as total_score'),DB::raw('SUM(user_answers.point) as score'), DB::raw('DATE_FORMAT(user_answers.created_at,\'%Y-%m-%d\') AS "date"'))
+            ->where('user_answers.user_id', Auth::user()->id)
+            ->where('user_answers.created_at', '>=', DB::raw('DATE(NOW()) - INTERVAL 7 DAY'))
+            ->groupBy(DB::raw('DATE_FORMAT(user_answers.created_at,\'%Y-%m-%d\')'))
             ->get();
         if(isset($scores)) {
             foreach ($scores as $score) {
                 $items[] = [
-                    'user_id' => $score->user_id,
-                    'score' => $score->score
+                    'date' => date('d M y', strtotime($score->date)),
+                    'score' => $score->score,
+                    'total_score' => $score->total_score,
+                    'score_percentage' => ($score->score * 100)/$score->total_score
                 ];
             }
         }
-        $data = ['success' => false, 'data' => [], 'message' => __('Invalid User')];
+        $data['daily_score'] = $items;
         if (isset(Auth::user()->id)) {
             $user = User::select(
                 'id',
