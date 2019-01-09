@@ -206,6 +206,25 @@ class AuthController extends Controller
     }
 
     /*
+     * setDeviceId
+     *
+     * update the device id which was given by app end
+     *
+     *
+     *
+     */
+
+    public function setDeviceId($user_id,$device_id)
+    {
+        if (isset($user_id) && isset($device_id)) {
+            $user = User::where('id', $user_id)->first();
+            if (isset($user)) {
+                $update = $user->update(['device_id' =>$device_id]);
+            }
+        }
+    }
+
+    /*
      * sendToken
      *
      * Send code to email for changing forget password

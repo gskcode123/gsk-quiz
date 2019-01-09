@@ -30,6 +30,8 @@ class CreateUsersTable extends Migration
             $table->string('address')->nullable();
             $table->string('zip',20)->nullable();
             $table->string('language')->nullable();
+            $table->boolean('push_notification_status')->default(1);
+            $table->boolean('email_notification_status')->default(1);
             $table->rememberToken();
             $table->timestamps();
         });

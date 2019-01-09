@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Model\Category;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Validation\Rule;
@@ -109,6 +110,26 @@ class CategoryController extends Controller
             } else {
                 $insert = Category::create($data);
                 if ($insert) {
+                    $data_id = $insert->id;
+                    $ids = User::where(['active_status'=> 1, 'email_verified'=> 1, 'role'=> 2])->select('device_id', 'device_type')->get();
+                    //   $ids = array_filter($ids->toArray());
+                    $count = 1;
+                    // $count_ios =1;
+
+                    if (isset($ids[0])) {
+                        define('API_ACCESS_KEY', 'AAAA8P9G7Gc:APA91bEsV8U52EHrZC-okzl8gn4eTaUpinlwE6cZYgQUKZSbhBoKThueD034diTevllNzv5m_-mYzLkL9OqEUpwqtiWlGa4cSwcpCAAcxF3PPpuyYFPR1lZ32_m1XzNq7Gl6zMq7PwVQ');
+
+                        foreach ($ids as $key => $id) {
+                            if (!empty($id->device_type)) {
+                                if ($id->device_type == 1) {
+
+                                    pushNotification($id->device_id, $id->device_type, $data_id, $count);
+                                    $count++;
+                                }
+                            }
+                        }
+                    }
+
                     return redirect()->route('qsCategoryList')->with('success', __('Category Created Successfully'));
                 } else {
                     return redirect()->route('qsCategoryList')->with('dismiss', __('Save Failed'));
@@ -116,7 +137,7 @@ class CategoryController extends Controller
             }
 
         } catch (\Exception $e) {
-            dd($e->getMessage());
+//            dd($e->getMessage());
             return redirect()->back()->with('dismiss', __('Something went wrong'));
         }
 

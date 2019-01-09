@@ -335,3 +335,95 @@ if (!function_exists('calculate_score')) {
     }
 }
 
+//google firebase
+function pushNotification($registrationIds,$type, $data_id, $count)
+{
+    $cat = \App\Model\Category::find($data_id);
+    $fields = array
+    (
+        'to' => $registrationIds,
+        "delay_while_idle" => true,
+        "time_to_live" => 3,
+        /*    'notification' => [
+                'body' => strip_tags(str_limit($news->description,30)),
+                'title' => str_limit($news->title,25),
+            ],*/
+        'data'=> [
+//            'message' => strip_tags(str_limit($news->description,30)),
+            'name' => $cat->name,
+            'id' => $cat->id,
+            'is_background' => true,
+            'content_available'=>true,
+        ]
+    );
+
+
+    $headers = array
+    (
+        'Authorization: key=' . API_ACCESS_KEY,
+        'Content-Type: application/json'
+    );
+
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
+    $result = curl_exec($ch);
+    curl_close($ch);
+
+    return $fields;
+
+}
+
+//google firebase
+function pushNotificationIos($registrationIds,$type, $data_id, $count)
+{
+
+    $news = \App\News::find($data_id);
+
+    $fields = array
+    (
+        'to' => $registrationIds,
+        "delay_while_idle" => true,
+
+        "time_to_live" => 3,
+        'notification' => [
+            'body' => strip_tags(str_limit($news->description,30)),
+            'title' => str_limit($news->title,25),
+            'vibrate' => 1,
+            'sound' => 'default',
+        ],
+        'data'=> [
+            'message' => strip_tags(str_limit($news->description,30)),
+            'title' => str_limit($news->title,25),
+            'id' => $news->id,
+            'is_background' => true,
+            'content_available'=>true,
+
+
+        ]
+    );
+
+    $headers = array
+    (
+        'Authorization: key=' . API_ACCESS_KEY,
+        'Content-Type: application/json'
+    );
+
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
+    $result = curl_exec($ch);
+    curl_close($ch);
+
+    return $fields;
+
+}
+
