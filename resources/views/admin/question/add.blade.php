@@ -162,6 +162,23 @@
                                             </div>
                                         </div>
                                             @if(empty($qsOptions))
+                                            <div class="row" id="">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <input type="text" required name="options[]" class="form-control" placeholder="Answer">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div class="form-group">
+                                                        <div class="qz-question-category">
+                                                            <select name="ans_type[]" class="form-control" >
+                                                                <option value="0">{{__('Wrong')}}</option>
+                                                                <option value="1">{{__('Right')}}</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <div class="row" id="dynamic_field">
                                                 <div class="col-lg-6">
                                                     <div class="form-group">

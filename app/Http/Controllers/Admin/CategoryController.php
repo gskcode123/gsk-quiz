@@ -61,7 +61,7 @@ class CategoryController extends Controller
         $rules = [
             'name' => ['required', Rule::unique('categories')->ignore($request->edit_id, 'id')],
             'serial' => ['required', Rule::unique('categories')->ignore($request->edit_id, 'id')],
-            'qs_limit' => 'required|numeric|min:1',
+            'qs_limit' => 'required|numeric|between:1,100',
             'max_limit' => 'required|numeric|min:1',
             'time_limit' => 'required|numeric|between:0,10',
         ];

@@ -125,6 +125,11 @@ class QuestionController extends Controller
                     return redirect()->back()->with('dismiss', __('Update Failed'));
                 }
             } else {
+                $categoryLimit = Category::where('id', $request->category_id)->first()->max_limit;
+                $addedQuestion = Question::where('category_id', $request->category_id)->count();
+                if ($categoryLimit <= $addedQuestion) {
+                    return redirect()->route('questionList')->with('dismiss', __('Questions limit exceeded'));
+                }
                 $insert = Question::create($data);
                 if ($insert) {
                     $options = $request->options;
