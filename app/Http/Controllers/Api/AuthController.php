@@ -63,6 +63,7 @@ class AuthController extends Controller
                     } else {
                         $mail_key = randomNumber(6);
                         $mailService = app(MailService::class);
+                        UserVerificationCode::where(['user_id' => $user->id])->update(['status' => STATUS_SUCCESS]);
                         UserVerificationCode::create(['user_id' => $user->id, 'code' => $mail_key, 'type' => 1, 'status' => STATUS_PENDING, 'expired_at' => date('Y-m-d', strtotime('+15 days'))]);
                         $userName = $user->name;
                         $userEmail = $user->email;
