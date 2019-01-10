@@ -57,7 +57,7 @@ class AuthController extends Controller
                         $user->update();
 
                         $data['success'] = true;
-                        $data['data'] = ['access_token' => $token, 'access_type' => "Bearer"];
+                        $data['data'] = ['access_token' => $token, 'access_type' => "Bearer", 'user_info' => $user];
                         $data['message'] = __('Successfully Logged in');
 
                     } else {
