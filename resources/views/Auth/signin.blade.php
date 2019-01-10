@@ -77,7 +77,7 @@
                             {{ Form::close() }}
 
                             <div class="qz-user-footer">
-                                <h4>{{__('Don\'\t have account ?')}} <a href="{{route('userSignUp')}}">{{__('Sign Up')}}</a> </h4>
+                                <h4>{{__('Don\'t have account ?')}} <a href="{{route('userSignUp')}}">{{__('Sign Up')}}</a> </h4>
                                 <h4><a href="{{route('forgetPassword')}}">{{__('Forgot Password')}}</a> </h4>
                                 {{--<p>--}}
                                     {{--Or sign in with--}}

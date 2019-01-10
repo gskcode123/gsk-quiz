@@ -730,3 +730,9 @@ button.btn.btn-primary.btn-block.add-category-btn.mt-4 {
 .userlist-image img{
     margin-right: 10px;
 }
+
+button#add {
+    position: absolute;
+    top: 55px;
+    right: 0;
+}
