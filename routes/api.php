@@ -39,6 +39,6 @@ Route::group(['middleware' =>['auth:api','api.lang'],'namespace'=>'Api'],functio
     Route::get('leader-board', 'QuestionController@leaderBoard');
 
     // set device id
-    Route::get('set-user-device-id/{user_id}/{device_id}','Api\AuthController@setDeviceId');
+    Route::get('set-user-device-id/{user_id}/{device_id}','AuthController@setDeviceId');
 
 });
