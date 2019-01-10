@@ -227,7 +227,7 @@ class ProfileController extends Controller
             $user->update($input);
             $data =[
                 'success' => true,
-                'message' => __('Save Setting Successfully')
+                'message' => __('Language changed successfully')
             ];
         }
 

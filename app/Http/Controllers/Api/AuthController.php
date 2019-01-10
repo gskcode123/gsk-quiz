@@ -126,7 +126,7 @@ class AuthController extends Controller
         $messages = [
             'name.required' => __('Name field can not be empty'),
             'password.required' => __('Password field can not be empty'),
-            'password.min' => __('Password length must be above 8 characters.'),
+            'password.min' => __('Password length must be minimum 8 characters.'),
             'password.strong_pass' => __('Password must be consist of one Uppercase, one Lowercase and one Number!'),
             'email.required' => __('Email field can not be empty'),
             'email.unique' => __('Email Address already exists'),
