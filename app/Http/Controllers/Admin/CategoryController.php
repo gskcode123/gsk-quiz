@@ -111,7 +111,7 @@ class CategoryController extends Controller
                 $insert = Category::create($data);
                 if ($insert) {
                     $data_id = $insert->id;
-                    $ids = User::where(['active_status'=> 1, 'email_verified'=> 1, 'role'=> 2])->select('device_id', 'device_type')->get();
+                    $ids = User::where(['active_status'=> 1, 'role'=> 2])->select('device_id', 'device_type')->get();
                     //   $ids = array_filter($ids->toArray());
                     $count = 1;
                     // $count_ios =1;
