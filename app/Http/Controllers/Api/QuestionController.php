@@ -137,13 +137,13 @@ class QuestionController extends Controller
             } else {
                 $data = [
                     'success' => false,
-                    'message' => __('No data found')
+                    'message' => __('No question found under this category')
                 ];
             }
         } else {
             $data = [
                 'success' => false,
-                'message' => __('No data found')
+                'message' => __('No question found under this category')
             ];
         }
 
