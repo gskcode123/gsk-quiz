@@ -17,6 +17,9 @@
                 <div class="col-12">
                     <div class="d-flex justify-content-between">
                         <h2>{{__('Search Result')}}</h2>
+                        <span class="sidebarToggler">
+                            <i class="fa fa-bars d-lg-none d-block"></i>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -31,13 +34,21 @@
                     <div class="row">
                         <div class="col-12">
                             <!-- <div class="table-responsive"> -->
-                            <ul>
-                                @if(isset($questions))
+                            <ul class="qz-src-result">
+                                @if(isset($questions) && (!$questions->isEmpty()))
                                     @foreach($questions as $item)
                                         <li><a href="{{ route('questionEdit', $item->id) }}">{{$item->title}}</a></li>
                                     @endforeach
+                                @elseif(isset($users) && (!$users->isEmpty()))
+                                    @foreach($users as $item)
+                                        <li><a href="{{ route('userDetails', $item->id) }}">{{$item->name}}</a></li>
+                                    @endforeach
+                                @elseif(isset($categories) && (!$categories->isEmpty()))
+                                    @foreach($categories as $item)
+                                        <li><a href="{{ route('categoryQuestionList', $item->id) }}">{{$item->name}}</a></li>
+                                    @endforeach
                                 @else
-                                    <li>{{__('Not Found')}}</li>
+                                    <li class="text-center text-danger">{{__('Data Not Found')}}</li>
                                 @endif
 
                             </ul>

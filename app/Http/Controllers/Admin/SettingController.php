@@ -59,19 +59,20 @@ class SettingController extends Controller
                 AdminSetting::where(['slug' => 'copyright_text'])->update(['value' => $request->copyright_text]);
             }
             if (isset($request->logo)) {
-                AdminSetting::updateOrCreate(['slug' => 'logo'], ['value' => uploadthumb($request->logo, path_image(), 'logo_', '', '', allsetting()['logo'])]);
+//                AdminSetting::updateOrCreate(['slug' => 'logo'], ['value' => uploadthumb($request->logo, path_image(), 'logo_', '', '', allsetting()['logo'])]);
+                AdminSetting::updateOrCreate(['slug' => 'logo'], ['value' => fileUpload($request['logo'], path_image(), allsetting()['logo'])]);
             }
             if (isset($request->favicon)) {
-                AdminSetting::updateOrCreate(['slug' => 'favicon'], ['value' => uploadthumb($request->favicon, path_image(), 'favicon_', '', '', allsetting()['favicon'])]);
+                AdminSetting::updateOrCreate(['slug' => 'favicon'], ['value' => fileUpload($request['favicon'], path_image(), allsetting()['favicon'])]);
             }
             if (isset($request->login_logo)) {
-                AdminSetting::updateOrCreate(['slug' => 'login_logo'], ['value' => uploadthumb($request->login_logo, path_image(), 'login_', '', '', allsetting()['login_logo'])]);
+                AdminSetting::updateOrCreate(['slug' => 'login_logo'], ['value' => fileUpload($request['login_logo'], path_image(), allsetting()['login_logo'])]);
             }
 
             return redirect()->back()->with(['success' => __('Updated Successfully')]);
         } catch (\Exception $e) {
 //            dd($e->getMessage());
-            return redirect()->back()->with(['dismiss' => $e->getMessage()]);
+            return redirect()->back()->with(['dismiss' => __('Something went wrong')]);
         }
     }
 

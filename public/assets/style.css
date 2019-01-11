@@ -743,3 +743,17 @@ button#add {
     top: 55px;
     right: 0;
 }
+.qz-src-result li {
+    margin-bottom: 5px;
+    border-bottom: 1px solid #f5f5f5;
+    padding: 10px;
+    text-transform: capitalize;
+}
+.qz-src-result li:last-child{
+    margin-bottom: 0;
+}
+.qz-src-result li a{
+    color: #5d5d5f;
+}
+
+

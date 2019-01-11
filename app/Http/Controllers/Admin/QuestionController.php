@@ -28,6 +28,24 @@ class QuestionController extends Controller
 
         return view('admin.question.list', $data);
     }
+    /*
+     * categoryQuestionList
+     *
+     * List of categorise question
+     *
+     *
+     *
+     *
+     */
+    public function categoryQuestionList($cat_id)
+    {
+        $data['pageTitle'] = __('Category Question List');
+        $data['catName'] = Category::where('id', $cat_id)->first()->name;
+        $data['menu'] = 'category';
+        $data['items'] = Question::orderBy('id', 'DESC')->where('category_id', $cat_id)->get();
+
+        return view('admin.question.cat-qs-list', $data);
+    }
 
     /*
      * questionCreate

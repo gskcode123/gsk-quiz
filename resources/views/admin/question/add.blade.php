@@ -151,29 +151,29 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="row" id="">
-                                            <div class="col-lg-6">
+                                            <div class="col-md-6 qz-label-hide">
                                                 <div class="form-group">
                                                     <label>{{__('Options')}}<span class="text-danger"></span></label>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-3">
+                                            <div class="col-md-3 qz-label-hide">
                                                 <div class="form-group">
                                                     <label>{{__('Answer Type')}}</label>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-2 offset-lg-1">
+                                            <div class="col-md-2 offset-lg-1">
                                                 <label for=""></label>
                                                 <button type="button" class="btn btn-primary btn-block" name="add" id="add">{{__('Add More')}}</button>
                                             </div>
                                         </div>
                                             @if(empty($qsOptions))
                                             <div class="row" id="">
-                                                <div class="col-lg-6">
+                                                <div class="col-md-6">
                                                     <div class="form-group">
                                                         <input type="text" required name="options[]" class="form-control" placeholder="Answer">
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-3">
+                                                <div class="col-md-3">
                                                     <div class="form-group">
                                                         <div class="qz-question-category">
                                                             <select name="ans_type[]" class="form-control" >
@@ -185,12 +185,12 @@
                                                 </div>
                                             </div>
                                             <div class="row" id="dynamic_field">
-                                                <div class="col-lg-6">
+                                                <div class="col-md-6">
                                                     <div class="form-group">
                                                         <input type="text" required name="options[]" class="form-control" placeholder="Answer">
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-3">
+                                                <div class="col-md-3">
                                                     <div class="form-group">
                                                         <div class="qz-question-category">
                                                             <select name="ans_type[]" class="form-control" >
@@ -206,12 +206,12 @@
                                                 @php ($sl = 1)
                                                 @foreach($qsOptions as $opt)
                                                 <div class="row" id="optTitle{{$sl}}">
-                                                    <div class="col-lg-6" >
+                                                    <div class="col-md-6" >
                                                         <div class="form-group">
                                                             <input type="text" name="options[]" value="{{ $opt->option_title }}" class="form-control" placeholder="">
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-3" >
+                                                    <div class="col-md-3" >
                                                         <div class="form-group">
                                                             <div class="qz-question-category">
                                                                 <select name="ans_type[]" class="form-control" >
@@ -221,7 +221,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-1">
+                                                    <div class="col-md-1">
                                                         <div class="form-group">
                                                             <button type="button" name="remove" id="{{ $sl }}" class="btn btn-danger btn_remove2">X</button>
                                                         </div>
@@ -233,7 +233,7 @@
                                             </div>
                                             @endif
                                             <div class="row">
-                                                <div class="col-lg-4">
+                                                <div class="col-md-4">
                                                     @if(isset($question))
                                                         <input type="hidden" name="edit_id" value="{{$question->id}}">
                                                     @endif
@@ -265,12 +265,12 @@
                 // alert(1);
                 i++;
                 $('#dynamic_field').append(
-                    '<div class="col-lg-6 dynamic-added" id="row'+i+'" >' +
+                    '<div class="col-md-6 dynamic-added" id="row'+i+'" >' +
                         '<div class="form-group">' +
                             '<input type="text" name="options[]" placeholder="Answer" class="form-control name_list" />' +
                         '</div>' +
                     '</div>' +
-                    '<div class="col-lg-3 dynamic-added" id="rows'+i+'" >' +
+                    '<div class="col-md-3 dynamic-added" id="rows'+i+'" >' +
                         '<div class="form-group">' +
                             '<div class="qz-question-category">' +
                             '<select name="ans_type[]" class="form-control">' +
@@ -280,7 +280,7 @@
                             '</div>' +
                         '</div>' +
                     '</div>' +
-                    '<div class="col-lg-1 remove-btn">' +
+                    '<div class="col-md-1 remove-btn">' +
                         '<div class="form-group">' +
                             '<button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove">X</button>' +
                         '</div>' +

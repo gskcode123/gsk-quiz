@@ -59,7 +59,14 @@
 
 /*-------------- Start device screen 991 --------------*/
 
-@media screen and (max-width: 991px) {}
+@media screen and (max-width: 991px) {
+
+    button#add {
+        position: static;
+        margin-bottom: 15px;
+
+    }
+}
 
 /*-------------- Start device screen 768 --------------*/
 
@@ -88,6 +95,9 @@
         display: flex;
         justify-content: center;
         cursor: pointer;
+    }
+    .qz-label-hide{
+        display: none;
     }
 }
 

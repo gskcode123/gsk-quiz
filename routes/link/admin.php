@@ -34,6 +34,7 @@ Route::group(['middleware' => ['auth','admin','lang']], function() {
 
     //Question
     Route::get('question-list', 'Admin\QuestionController@questionList')->name('questionList');
+    Route::get('category-question-list/{id}', 'Admin\QuestionController@categoryQuestionList')->name('categoryQuestionList');
     Route::get('question-create', 'Admin\QuestionController@questionCreate')->name('questionCreate');
     Route::post('question-save', 'Admin\QuestionController@questionSave')->name('questionSave');
     Route::get('question-edit/{id}', 'Admin\QuestionController@questionEdit')->name('questionEdit');

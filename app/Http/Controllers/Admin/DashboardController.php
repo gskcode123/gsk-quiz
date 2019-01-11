@@ -74,10 +74,20 @@ class DashboardController extends Controller
 
     public function qsSearch(Request $request)
     {
-        $data['pageTitle'] = __('Rearch Result');
-        $data['questions'] = Question::where('status',1)
+        $data['pageTitle'] = __('Search Result');
+        $categories = Category::where('status',1)
+            ->where('name','LIKE','%'.$request->item.'%')
+            ->get();
+        $questions = Question::where('status',1)
             ->where('title','LIKE','%'.$request->item.'%')
             ->get();
+        $users = User::where('active_status',1)
+            ->where('name','LIKE','%'.$request->item.'%')
+            ->get();
+
+        $data['users'] = $users;
+        $data['questions'] = $questions;
+        $data['categories'] = $categories;
 
         return view('admin.search-item', $data);
     }

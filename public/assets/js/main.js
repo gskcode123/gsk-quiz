@@ -24,7 +24,10 @@ $(document).ready(function() {
         'responsive': true,
         'details':true
     });
-    $('#qz-question-table').DataTable();
+    $('#qz-question-table').DataTable({
+        'responsive': true,
+        'details':true
+    });
 
     $('.sidebarToggler').on('click', function(){
         $('.qz-sidebar').toggleClass('sidebarToggle')

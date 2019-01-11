@@ -16,14 +16,11 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <div class="d-flex justify-content-between">
-                        <h2>{{__('Question')}}</h2>
-                        <div class="d-flex align-items-center">
-                            <a href="{{ route('questionCreate') }}" class="btn btn-primary px-3">{{__('Add New')}}</a>
-                            <span class="sidebarToggler ml-4">
-                                <i class="fa fa-bars d-lg-none d-block"></i>
-                            </span>
-                        </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h2>@if(isset($catName)) {{ $catName }} @else {{__('Question List')}} @endif</h2>
+                        <span class="sidebarToggler">
+                            <i class="fa fa-bars d-lg-none d-block"></i>
+                        </span>
                     </div>
                 </div>
             </div>
