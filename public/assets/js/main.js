@@ -35,4 +35,8 @@ $(document).ready(function() {
 
     $('.qz-sidebar').scrollbar();
 
+    $(document).ready(function () {
+        $("#notification_box").fadeOut(4000);
+    });
+
 });
