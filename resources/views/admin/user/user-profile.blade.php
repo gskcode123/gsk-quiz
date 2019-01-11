@@ -34,7 +34,7 @@
             <div class="card-body">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-xl-5">
+                        <div class="col-xl-5 col-lg-5">
                             <div class="qz-profile-card text-center">
                                 <div class="qz-edit-icon">
                                     <a href="#">
@@ -70,55 +70,55 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-7">
-                            <ul class="user-details-info">
+                        <div class="col-xl-7 col-lg-7">
+                            <ul class="user-details-info mt-md-0 mt-4">
                                 <li>
                                     <div class="row ">
-                                        <div class="col-md-4">{{__('Name')}}</div>
-                                        <div class="col-md-1">:</div>
-                                        <div class="col-md-7">{{$user->name}}</div>
+                                        <div class="col-4">{{__('Name')}}</div>
+                                        <div class="col-1">:</div>
+                                        <div class="col-md-7 col">{{$user->name}}</div>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="row">
-                                        <div class="col-md-4">{{__('Phone')}}</div>
-                                        <div class="col-md-1">:</div>
-                                        <div class="col-md-7">{{$user->phone}}</div>
+                                        <div class="col-4">{{__('Phone')}}</div>
+                                        <div class="col-1">:</div>
+                                        <div class="col-md-7 col">{{$user->phone}}</div>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="row">
-                                        <div class="col-md-4">{{__('Country')}}</div>
-                                        <div class="col-md-1">:</div>
-                                        <div class="col-md-7">{{$user->country}}</div>
+                                        <div class="col-4">{{__('Country')}}</div>
+                                        <div class="col-1">:</div>
+                                        <div class="col-md-7 col">{{$user->country}}</div>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="row">
-                                        <div class="col-md-4">{{__('City')}}</div>
-                                        <div class="col-md-1">:</div>
-                                        <div class="col-md-7">{{$user->city}}</div>
+                                        <div class="col-4">{{__('City')}}</div>
+                                        <div class="col-1">:</div>
+                                        <div class="col-md-7 col">{{$user->city}}</div>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="row">
-                                        <div class="col-md-4">{{__('State')}}</div>
-                                        <div class="col-md-1">:</div>
-                                        <div class="col-md-7">{{$user->state}}</div>
+                                        <div class="col-4">{{__('State')}}</div>
+                                        <div class="col-1">:</div>
+                                        <div class="col-md-7 col">{{$user->state}}</div>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="row">
-                                        <div class="col-md-4">{{__('Zip')}}</div>
-                                        <div class="col-md-1">:</div>
-                                        <div class="col-md-7">{{$user->zip}}</div>
+                                        <div class="col-4">{{__('Zip')}}</div>
+                                        <div class="col-1">:</div>
+                                        <div class="col-md-7 col">{{$user->zip}}</div>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="row">
-                                        <div class="col-md-4">{{__('Full Address')}}</div>
-                                        <div class="col-md-1">:</div>
-                                        <div class="col-md-7">{{$user->address}}</div>
+                                        <div class="col-md-4 col-5">{{__('Full Address')}}</div>
+                                        <div class="col-1">:</div>
+                                        <div class="col-md-7 col-6">{{$user->address}}</div>
                                     </div>
                                 </li>
                             </ul>
