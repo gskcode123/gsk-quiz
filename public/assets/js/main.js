@@ -35,8 +35,12 @@ $(document).ready(function() {
 
     $('.qz-sidebar').scrollbar();
 
-    $(document).ready(function () {
-        $("#notification_box").fadeOut(4000);
-    });
+    // $(document).ready(function () {
+    //     $("#notification_box").fadeOut(4000);
+    // });
+
+    setTimeout(function () {
+        $(".myalert").fadeOut()
+    }, 4000);
 
 });

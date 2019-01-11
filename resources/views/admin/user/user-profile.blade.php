@@ -10,7 +10,6 @@
 @endsection
 
 @section('main-body')
-    @include('layout.message')
     <!-- Start page title -->
     <div class="qz-page-title">
         <div class="container-fluid">
@@ -27,7 +26,7 @@
         </div>
     </div>
     <!-- End page title -->
-
+    @include('layout.message')
     <!-- Start content area  -->
     <div class="qz-content-area">
         <div class="card qz-profile-area">

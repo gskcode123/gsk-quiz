@@ -10,7 +10,7 @@
 @endsection
 
 @section('main-body')
-    @include('layout.message')
+    {{--@include('layout.message')--}}
     <!-- Start page title -->
     <div class="qz-page-title">
         <div class="container-fluid">
@@ -27,7 +27,7 @@
         </div>
     </div>
     <!-- End page title -->
-
+    @include('layout.message')
     <!-- Start content area  -->
     <div class="qz-content-area">
         <div class="card qz-profile-area">
@@ -108,7 +108,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>{{__('Image')}}</label>
-                                        <input type="file" name="photo" class="form-control d-block">
+                                        <input type="file" name="photo" class=" d-block">
                                     </div>
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-primary btn-block add-category-btn"> {{__('Update')}} </button>

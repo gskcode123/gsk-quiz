@@ -41,11 +41,11 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
-                <div class="card">
-                    <div class="card-body">
-                        @include('layout.message')
-                    </div>
-                </div>
+                {{--<div class="card">--}}
+                    {{--<div class="card-body">--}}
+                        {{--@include('layout.message')--}}
+                    {{--</div>--}}
+                {{--</div>--}}
                 <div class="card-body">
                     <div class="row text-center">
                         <div class="col-lg-8 offset-lg-2">
@@ -58,6 +58,9 @@
                                 <h1>{{__('Sign Up')}}</h1>
                             </div>
                             <h5>{{__('Hello there, Sign up and Join with Us')}}</h5>
+                                <span class="text-left">
+                                    @include('layout.message')
+                                </span>
 
                             {{ Form::open(['route' => 'userSave']) }}
                             {{csrf_field()}}
@@ -72,17 +75,17 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <input type="password" name="password" class="form-control" placeholder="Password">
+                                            <input type="email" name="email" class="form-control" placeholder="Email">
                                             <div class="qz-input-icon">
-                                                <span class="flaticon-lock"></span>
+                                                <span class="flaticon-mail"></span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <input type="email" name="email" class="form-control" placeholder="Email">
+                                            <input type="password" name="password" class="form-control" placeholder="Password">
                                             <div class="qz-input-icon">
-                                                <span class="flaticon-mail"></span>
+                                                <span class="flaticon-lock"></span>
                                             </div>
                                         </div>
                                     </div>

@@ -584,9 +584,9 @@ table.table.category-table tbody td {
 
 .user-body{
     background: #3865F6;
-    height: 100vh;
-    display: flex;
-    align-items: center;
+    /*height: 100%;*/
+    /*display: flex;*/
+    /*align-items: center;*/
 }
 .user-body .card{
     background: #fff url(images/bg-transparent-img.png) no-repeat center center / cover;
