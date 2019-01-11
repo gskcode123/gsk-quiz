@@ -1,7 +1,7 @@
 /node_modules
 /public/hot
 /public/storage
-/public/uploaded_file/files
+/public/uploaded_file
 /storage/*.key
 /vendor
 /.idea

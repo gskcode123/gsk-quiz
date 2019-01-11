@@ -73,8 +73,8 @@ p {
 .qz-sidebar{
     width: 260px;
     background: #fff;
-    height: 100%;
-    position: fixed;
+    height: 100vh;
+    position: fixed !important;
     left: 0;
     top: 0;
 }
@@ -493,9 +493,12 @@ table.table.category-table tbody td {
     height: 120px;
     width: 120px;
 }
-.qz-profile-user-avater{
+.qz-profile-user-avater {
     position: relative;
     z-index: 1;
+    height: 120px;
+    width: 120px;
+    margin: auto;
 }
 .qz-profile-user-avater::after{
     position: absolute;
@@ -633,6 +636,10 @@ table.table.category-table tbody td {
 }
 .user-body form{
     margin: 50px 0;
+}
+
+form input[type="file"]{
+    height: 35px !important;
 }
 
 .user-body input.form-control::-webkit-input-placeholder {

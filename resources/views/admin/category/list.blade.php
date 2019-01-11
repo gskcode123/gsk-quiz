@@ -43,11 +43,11 @@
                                 <thead>
                                 <tr>
                                     <th class="all">{{__('SL.')}}</th>
-                                    <th class="teblet">{{__('Title')}}</th>
+                                    <th class="teblete">{{__('Title')}}</th>
                                     <th class="desktop">{{__('Questions')}}</th>
                                     <th class="desktop">{{__('Priority')}}</th>
                                     <th class="desktop">{{__('Added On')}}</th>
-                                    <th class="teblet">{{__('Status')}}</th>
+                                    <th class="teblete">{{__('Status')}}</th>
                                     <th class="all">{{__('Action')}}</th>
                                 </tr>
                                 </thead>

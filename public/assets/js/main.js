@@ -20,10 +20,16 @@ $(document).ready(function() {
         }
     });
 
-    $('#category-table').DataTable();
+    $('#category-table').DataTable({
+        'responsive': true,
+        'details':true
+    });
     $('#qz-question-table').DataTable();
 
+    $('.sidebarToggler').on('click', function(){
+        $('.qz-sidebar').toggleClass('sidebarToggle')
+    })
 
-
+    $('.qz-sidebar').scrollbar();
 
 });

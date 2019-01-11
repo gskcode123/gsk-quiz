@@ -28,6 +28,7 @@
 
     <!-- font family -->
     <link rel="stylesheet" href="{{asset('assets/css/proxima-nova.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/scrollbar.css')}}">
     <!-- Site Style -->
     <link rel="stylesheet" href="{{asset('assets/style.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/responsive.css')}}">
@@ -72,6 +73,7 @@
 <!-- Start data table -->
 <script src="{{asset('assets/DataTables/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('assets/DataTables/js/dataTables.responsive.min.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.scrollbar/0.2.11/jquery.scrollbar.min.js"></script>
 
 @yield('script')
 

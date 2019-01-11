@@ -16,9 +16,12 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <div class="d-flex justify-content-between">
+                    <div class="d-flex justify-content-between align-items-center">
                         <h2>{{__('Question')}}</h2>
                         <a href="{{ route('questionCreate') }}" class="btn btn-primary px-3">{{__('Add New')}}</a>
+                        <span class="sidebarToggler">
+                            <i class="fa fa-bars d-lg-none d-block"></i>
+                        </span>
                     </div>
                 </div>
             </div>
