@@ -17,7 +17,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h2>@if(isset($question)) {{__('Edit Category')}} @else {{__('Add Category')}} @endif</h2>
+                        <h2>@if(isset($category)) {{__('Edit Category')}} @else {{__('Add Category')}} @endif</h2>
                         <span class="sidebarToggler">
                             <i class="fa fa-bars d-lg-none d-block"></i>
                         </span>

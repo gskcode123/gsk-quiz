@@ -39,15 +39,18 @@
                                     @foreach($questions as $item)
                                         <li><a href="{{ route('questionEdit', $item->id) }}">{{$item->title}}</a></li>
                                     @endforeach
-                                @elseif(isset($users) && (!$users->isEmpty()))
+                                @endif
+                                @if(isset($users) && (!$users->isEmpty()))
                                     @foreach($users as $item)
                                         <li><a href="{{ route('userDetails', $item->id) }}">{{$item->name}}</a></li>
                                     @endforeach
-                                @elseif(isset($categories) && (!$categories->isEmpty()))
+                                @endif
+                                @if(isset($categories) && (!$categories->isEmpty()))
                                     @foreach($categories as $item)
                                         <li><a href="{{ route('categoryQuestionList', $item->id) }}">{{$item->name}}</a></li>
                                     @endforeach
-                                @else
+                                @endif
+                                @if(($categories->isEmpty()) && ($users->isEmpty()) && ($questions->isEmpty()))
                                     <li class="text-center text-danger">{{__('Data Not Found')}}</li>
                                 @endif
 
