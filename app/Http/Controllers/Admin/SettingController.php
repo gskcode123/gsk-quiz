@@ -70,6 +70,7 @@ class SettingController extends Controller
 
             return redirect()->back()->with(['success' => __('Updated Successfully')]);
         } catch (\Exception $e) {
+            dd($e->getMessage());
             return redirect()->back()->with(['dismiss' => 'Opsss! Something wrong please try again']);
         }
     }
