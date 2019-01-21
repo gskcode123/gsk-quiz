@@ -39,6 +39,7 @@ class ProfileController extends Controller
             ->where('user_answers.created_at', '>=', DB::raw('DATE(NOW()) - INTERVAL 7 DAY'))
             ->groupBy(DB::raw('DATE_FORMAT(user_answers.created_at,\'%Y-%m-%d\')'))
             ->get();
+        $items = [];
         if(isset($scores)) {
             foreach ($scores as $score) {
                 $items[] = [

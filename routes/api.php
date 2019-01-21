@@ -37,6 +37,8 @@ Route::group(['middleware' =>['auth:api','api.lang'],'namespace'=>'Api'],functio
 
     //Leader Board
     Route::get('leader-board', 'QuestionController@leaderBoard');
+    Route::get('todays-top-scorer-list', 'QuestionController@todaysTopscorers');
+    Route::get('weekly-top-scorer-list', 'QuestionController@weeklyTopscorers');
 
     // set device id
     Route::get('set-user-device-id/{user_id}/{device_id}','AuthController@setDeviceId');

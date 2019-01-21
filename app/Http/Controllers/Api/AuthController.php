@@ -75,7 +75,7 @@ class AuthController extends Controller
                         $mailService->send('email.verifyapp', $data, $userEmail, $userName, $subject);
 
                         $data['success'] = true;
-                        $data['data'] = ['access_token' => $token, 'access_type' => "Bearer"];
+                        $data['data'] = ['access_token' => $token, 'user_info' => $user, 'access_type' => "Bearer"];
                         $data['message'] = __('Your email is not verified. Please verify your email to get full access.');
                     }
                 } elseif ($user->active_status == STATUS_SUSPENDED) {

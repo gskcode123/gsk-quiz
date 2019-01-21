@@ -391,5 +391,110 @@ class QuestionController extends Controller
 
         return response()->json($data);
     }
+    /*
+     * todaysTopscorer
+     *
+     * Todays top scorer list
+     *
+     *
+     *
+     *
+     */
+    public function todaysTopscorers()
+    {
+        $data = ['success' => false, 'data' => [], 'message' => __('Something Went wrong !')];
+        $leaders = UserAnswer::select(
+            DB::raw('SUM(point) as score, user_id'))
+            ->groupBy('user_id')
+            ->whereDate('created_at', Carbon::today())
+            ->orderBy('score', 'DESC')
+            ->get();
+
+        $lists = [];
+        if (isset($leaders)) {
+            $rank = 1;
+            foreach ($leaders as $item) {
+
+                $lists[] = [
+                    'user_id' => $item->user_id,
+                    'photo' => asset(pathUserImage() . $item->user->photo),
+                    'name' => $item->user->name,
+                    'score' => $item->score,
+                    'ranking' => $rank++,
+                ];
+            }
+            if (!empty($lists)) {
+                $data = [
+                    'success' => true,
+                    'leaderList' => $lists,
+                ];
+            } else {
+                $data = [
+                    'success' => false,
+                    'message' => __('No data found')
+                ];
+            }
+        } else {
+            $data = [
+                'success' => false,
+                'message' => __('No data found')
+            ];
+        }
+
+        return response()->json($data);
+    }
+
+    /*
+     * weeklyTopscorers
+     *
+     * Weekly top scorer list
+     *
+     *
+     *
+     *
+     */
+    public function weeklyTopscorers()
+    {
+        $data = ['success' => false, 'data' => [], 'message' => __('Something Went wrong !')];
+        $leaders = UserAnswer::select(
+            DB::raw('SUM(point) as score, user_id'))
+            ->groupBy('user_id')
+            ->where('created_at', '>=', Carbon::now()->subDays(7))
+            ->orderBy('score', 'DESC')
+            ->get();
+
+        $lists = [];
+        if (isset($leaders)) {
+            $rank = 1;
+            foreach ($leaders as $item) {
+
+                $lists[] = [
+                    'user_id' => $item->user_id,
+                    'photo' => asset(pathUserImage() . $item->user->photo),
+                    'name' => $item->user->name,
+                    'score' => $item->score,
+                    'ranking' => $rank++,
+                ];
+            }
+            if (!empty($lists)) {
+                $data = [
+                    'success' => true,
+                    'leaderList' => $lists,
+                ];
+            } else {
+                $data = [
+                    'success' => false,
+                    'message' => __('No data found')
+                ];
+            }
+        } else {
+            $data = [
+                'success' => false,
+                'message' => __('No data found')
+            ];
+        }
+
+        return response()->json($data);
+    }
 
 }
