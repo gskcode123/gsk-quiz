@@ -49,6 +49,15 @@
                                     <textarea name="description" id="" rows="6" class="form-control">@if(isset($category)){{$category->description}}@else{{old('description')}}@endif</textarea>
                                 </div>
                                 <div class="form-group">
+                                    <label>{{__('Coin')}}<span class="text-danger"></span></label>
+                                    <input type="text" @if(isset($category)) value="{{$category->coin}}" @else value="{{old('coin')}}" @endif name="coin" class="form-control" placeholder="Coin">
+                                    @if ($errors->has('coin'))
+                                        <span class="text-danger">
+                                            <strong>{{ $errors->first('coin') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                                <div class="form-group">
                                     <label>{{__('Question limit')}}<span class="text-danger">*</span></label>
                                     <input type="text" @if(isset($category)) value="{{$category->max_limit}}" @else value="{{old('max_limit')}}" @endif name="max_limit" class="form-control" placeholder="Question Limit for category">
                                     @if ($errors->has('max_limit'))

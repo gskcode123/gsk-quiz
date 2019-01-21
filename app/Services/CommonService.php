@@ -166,6 +166,11 @@ class CommonService
         $mailService->send($mailTemplet, $data, $userEmail, $userName, $subject);
     }
 
+    public function create_coin_wallet($user_id)
+    {
+
+    }
+
     public function user_details($email)
     {
         $user = User::where('email', $email)->first();

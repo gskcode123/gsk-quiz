@@ -44,6 +44,7 @@
                                     <th class="all">{{__('SL.')}}</th>
                                     <th class="teblete">{{__('Title')}}</th>
                                     <th class="desktop">{{__('Questions')}}</th>
+                                    <th class="desktop">{{__('Coin')}}</th>
                                     <th class="desktop">{{__('Priority')}}</th>
                                     <th class="desktop">{{__('Added On')}}</th>
                                     <th class="teblete">{{__('Status')}}</th>
@@ -58,6 +59,7 @@
                                     <td>{{ $sl++ }}</td>
                                     <td>{{ $item->name }}</td>
                                     <td>{{ count_question($item->id) }}</td>
+                                    <td>{{ $item->coin }}</td>
                                     <td>{{ $item->serial }}</td>
                                     <td>{{ date('d M y', strtotime($item->created_at)) }}</td>
                                     <td><span @if($item->status == 1) class="text-success" @else class="text-danger" @endif>{{ statusType($item->status) }}</span></td>

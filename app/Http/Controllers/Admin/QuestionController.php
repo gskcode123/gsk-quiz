@@ -83,6 +83,8 @@ class QuestionController extends Controller
         $rules = [
             'title' => ['required', Rule::unique('questions')->ignore($request->edit_id, 'id')],
             'category_id' => 'required',
+            'skip_coin' => 'required',
+            'hints' => 'required',
             'type' => 'required',
             'status' => 'required',
             'options' => 'required',
@@ -97,6 +99,9 @@ class QuestionController extends Controller
             'category_id.required' => __('Must be select a category'),
             'type.required' => __('Must be select a question type'),
         ];
+        if (!empty($request->coin)) {
+            $rules['coin'] = 'numeric|between:1,1000';
+        }
 
         $this->validate($request, $rules,$messages);
         try {
@@ -110,6 +115,12 @@ class QuestionController extends Controller
                 'serial' => $request->serial,
                 'status' => $request->status,
             ];
+
+            if (!empty($request->coin)) {
+                $data['coin'] = $request->coin;
+            } else {
+                $data['coin'] = 0;
+            }
             if (!empty($request->edit_id)) {
                 $qs = Question::where('id', $request->edit_id)->first();
             }

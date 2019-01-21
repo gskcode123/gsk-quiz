@@ -63,7 +63,7 @@ class CategoryController extends Controller
             'serial' => ['required', Rule::unique('categories')->ignore($request->edit_id, 'id')],
             'qs_limit' => 'required|numeric|between:1,100',
             'max_limit' => 'required|numeric|min:1',
-            'time_limit' => 'required|numeric|between:0,10',
+            'time_limit' => 'required|numeric|between:0,20',
         ];
 
         $messages = [
@@ -77,7 +77,10 @@ class CategoryController extends Controller
         ];
 
         if (!empty($request->image)) {
-//            $rules['image'] = 'mimes:jpeg,jpg,JPG,png,PNG,gif|max:20000';
+            $rules['image'] = 'mimes:jpeg,jpg,JPG,png,PNG,gif|max:4000';
+        }
+        if (!empty($request->coin)) {
+            $rules['coin'] = 'numeric|between:1,1000';
         }
         $this->validate($request, $rules, $messages);
         try {
@@ -90,6 +93,11 @@ class CategoryController extends Controller
                 'serial' => $request->serial,
                 'status' => $request->status,
             ];
+            if (!empty($request->coin)) {
+                $data['coin'] = $request->coin;
+            } else {
+                $data['coin'] = 0;
+            }
             if (!empty($request->edit_id)) {
                 $cat = Category::where('id', $request->edit_id)->first();
             }
