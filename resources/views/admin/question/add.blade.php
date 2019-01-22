@@ -196,14 +196,18 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
+                                                @if(isset($qsOptions) && (isset($question)) && (isset($qsOptions[0])) && ($question->type == 2))
+                                                    <input type="hidden" name="option1" value="{{$qsOptions[0]->id}}">
+                                                    <img width="50" @if(isset($qsOptions[0]->option_image)) src="{{ asset(path_question_option_image().$qsOptions[0]->option_image)}}" @endif alt="">
+                                                @endif
                                                 <input type="file" name="option_image1">
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="form-group">
                                                     <div class="qz-question-category">
                                                         <select name="ans_type1" class="form-control" >
-                                                            <option value="0">{{__('Wrong')}}</option>
-                                                            <option value="1">{{__('Right')}}</option>
+                                                            <option @if(isset($qsOptions) && (isset($question)) && ($question->type == 2) && (isset($qsOptions[0])) &&  ($qsOptions[0]->is_answer == 0)) selected @endif value="0">{{__('Wrong')}}</option>
+                                                            <option @if(isset($qsOptions) && (isset($question)) && ($question->type == 2) && (isset($qsOptions[0])) &&  ($qsOptions[0]->is_answer == 1)) selected @endif  value="1">{{__('Right')}}</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -211,14 +215,18 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
+                                                @if(isset($qsOptions) && (isset($question)) && (isset($qsOptions[1])) && ($question->type == 2))
+                                                    <input type="hidden" name="option2" value="{{$qsOptions[1]->id}}">
+                                                    <img width="50" @if(isset($qsOptions[1]->option_image)) src="{{ asset(path_question_option_image().$qsOptions[1]->option_image)}}" @endif alt="">
+                                                @endif
                                                 <input type="file" name="option_image2">
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="form-group">
                                                     <div class="qz-question-category">
                                                         <select name="ans_type2" class="form-control" >
-                                                            <option value="0">{{__('Wrong')}}</option>
-                                                            <option value="1">{{__('Right')}}</option>
+                                                            <option @if(isset($qsOptions) && (isset($question)) && ($question->type == 2) && (isset($qsOptions[1])) &&  ($qsOptions[1]->is_answer == 0)) selected @endif value="0">{{__('Wrong')}}</option>
+                                                            <option @if(isset($qsOptions) && (isset($question)) && ($question->type == 2) && (isset($qsOptions[1])) &&  ($qsOptions[1]->is_answer == 1)) selected @endif  value="1">{{__('Right')}}</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -226,14 +234,18 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
+                                                @if(isset($qsOptions) && (isset($question)) && (isset($qsOptions[2])) && ($question->type == 2))
+                                                    <input type="hidden" name="option3" value="{{$qsOptions[2]->id}}">
+                                                    <img width="50" @if(isset($qsOptions[2]->option_image)) src="{{ asset(path_question_option_image().$qsOptions[2]->option_image)}}" @endif alt="">
+                                                @endif
                                                 <input type="file" name="option_image3">
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="form-group">
                                                     <div class="qz-question-category">
                                                         <select name="ans_type3" class="form-control" >
-                                                            <option value="0">{{__('Wrong')}}</option>
-                                                            <option value="1">{{__('Right')}}</option>
+                                                            <option @if(isset($qsOptions) && (isset($question)) && ($question->type == 2) && (isset($qsOptions[2])) &&  ($qsOptions[2]->is_answer == 0)) selected @endif value="0">{{__('Wrong')}}</option>
+                                                            <option @if(isset($qsOptions) && (isset($question)) && ($question->type == 2) && (isset($qsOptions[2])) &&  ($qsOptions[2]->is_answer == 1)) selected @endif  value="1">{{__('Right')}}</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -241,14 +253,18 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
+                                                @if(isset($qsOptions) && (isset($question)) && (isset($qsOptions[3])) && ($question->type == 2))
+                                                    <input type="hidden" name="option4" value="{{$qsOptions[3]->id}}">
+                                                    <img width="50" @if(isset($qsOptions[3]->option_image)) src="{{ asset(path_question_option_image().$qsOptions[3]->option_image)}}" @endif alt="">
+                                                @endif
                                                 <input type="file" name="option_image4">
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="form-group">
                                                     <div class="qz-question-category">
                                                         <select name="ans_type4" class="form-control" >
-                                                            <option value="0">{{__('Wrong')}}</option>
-                                                            <option value="1">{{__('Right')}}</option>
+                                                            <option @if(isset($qsOptions) && (isset($question)) && ($question->type == 2) && (isset($qsOptions[3])) &&  ($qsOptions[3]->is_answer == 0)) selected @endif value="0">{{__('Wrong')}}</option>
+                                                            <option @if(isset($qsOptions) && (isset($question)) && ($question->type == 2) && (isset($qsOptions[3])) && ($qsOptions[3]->is_answer == 1)) selected @endif  value="1">{{__('Right')}}</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -310,7 +326,7 @@
                                                 </div>
                                             </div>
                                             @endif
-                                            @if(isset($qsOptions))
+                                            @if(isset($qsOptions) && (isset($question)) && ($question->type == 1))
                                                 @php ($sl = 1)
                                                 @foreach($qsOptions as $opt)
                                                 <div class="row" id="optTitle{{$sl}}">
@@ -364,7 +380,6 @@
 
 @section('script')
     <script type="text/javascript">
-        console.log(1);
         $(document).ready(function(){
             $("#puzzle").hide();
             var i=1;
@@ -421,6 +436,19 @@
                 }
 
             });
+
+            var url = window.location.pathname.split( '/' );
+ console.log(url[1]);
+
+            if (url[1] == 'question-edit') {
+                var type = $('#question_type :selected').val();
+                if (type == 2) {
+                    $("#puzzle").show();
+                    $("#multiple_choise").hide();
+                } else {
+                    $("#multiple_choise").show();
+                }
+            }
 
         });
     </script>
