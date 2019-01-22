@@ -98,6 +98,7 @@ class QuestionController extends Controller
             ->where(['questions.category_id' => $id,'questions.status'=> STATUS_ACTIVE])
             ->whereNotIn('questions.id', UserAnswer::select('question_id')->where(['user_id' => Auth::id()]))
             ->select('questions.*')
+            ->inRandomOrder()
             ->limit($limit)
             ->get();
         $data['hints_coin'] = 0;
@@ -105,15 +106,37 @@ class QuestionController extends Controller
             $data['hints_coin'] = allsetting('hints_coin');
         }
         $lists = [];
+
         if (isset($availableQuestions)) {
             foreach ($availableQuestions as $question) {
                 $item = [];
-                foreach ($question->question_option as $option) {
-                    $item[] = [
-                        'id' => $option->id,
-                        'option_title' => $option->option_title
+                $itemImage = [];
+                if ($question->type == 1) {
+                    foreach ($question->question_option as $option) {
+                        $item[] = [
+                            'id' => $option->id,
+                            'option_title' => $option->option_title
+                        ];
+                    }
+                } else {
+                    $itemImage [] = [
+                        'id' => $question->question_option[0]->id,
+                        'option_image' => asset(path_question_option1_image() . $question->question_option[0]->option_image)
+                    ];
+                    $itemImage [] = [
+                        'id' => $question->question_option[1]->id,
+                        'option_image' => asset(path_question_option2_image() . $question->question_option[1]->option_image)
+                    ];
+                    $itemImage [] = [
+                        'id' => $question->question_option[2]->id,
+                        'option_image' => asset(path_question_option3_image() . $question->question_option[2]->option_image)
+                    ];
+                    $itemImage [] = [
+                        'id' => $question->question_option[3]->id,
+                        'option_image' => asset(path_question_option4_image() . $question->question_option[3]->option_image)
                     ];
                 }
+
                 $lists[] = [
                     'category' => $question->qsCategory->name,
                     'category_id' => $question->qsCategory->id,
@@ -128,7 +151,8 @@ class QuestionController extends Controller
                     'status' => $question->status,
                     'hints' => $question->hints,
                     'skip_coin' => $question->skip_coin,
-                    'options' => $item,
+                    'options' => $question->type == 1 ? $item : $itemImage,
+//                    'options2' => $itemImage,
 //                    'options' => $question->question_option->toArray()
                 ];
 

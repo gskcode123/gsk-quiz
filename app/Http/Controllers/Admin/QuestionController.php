@@ -79,7 +79,7 @@ class QuestionController extends Controller
 
     public function questionSave(Request $request)
     {
-        dd($request->all());
+//        dd($request->all());
         $rules = [
             'title' => ['required', Rule::unique('questions')->ignore($request->edit_id, 'id')],
             'category_id' => 'required',
@@ -102,7 +102,7 @@ class QuestionController extends Controller
             'hints.required' => __('Hints field is required'),
         ];
         if ($request->type == 1) {
-            $rules['options'] = 'required';
+//            $rules['options'] = 'required';
         }
         if (!empty($request->coin)) {
             $rules['coin'] = 'numeric|between:1,1000';
@@ -207,7 +207,6 @@ class QuestionController extends Controller
                                 'option_title' => $options[$i],
                                 'is_answer' => $types[$i]
                             ]);
-
                         }
                     }
 
@@ -242,7 +241,6 @@ class QuestionController extends Controller
         if (!empty($id) && is_numeric($id)) {
             $data['question'] = Question::findOrFail($id);
             $data['qsOptions'] = QuestionOption::where('question_id', $id)->get();
-//            dd($data['qsOptions'][0]->id);
         }
         return view('admin.question.add', $data);
     }

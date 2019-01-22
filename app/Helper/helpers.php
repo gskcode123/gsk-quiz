@@ -156,9 +156,21 @@ function path_question_image()
 {
     return 'uploaded_file/files/img/question/';
 }
-function path_question_option_image()
+function path_question_option1_image()
 {
-    return 'uploaded_file/files/img/question/options/';
+    return 'uploaded_file/files/img/question/options/option1/';
+}
+function path_question_option2_image()
+{
+    return 'uploaded_file/files/img/question/options/option2/';
+}
+function path_question_option3_image()
+{
+    return 'uploaded_file/files/img/question/options/option3/';
+}
+function path_question_option4_image()
+{
+    return 'uploaded_file/files/img/question/options/option4/';
 }
 function path_landing_blog_image()
 {

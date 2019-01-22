@@ -248,94 +248,94 @@ class CommonService
     public function saveOptionImage($request,$question_id)
     {
         if (isset($request->ans_type1)) {
-            $data = [
+            $data1 = [
                 'question_id'=>$question_id,
                 'is_answer'=>$request->ans_type1,
             ];
             if (!empty($request->edit_id)) {
-                $option = QuestionOption::where('id', $request->option1)->first();
+                $option1 = QuestionOption::where('id', $request->option1)->first();
             }
             if (!empty($request['option_image1'])) {
                 $old_img = '';
-                if (!empty($option->option_image)) {
-                    $old_img = $option->option_image;
+                if (!empty($option1->option_image)) {
+                    $old_img = $option1->option_image;
                 }
-                $option_image1 = fileUpload($request['option_image1'], path_question_option_image(), $old_img);
-                $data['option_image'] = $option_image1;
+                $option_image1 = fileUpload($request['option_image1'], path_question_option1_image(), $old_img);
+                $data1['option_image'] = $option_image1;
             }
             if (!empty($request->edit_id)) {
-                $option->update($data);
+                $option1->update($data1);
             } else {
-                QuestionOption::create($data);
+                QuestionOption::create($data1);
             }
         }
 
         if (isset($request->ans_type2)) {
-            $data = [
+            $data2 = [
                 'question_id'=>$question_id,
                 'is_answer'=>$request->ans_type2,
             ];
             if (!empty($request->edit_id)) {
-                $option = QuestionOption::where('id', $request->option2)->first();
+                $option2 = QuestionOption::where('id', $request->option2)->first();
             }
             if (!empty($request['option_image2'])) {
                 $old_img = '';
-                if (!empty($option->option_image)) {
-                    $old_img = $option->option_image;
+                if (!empty($option2->option_image)) {
+                    $old_img = $option2->option_image;
                 }
-                $option_image2 = fileUpload($request['option_image2'], path_question_option_image(), $old_img);
-                $data['option_image'] = $option_image2;
+                $option_image2 = fileUpload($request['option_image2'], path_question_option2_image(), $old_img);
+                $data2['option_image'] = $option_image2;
             }
             if (!empty($request->edit_id)) {
-                $option->update($data);
+                $option2->update($data2);
             } else {
-                QuestionOption::create($data);
+                QuestionOption::create($data2);
             }
         }
 
         if (isset($request->ans_type3)) {
-            $data = [
+            $data3 = [
                 'question_id'=>$question_id,
                 'is_answer'=>$request->ans_type3,
             ];
             if (!empty($request->edit_id)) {
-                $option = QuestionOption::where('id', $request->option3)->first();
+                $option3 = QuestionOption::where('id', $request->option3)->first();
             }
             if (!empty($request['option_image3'])) {
                 $old_img = '';
-                if (!empty($option->option_image)) {
-                    $old_img = $option->option_image;
+                if (!empty($option3->option_image)) {
+                    $old_img = $option3->option_image;
                 }
-                $option_image3 = fileUpload($request['option_image3'], path_question_option_image(), $old_img);
-                $data['option_image'] = $option_image3;
+                $option_image3 = fileUpload($request['option_image3'], path_question_option3_image(), $old_img);
+                $data3['option_image'] = $option_image3;
             }
             if (!empty($request->edit_id)) {
-                $option->update($data);
+                $option3->update($data3);
             } else {
-                QuestionOption::create($data);
+                QuestionOption::create($data3);
             }
         }
 
         if (isset($request->ans_type4)) {
-            $data = [
+            $data4 = [
                 'question_id'=>$question_id,
                 'is_answer'=>$request->ans_type4,
             ];
             if (!empty($request->edit_id)) {
-                $option = QuestionOption::where('id', $request->option4)->first();
+                $option4 = QuestionOption::where('id', $request->option4)->first();
             }
             if (!empty($request['option_image4'])) {
                 $old_img = '';
-                if (!empty($option->option_image)) {
-                    $old_img = $option->option_image;
+                if (!empty($option4->option_image)) {
+                    $old_img = $option4->option_image;
                 }
-                $option_image4 = fileUpload($request['option_image4'], path_question_option_image(), $old_img);
-                $data['option_image'] = $option_image4;
+                $option_image4 = fileUpload($request['option_image4'], path_question_option4_image(), $old_img);
+                $data4['option_image'] = $option_image4;
             }
             if (!empty($request->edit_id)) {
-                $option->update($data);
+                $option4->update($data4);
             } else {
-                QuestionOption::create($data);
+                QuestionOption::create($data4);
             }
         }
     }
