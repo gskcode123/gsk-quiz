@@ -29,7 +29,11 @@ class QuestionController extends Controller
         $data = ['success' => false, 'data' => [], 'message' => __('Something went wrong')];
 
         $categories = Category::where('status', STATUS_ACTIVE)->orderBy('serial', 'ASC')->get();
-
+        $data['user_available_coin'] = 0;
+        if (isset(Auth::user()->userCoin->coin)) {
+            $data['user_available_coin'] = Auth::user()->userCoin->coin;
+        }
+        $item = [];
         if (isset($categories)) {
             foreach ($categories as $list) {
                 $item[] = [
@@ -43,23 +47,21 @@ class QuestionController extends Controller
                     'max_limit' => $list->max_limit,
                     'serial' => $list->serial,
                     'status' => $list->status,
+                    'coin' => $list->coin,
                     'question_amount' => count_question($list->id),
+                    'is_locked' => $list->coin > 0 ? 1 : 0
                 ];
             }
 
             if (!empty($item)) {
-                $data = [
-                    'success' => true,
-                    'category_list' => $item
-                ];
+                $data['message'] = __('Category List');
+                $data['success'] = true;
+                $data['category_list'] = $item;
             }
         } else {
-            $data = [
-                'success' => false,
-                'message' => __('No data found')
-            ];
+            $data ['success'] =  false;
+            $data['message'] = __('No data found');
         }
-
         return response()->json($data);
     }
 
@@ -98,7 +100,10 @@ class QuestionController extends Controller
             ->select('questions.*')
             ->limit($limit)
             ->get();
-
+        $data['hints_coin'] = 0;
+        if (!empty(allsetting('hints_coin'))) {
+            $data['hints_coin'] = allsetting('hints_coin');
+        }
         $lists = [];
         if (isset($availableQuestions)) {
             foreach ($availableQuestions as $question) {
@@ -121,6 +126,8 @@ class QuestionController extends Controller
                     'coin' => $question->coin,
                     'time_limit' => isset($question->time_limit) ? $question->time_limit : $timeLimit,
                     'status' => $question->status,
+                    'hints' => $question->hints,
+                    'skip_coin' => $question->skip_coin,
                     'options' => $item,
 //                    'options' => $question->question_option->toArray()
                 ];
@@ -129,11 +136,9 @@ class QuestionController extends Controller
 
 
             if (!empty($lists)) {
-                $data = [
-                    'success' => true,
-                    'availableQuestionList' => $lists,
-//                    'options' => $item
-                ];
+                $data['success'] = true;
+                $data['availableQuestionList'] = $lists;
+                $data['message'] = __('Available Question List');
             } else {
                 $data = [
                     'success' => false,
@@ -332,8 +337,8 @@ class QuestionController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => $e->getMessage(),
-                //'message' => 'Something went wrong. Please try again!',
+//                'message' => $e->getMessage(),
+                'message' => 'Something went wrong. Please try again!',
             ]);
         }
 
@@ -349,67 +354,31 @@ class QuestionController extends Controller
      *
      *
      */
-    public function leaderBoard()
+    public function leaderBoard($type=null)
     {
         $data = ['success' => false, 'data' => [], 'message' => __('Something Went wrong !')];
-        $leaders = UserAnswer::select(
-            DB::raw('SUM(point) as score, user_id'))
-            ->groupBy('user_id')
-            ->orderBy('score', 'DESC')
-            ->get();
-
-        $lists = [];
-        if (isset($leaders)) {
-            $rank = 1;
-            foreach ($leaders as $item) {
-
-                $lists[] = [
-                    'user_id' => $item->user_id,
-                    'photo' => asset(pathUserImage() . $item->user->photo),
-                    'name' => $item->user->name,
-                    'score' => $item->score,
-                    'ranking' => $rank++,
-                ];
-            }
-            if (!empty($lists)) {
-                $data = [
-                    'success' => true,
-                    'leaderList' => $lists,
-                ];
-            } else {
-                $data = [
-                    'success' => false,
-                    'message' => __('No data found')
-                ];
-            }
+        if ($type == 2) {
+            $leaders = UserAnswer::select(
+                DB::raw('SUM(point) as score, user_id'))
+                ->groupBy('user_id')
+                ->whereDate('created_at', Carbon::today())
+                ->orderBy('score', 'DESC')
+                ->get();
+        } elseif($type == 3) {
+            $leaders = UserAnswer::select(
+                DB::raw('SUM(point) as score, user_id'))
+                ->groupBy('user_id')
+                ->where('created_at', '>=', Carbon::now()->subDays(7))
+                ->orderBy('score', 'DESC')
+                ->get();
         } else {
-            $data = [
-                'success' => false,
-                'message' => __('No data found')
-            ];
+            $leaders = UserAnswer::select(
+                DB::raw('SUM(point) as score, user_id'))
+                ->groupBy('user_id')
+                ->orderBy('score', 'DESC')
+                ->get();
         }
 
-        return response()->json($data);
-    }
-    /*
-     * todaysTopscorer
-     *
-     * Todays top scorer list
-     *
-     *
-     *
-     *
-     */
-    public function todaysTopscorers()
-    {
-        $data = ['success' => false, 'data' => [], 'message' => __('Something Went wrong !')];
-        $leaders = UserAnswer::select(
-            DB::raw('SUM(point) as score, user_id'))
-            ->groupBy('user_id')
-            ->whereDate('created_at', Carbon::today())
-            ->orderBy('score', 'DESC')
-            ->get();
-
         $lists = [];
         if (isset($leaders)) {
             $rank = 1;
@@ -420,59 +389,7 @@ class QuestionController extends Controller
                     'photo' => asset(pathUserImage() . $item->user->photo),
                     'name' => $item->user->name,
                     'score' => $item->score,
-                    'ranking' => $rank++,
-                ];
-            }
-            if (!empty($lists)) {
-                $data = [
-                    'success' => true,
-                    'leaderList' => $lists,
-                ];
-            } else {
-                $data = [
-                    'success' => false,
-                    'message' => __('No data found')
-                ];
-            }
-        } else {
-            $data = [
-                'success' => false,
-                'message' => __('No data found')
-            ];
-        }
-
-        return response()->json($data);
-    }
-
-    /*
-     * weeklyTopscorers
-     *
-     * Weekly top scorer list
-     *
-     *
-     *
-     *
-     */
-    public function weeklyTopscorers()
-    {
-        $data = ['success' => false, 'data' => [], 'message' => __('Something Went wrong !')];
-        $leaders = UserAnswer::select(
-            DB::raw('SUM(point) as score, user_id'))
-            ->groupBy('user_id')
-            ->where('created_at', '>=', Carbon::now()->subDays(7))
-            ->orderBy('score', 'DESC')
-            ->get();
-
-        $lists = [];
-        if (isset($leaders)) {
-            $rank = 1;
-            foreach ($leaders as $item) {
-
-                $lists[] = [
-                    'user_id' => $item->user_id,
-                    'photo' => asset(pathUserImage() . $item->user->photo),
-                    'name' => $item->user->name,
-                    'score' => $item->score,
+                    'coin' => isset($item->user->userCoin->coin) ? $item->user->userCoin->coin : 0,
                     'ranking' => $rank++,
                 ];
             }

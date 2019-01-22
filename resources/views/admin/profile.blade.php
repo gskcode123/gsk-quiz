@@ -52,20 +52,20 @@
                             <div class="row">
                                 <div class="col-lg-4">
                                     <div class="qz-user-status-card qz-user-status-card-bg1">
-                                        <h4>20</h4>
+                                        <h4>{{calculate_ranking($user->id)}}</h4>
                                         <h6>{{__('Average Rank')}}</h6>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="qz-user-status-card qz-user-status-card-bg2">
-                                        <h4>1540</h4>
+                                        <h4>@if(isset($user->userCoin->coin)) {{ $user->userCoin->coin }} @else 0 @endif</h4>
                                         <h6>{{__('Total earn Coin')}}</h6>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="qz-user-status-card qz-user-status-card-bg3">
-                                        <h4>20</h4>
-                                        <h6>{{__('Challenge played')}}</h6>
+                                        <h4>{{ calculate_score($user->id) }}</h4>
+                                        <h6>{{__('Total Score')}}</h6>
                                     </div>
                                 </div>
                             </div>

@@ -85,7 +85,7 @@
                                         <div class="form-group">
                                             <label>{{__('Question Type')}} <span class="text-danger">*</span></label>
                                             <div class="qz-question-category">
-                                                <select class="form-control" name="type">
+                                                <select class="form-control" name="type" id="question_type">
                                                     <option value="">{{__('Select Type')}}</option>
                                                     @foreach(question_type() as $key => $value)
                                                         <option @if(isset($question) && ($question->type == $key)) selected
@@ -126,7 +126,7 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label>{{__('Skip Coin')}} <span class="text-danger"></span></label>
+                                            <label>{{__('Skip Coin')}} <span class="text-danger">*</span></label>
                                             <input type="text" @if(isset($question)) value="{{ $question->skip_coin }}" @else value="{{ old('skip_coin') }}" @endif name ="skip_coin" class="form-control" placeholder="Skip Coin">
                                             @if ($errors->has('skip_coin'))
                                                 <span class="text-danger">
@@ -180,7 +180,83 @@
                                         {{--</div>--}}
                                     {{--</div>--}}
                                 </div>
-                                <div class="row">
+                                <div class="row" id="puzzle">
+                                    <div class="col-md-12">
+                                        <div class="row" id="">
+                                            <div class="col-md-6 qz-label-hide">
+                                                <div class="form-group">
+                                                    <label>{{__('Options')}}<span class="text-danger"></span></label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 qz-label-hide">
+                                                <div class="form-group">
+                                                    <label>{{__('Answer Type')}}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <input type="file" name="option_image1">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <div class="qz-question-category">
+                                                        <select name="ans_type1" class="form-control" >
+                                                            <option value="0">{{__('Wrong')}}</option>
+                                                            <option value="1">{{__('Right')}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <input type="file" name="option_image2">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <div class="qz-question-category">
+                                                        <select name="ans_type2" class="form-control" >
+                                                            <option value="0">{{__('Wrong')}}</option>
+                                                            <option value="1">{{__('Right')}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <input type="file" name="option_image3">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <div class="qz-question-category">
+                                                        <select name="ans_type3" class="form-control" >
+                                                            <option value="0">{{__('Wrong')}}</option>
+                                                            <option value="1">{{__('Right')}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <input type="file" name="option_image4">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <div class="qz-question-category">
+                                                        <select name="ans_type4" class="form-control" >
+                                                            <option value="0">{{__('Wrong')}}</option>
+                                                            <option value="1">{{__('Right')}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" id="multiple_choise">
                                     <div class="col-lg-12">
                                         <div class="row" id="">
                                             <div class="col-md-6 qz-label-hide">
@@ -202,7 +278,7 @@
                                             <div class="row" id="">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <input type="text" required name="options[]" class="form-control" placeholder="Answer">
+                                                        <input type="text"  name="options[]" class="form-control" placeholder="Answer">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
@@ -219,7 +295,7 @@
                                             <div class="row" id="dynamic_field">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <input type="text" required name="options[]" class="form-control" placeholder="Answer">
+                                                        <input type="text"  name="options[]" class="form-control" placeholder="Answer">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
@@ -264,19 +340,18 @@
                                             <div class="row" id="dynamic_field">
                                             </div>
                                             @endif
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    @if(isset($question))
-                                                        <input type="hidden" name="edit_id" value="{{$question->id}}">
-                                                    @endif
-                                                    <button type="submit" class="btn btn-primary btn-block add-category-btn mt-4">
-                                                        @if(isset($question)) {{__('Update')}} @else {{__('Add New')}} @endif
-                                                    </button>
-                                                </div>
-                                            </div>
                                     </div>
                                 </div>
-
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        @if(isset($question))
+                                            <input type="hidden" name="edit_id" value="{{$question->id}}">
+                                        @endif
+                                        <button type="submit" class="btn btn-primary btn-block add-category-btn mt-4">
+                                            @if(isset($question)) {{__('Update')}} @else {{__('Add New')}} @endif
+                                        </button>
+                                    </div>
+                                </div>
                             {{ Form::close() }}
                         </div>
                     </div>
@@ -291,6 +366,7 @@
     <script type="text/javascript">
         console.log(1);
         $(document).ready(function(){
+            $("#puzzle").hide();
             var i=1;
 
             $('#add').click(function () {
@@ -332,6 +408,18 @@
                 $('#optTitle'+button_id+'').remove();
                 // $('#optAns'+button_id+'').remove();
                 // $(this).remove();
+            });
+
+            $('#question_type').change(function () {
+                var type = $('#question_type :selected').val();
+                if (type == 2) {
+                    $("#puzzle").show();
+                    $("#multiple_choise").hide();
+                } else {
+                    $("#multiple_choise").show();
+                    $("#puzzle").hide();
+                }
+
             });
 
         });

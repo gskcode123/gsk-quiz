@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Model\UserAnswer;
+use App\Model\UserCoin;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
@@ -31,5 +32,9 @@ class User extends Authenticatable
     public function userAnswer()
     {
         return $this->hasMany(UserAnswer::class);
+    }
+    public function userCoin()
+    {
+        return $this->hasOne(UserCoin::class);
     }
 }

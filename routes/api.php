@@ -36,9 +36,14 @@ Route::group(['middleware' =>['auth:api','api.lang'],'namespace'=>'Api'],functio
     Route::post('submit-answer/{id}', 'QuestionController@submitAnswer');
 
     //Leader Board
-    Route::get('leader-board', 'QuestionController@leaderBoard');
+    Route::get('leader-board/{type?}', 'QuestionController@leaderBoard');
 
     // set device id
     Route::get('set-user-device-id/{user_id}/{device_id}','AuthController@setDeviceId');
+
+    //deduct coin
+    Route::post('deduct-coin', 'CoinController@deductCoin');
+    //add coin
+    Route::post('earn-coin', 'CoinController@earnCoin');
 
 });

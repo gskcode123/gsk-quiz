@@ -83,7 +83,7 @@ class QuestionController extends Controller
         $rules = [
             'title' => ['required', Rule::unique('questions')->ignore($request->edit_id, 'id')],
             'category_id' => 'required',
-            'skip_coin' => 'required',
+            'skip_coin' => 'required|numeric|between:0,100',
             'hints' => 'required',
             'type' => 'required',
             'status' => 'required',
@@ -98,9 +98,14 @@ class QuestionController extends Controller
             'options.required' => __('Option field can not be empty'),
             'category_id.required' => __('Must be select a category'),
             'type.required' => __('Must be select a question type'),
+            'skip_coin.required' => __('Skip coin field is required'),
+            'hints.required' => __('Hints field is required'),
         ];
         if (!empty($request->coin)) {
             $rules['coin'] = 'numeric|between:1,1000';
+        }
+        if (!empty($request->time_limit)) {
+            $rules['time_limit'] = 'numeric|between:1,10';
         }
 
         $this->validate($request, $rules,$messages);
@@ -114,6 +119,8 @@ class QuestionController extends Controller
                 'point' => $request->point,
                 'serial' => $request->serial,
                 'status' => $request->status,
+                'skip_coin' => $request->skip_coin,
+                'hints' => $request->hints,
             ];
 
             if (!empty($request->coin)) {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Exceptions\ApiException;
 use App\Model\UserVerificationCode;
+use App\Services\CommonService;
 use App\Services\MailService;
 use App\User;
 use Illuminate\Http\Request;
@@ -49,6 +50,10 @@ class AuthController extends Controller
 
         if (isset($user) && Hash::check($request->password, $user->password)) {
 
+            $admob_coin = 0;
+            if(!empty(allsetting('admob_coin'))) {
+                $admob_coin = allsetting('admob_coin');
+            }
             $token = $user->createToken($request->email)->accessToken;
             if ($user->role == USER_ROLE_USER) {
                 //Check email verification
@@ -57,7 +62,7 @@ class AuthController extends Controller
                         $user->update();
 
                         $data['success'] = true;
-                        $data['data'] = ['access_token' => $token, 'access_type' => "Bearer", 'user_info' => $user];
+                        $data['data'] = ['access_token' => $token, 'access_type' => "Bearer", 'admob_coin' =>$admob_coin, 'user_info' => $user];
                         $data['message'] = __('Successfully Logged in');
 
                     } else {
@@ -75,7 +80,7 @@ class AuthController extends Controller
                         $mailService->send('email.verifyapp', $data, $userEmail, $userName, $subject);
 
                         $data['success'] = true;
-                        $data['data'] = ['access_token' => $token, 'user_info' => $user, 'access_type' => "Bearer"];
+                        $data['data'] = ['access_token' => $token, 'user_info' => $user, 'admob_coin' =>$admob_coin, 'access_type' => "Bearer"];
                         $data['message'] = __('Your email is not verified. Please verify your email to get full access.');
                     }
                 } elseif ($user->active_status == STATUS_SUSPENDED) {
@@ -147,48 +152,54 @@ class AuthController extends Controller
             $data['message'] = $errors;
             return response()->json($data);
         }
+        try {
+            //verification key s for email and phone
+            $mail_key = $this->generate_email_verification_key();
 
-        //verification key s for email and phone
-        $mail_key = $this->generate_email_verification_key();
+            $user = User::create([
+                'name' => $request->get('name'),
+                'phone' => $request->get('phone'),
+                'email' => $request->get('email'),
+                'password' => Hash::make($request->get('password')),
+                'role' => USER_ROLE_USER,
+                'active_status' => STATUS_SUCCESS,
+                'email_verified' => STATUS_PENDING,
+                'reset_code' => md5($request->get('email') . uniqid() . randomString(5)),
+                'language' => 'en'
+            ]);
 
-        $user = User::create([
-            'name' => $request->get('name'),
-            'phone' => $request->get('phone'),
-            'email' => $request->get('email'),
-            'password' => Hash::make($request->get('password')),
-            'role' => USER_ROLE_USER,
-            'active_status' => STATUS_SUCCESS,
-            'email_verified' => STATUS_PENDING,
-            'reset_code' => md5($request->get('email') . uniqid() . randomString(5)),
-            'language' => 'en'
-        ]);
+            UserVerificationCode::create([
+                'user_id' => $user->id,
+                'code' => $mail_key,
+                'type' => 1,
+                'status' => STATUS_PENDING,
+                'expired_at' => date('Y-m-d', strtotime('+10 days'))
+            ]);
+            $createCoinWallet = app(CommonService::class)->create_coin_wallet($user->id);
+            $mailService = app(MailService::class);
+            $userName = $user->name ;
+            $userEmail = $user->email;
+            $companyName = isset($default['company']) && !empty($default['company']) ? $default['company'] : __('Quiz Test');
+            $subject = __('Email Verification | :companyName', ['companyName' => $companyName]);
+            $data['data'] = $user;
+            $data['key'] = $mail_key;
+            $mailService->send('email.verifyapp', $data, $userEmail, $userName, $subject);
 
-        UserVerificationCode::create([
-            'user_id' => $user->id,
-            'code' => $mail_key,
-            'type' => 1,
-            'status' => STATUS_PENDING,
-            'expired_at' => date('Y-m-d', strtotime('+10 days'))
-        ]);
-        $mailService = app(MailService::class);
-        $userName = $user->name ;
-        $userEmail = $user->email;
-        $companyName = isset($default['company']) && !empty($default['company']) ? $default['company'] : __('Quiz Test');
-        $subject = __('Email Verification | :companyName', ['companyName' => $companyName]);
-        $data['data'] = $user;
-        $data['key'] = $mail_key;
-        $mailService->send('email.verifyapp', $data, $userEmail, $userName, $subject);
+            if ($user) {
+                $token = $user->createToken($request->get('email'))->accessToken;
+                $data['success'] = true;
+                $data['data'] = ['access_token' => $token, 'access_type' => "Bearer", 'user_info' => $user];
+                $data['message'] = __('Successfully Signed up! Please verify your acccount');
 
-        if ($user) {
-            $token = $user->createToken($request->get('email'))->accessToken;
-            $data['success'] = true;
-            $data['data'] = ['access_token' => $token, 'access_type' => "Bearer", 'user_info' => $user];
-            $data['message'] = __('Successfully Signed up! Please verify your acccount');
+                return response()->json($data);
+            }
 
+            throw new ApiException(__('Registration failed. Please try again.'));
+        } catch(\Exception $e) {
+            $data =['success' => false, 'message' => __('Something went wrong')];
             return response()->json($data);
         }
 
-        throw new ApiException(__('Registration failed. Please try again.'));
     }
 
     /*

@@ -41,6 +41,7 @@
                                     <th>{{__('SL.')}}</th>
                                     <th>{{__('People')}}</th>
                                     <th>{{__('Score')}}</th>
+                                    <th>{{__('Coin')}}</th>
                                     <th>{{__('Rank')}}</th>
                                 </tr>
                                 </thead>
@@ -58,6 +59,7 @@
                                                 </div>
                                             </td>
                                             <td>{{ $item->score }}</td>
+                                            <td>@if(isset($item->user->userCoin->coin)){{ $item->user->userCoin->coin }} @else 0 @endif</td>
                                             <td class="text-center"><span class="text-success">{{ $rank++ }}</span></td>
                                         </tr>
                                     @endforeach

@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Model\AffiliationCode;
 use App\Model\Coin;
 use App\Model\Deposit;
+use App\Model\UserCoin;
 use App\Model\UserInfo;
 use App\Model\UserSetting;
 use App\Model\UserVerificationCode;
@@ -137,7 +138,7 @@ class CommonService
                         'expired_at' => date('Y-m-d', strtotime('+10 days')),
                         'status' => STATUS_PENDING]
                 );
-
+                $this->create_coin_wallet($user->id);
                 $this->sendVerificationMail($user, $mailTemplet, $mail_key);
             });
             return [
@@ -168,7 +169,11 @@ class CommonService
 
     public function create_coin_wallet($user_id)
     {
-
+        $coin = 0;
+        if(!empty(allsetting('signup_coin'))) {
+            $coin = allsetting('signup_coin');
+        }
+        $createCoinWallet = UserCoin::create(['user_id' => $user_id, 'coin' => $coin]);
     }
 
     public function user_details($email)
@@ -181,6 +186,61 @@ class CommonService
     {
         $smsText = 'Your '.allsetting()['app_title'].' verification code is here ' . $randno;
         app(SmsService::class)->send($phone, $smsText);
+    }
+
+    public function addOrDeductCoin($coin, $type)
+    {
+        $response['status'] = false;
+        $response['message'] = __('Invalid Request');
+
+        try {
+            $userCoin = UserCoin::where('user_id', Auth::user()->id)->first();
+            $response['available_coin'] = 0;
+            if (isset($userCoin)) {
+                $response['available_coin'] = $userCoin->coin;
+                if ($type == 1) {
+                    if ($userCoin->coin < $coin) {
+                        $response['status'] = false;
+                        $response['message'] = __("You don't have sufficient coin");
+                    } else {
+                        $deductCoin = bcsub($userCoin->coin, $coin);
+                        $dCoin = $userCoin->update(['coin' => $deductCoin]);
+                        if ($dCoin) {
+                            $response['status'] = true;
+                            $response['available_coin'] = UserCoin::where('user_id', Auth::user()->id)->first()->coin;
+                            $response['message'] = __('Coin deducted successfully');
+                        } else {
+                            $response['status'] = false;
+                            $response['message'] = __('Operation failed');
+                        }
+                    }
+                } else {
+                    $addedCoin = bcadd($userCoin->coin, $coin);
+                    $addCoin = $userCoin->update(['coin' => $addedCoin]);
+                    if ($addCoin) {
+//                        $currentCoin = UserCoin::where('user_id', Auth::user()->id)->first()->coin;
+                        $response['status'] = true;
+                        $response['available_coin'] = UserCoin::where('user_id', Auth::user()->id)->first()->coin;
+                        $response['message'] = __('Coin earned successfully');
+                    } else {
+                        $response['status'] = false;
+                        $response['message'] = __('Operation failed');
+                    }
+                }
+
+            } else {
+                $response['status'] = false;
+                $response['message'] = __('User Coin Account Not Found');
+            }
+        } catch (\Exception $e) {
+            $response = [
+                'success' => false,
+                'message' => __('Something went wrong . Please try again!')
+            ];
+            return $response;
+        }
+
+        return $response;
     }
 
 }

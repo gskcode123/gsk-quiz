@@ -59,13 +59,13 @@ class SettingController extends Controller
                 AdminSetting::where(['slug' => 'copyright_text'])->update(['value' => $request->copyright_text]);
             }
             if (isset($request->hints_coin)) {
-                AdminSetting::updateOrCreate(['slug' => 'hints_coin','value' => $request->hints_coin]);
+                AdminSetting::updateOrCreate(['slug' => 'hints_coin'],['value' => $request->hints_coin]);
             }
             if (isset($request->admob_coin)) {
-                AdminSetting::updateOrCreate(['slug' => 'admob_coin','value' => $request->admob_coin]);
+                AdminSetting::updateOrCreate(['slug' => 'admob_coin'],['value' => $request->admob_coin]);
             }
             if (isset($request->signup_coin)) {
-                AdminSetting::updateOrCreate(['slug' => 'signup_coin','value' => $request->signup_coin]);
+                AdminSetting::updateOrCreate(['slug' => 'signup_coin'],['value' => $request->signup_coin]);
             }
             if (isset($request->logo)) {
 //                AdminSetting::updateOrCreate(['slug' => 'logo'], ['value' => uploadthumb($request->logo, path_image(), 'logo_', '', '', allsetting()['logo'])]);

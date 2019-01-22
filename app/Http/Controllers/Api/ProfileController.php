@@ -71,11 +71,15 @@ class ProfileController extends Controller
                 'created_at',
                 'updated_at'
             )->findOrFail(Auth::user()->id);
-
+            $coin = 0;
+            if(isset($user->userCoin->coin)) {
+                $coin = $user->userCoin->coin;
+            }
             $data['data']['user'] = $user;
             $data['data']['user']->photo = asset(pathUserImage() . $user->photo);
             $data['data']['user']['ranking'] = calculate_ranking($user->id);
             $data['data']['user']['points'] = calculate_score($user->id);
+            $data['data']['user']['coins'] = $coin;
             $data['success'] = true;
             $data['message'] = __('Successfull');
         }

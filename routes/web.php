@@ -25,7 +25,7 @@ Route::post('/postsignin','AuthController@loginProcess')->name('loginProcess');
 Route::get('verify-{verification_code}','AuthController@verifyEmail')->name('verifyEmail');
 
 //forgot password
-Route::get('forget-password','AuthController@forgetPassword')->name('forgetPassword');
+//Route::get('forget-password','AuthController@forgetPassword')->name('forgetPassword');
 Route::post('forget-password-process', 'AuthController@forgetPasswordProcess')->name('forgetPasswordProcess');
 Route::get('forget-password-change/{reset_code}', 'AuthController@forgetPasswordChange')->name('forgetPasswordChange');
 Route::get('forget-password-reset', 'AuthController@forgetPasswordReset')->name('forgetPasswordReset');
