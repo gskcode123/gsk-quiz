@@ -62,7 +62,7 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label>{{__('Hints Coin')}}</label>
+                                            <label>{{__('Coin for hints')}}</label>
                                             <input type="text" name="hints_coin" value ="@if(isset($adm_setting['hints_coin'])) {{ $adm_setting['hints_coin'] }} @endif" class="form-control number-only no-regx" placeholder="">
                                         </div>
                                     </div>

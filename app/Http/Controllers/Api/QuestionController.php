@@ -120,20 +120,20 @@ class QuestionController extends Controller
                     }
                 } else {
                     $itemImage [] = [
-                        'id' => $question->question_option[0]->id,
-                        'option_image' => asset(path_question_option1_image() . $question->question_option[0]->option_image)
+                        'id' => isset($question->question_option[0]) ? $question->question_option[0]->id : '',
+                        'option_image' => isset($question->question_option[0]) ?  asset(path_question_option1_image() . $question->question_option[0]->option_image) : ''
                     ];
                     $itemImage [] = [
-                        'id' => $question->question_option[1]->id,
-                        'option_image' => asset(path_question_option2_image() . $question->question_option[1]->option_image)
+                        'id' => isset($question->question_option[1]) ? $question->question_option[1]->id : '',
+                        'option_image' => isset($question->question_option[1]) ?  asset(path_question_option2_image() . $question->question_option[1]->option_image) : ''
                     ];
                     $itemImage [] = [
-                        'id' => $question->question_option[2]->id,
-                        'option_image' => asset(path_question_option3_image() . $question->question_option[2]->option_image)
+                        'id' => isset($question->question_option[2]) ? $question->question_option[2]->id : '',
+                        'option_image' => isset($question->question_option[2]) ? asset(path_question_option3_image() . $question->question_option[2]->option_image) : ''
                     ];
                     $itemImage [] = [
-                        'id' => $question->question_option[3]->id,
-                        'option_image' => asset(path_question_option4_image() . $question->question_option[3]->option_image)
+                        'id' => isset($question->question_option[3]) ? $question->question_option[3]->id : '',
+                        'option_image' => isset($question->question_option[3]) ? asset(path_question_option4_image() . $question->question_option[3]->option_image) : ''
                     ];
                 }
 

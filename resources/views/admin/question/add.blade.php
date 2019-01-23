@@ -49,8 +49,8 @@
                                     </div>
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <label>{{__('Answer Hints')}} <span class="text-danger">*</span></label>
-                                            <input type="text" name="hints" @if(isset($question)) value="{{ $question->hints }}" @else value="{{ old('hints') }}" @endif class="form-control" placeholder="Answer Hints">
+                                            <label>{{__('Hints')}} <span class="text-danger">*</span></label>
+                                            <input type="text" name="hints" @if(isset($question)) value="{{ $question->hints }}" @else value="{{ old('hints') }}" @endif class="form-control" placeholder=" Hints">
                                             @if ($errors->has('hints'))
                                                 <span class="text-danger">
                                                     <strong>{{ $errors->first('hints') }}</strong>
@@ -126,8 +126,8 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label>{{__('Skip Coin')}} <span class="text-danger">*</span></label>
-                                            <input type="text" @if(isset($question)) value="{{ $question->skip_coin }}" @else value="{{ old('skip_coin') }}" @endif name ="skip_coin" class="form-control" placeholder="Skip Coin">
+                                            <label>{{__('Coin for skip')}} <span class="text-danger">*</span></label>
+                                            <input type="text" @if(isset($question)) value="{{ $question->skip_coin }}" @else value="{{ old('skip_coin') }}" @endif name ="skip_coin" class="form-control" placeholder="Coin for skip">
                                             @if ($errors->has('skip_coin'))
                                                 <span class="text-danger">
                                                         <strong>{{ $errors->first('skip_coin') }}</strong>
