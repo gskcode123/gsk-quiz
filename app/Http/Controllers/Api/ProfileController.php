@@ -75,11 +75,17 @@ class ProfileController extends Controller
             if(isset($user->userCoin->coin)) {
                 $coin = $user->userCoin->coin;
             }
+            $participated_questions = 0;
+            $userQuestions = UserAnswer::where('user_id', Auth::user()->id)->count();
+            if($userQuestions) {
+                $participated_questions = $userQuestions;
+            }
             $data['data']['user'] = $user;
             $data['data']['user']->photo = asset(pathUserImage() . $user->photo);
             $data['data']['user']['ranking'] = calculate_ranking($user->id);
             $data['data']['user']['points'] = calculate_score($user->id);
             $data['data']['user']['coins'] = $coin;
+            $data['data']['user']['participated_questions'] = $participated_questions;
             $data['success'] = true;
             $data['message'] = __('Successfull');
         }
