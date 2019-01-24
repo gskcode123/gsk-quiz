@@ -318,6 +318,7 @@ class QuestionController extends Controller
             }
             $question = Question::where(['id' => $id])->first();
             $option = QuestionOption::where(['id'=> $request->answer, 'question_id'=> $id])->first();
+            $userAnswer = UserAnswer::where(['question_id' => $id, 'user_id' => Auth::user()->id])->first();
 
             $input =[
                 'user_id' => Auth::user()->id,
@@ -335,8 +336,10 @@ class QuestionController extends Controller
                         if ($option->is_answer == ANSWER_TRUE) {
                             $input['is_correct'] = ANSWER_TRUE;
                             $input['point'] = $question->point;
-
-                            $updatePoint = $userCoins->increment('coin', $question->coin);
+                            $input['coin'] = $question->coin;
+                            if (empty($userAnswer)) {
+                                $updatePoint = $userCoins->increment('coin', $question->coin);
+                            }
                             $data = [
                                 'success' => true,
                                 'message' => __('Right Answer'),
@@ -361,13 +364,12 @@ class QuestionController extends Controller
                     'right_answer' => $rightAnswer
                 ];
             }
-            $userAnswer = UserAnswer::where(['question_id' => $id, 'user_id' => Auth::user()->id])->first();
-
             if ($userAnswer) {
                 $userAnswer->update($input);
             } else {
                 $insert = UserAnswer::create($input);
             }
+
             $data['total_point'] = calculate_score( Auth::user()->id);
             $data['total_coin'] = User::where('id',Auth::user()->id)->first()->userCoin->coin;
 
