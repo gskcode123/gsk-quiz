@@ -108,6 +108,9 @@ class QuestionController extends Controller
         $lists = [];
 
         if (isset($availableQuestions)) {
+            $totalQuestion = 0;
+            $totalCoin = 0;
+            $totalPoint = 0;
             foreach ($availableQuestions as $question) {
                 $item = [];
                 $itemImage = [];
@@ -156,11 +159,17 @@ class QuestionController extends Controller
 //                    'options' => $question->question_option->toArray()
                 ];
 
+                $totalQuestion ++;
+                $totalPoint = $totalPoint + $question->point;
+                $totalCoin = $totalCoin + $question->coin;
             }
 
 
             if (!empty($lists)) {
                 $data['success'] = true;
+                $data['totalQuestion'] = $totalQuestion;
+                $data['totalPoint'] = $totalPoint;
+                $data['totalCoin'] = $totalCoin;
                 $data['availableQuestionList'] = $lists;
                 $data['message'] = __('Available Question List');
             } else {
