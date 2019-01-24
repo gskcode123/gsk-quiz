@@ -51,6 +51,12 @@ class AuthController extends Controller
         if (isset($user) && Hash::check($request->password, $user->password)) {
 
             $admob_coin = 0;
+            $total_coin = 0;
+            $total_point = 0;
+            if (isset($user->userCoin->coin)) {
+                $total_coin = $user->userCoin->coin;
+            }
+            $total_point = calculate_score($user->id);
             if(!empty(allsetting('admob_coin'))) {
                 $admob_coin = allsetting('admob_coin');
             }
@@ -62,7 +68,7 @@ class AuthController extends Controller
                         $user->update();
 
                         $data['success'] = true;
-                        $data['data'] = ['access_token' => $token, 'access_type' => "Bearer", 'admob_coin' =>$admob_coin, 'user_info' => $user];
+                        $data['data'] = ['access_token' => $token, 'access_type' => "Bearer", 'admob_coin' =>$admob_coin, 'total_coin' =>$total_coin, 'total_point' =>$total_point, 'user_info' => $user];
                         $data['message'] = __('Successfully Logged in');
 
                     } else {
@@ -80,7 +86,7 @@ class AuthController extends Controller
                         $mailService->send('email.verifyapp', $data, $userEmail, $userName, $subject);
 
                         $data['success'] = true;
-                        $data['data'] = ['access_token' => $token, 'user_info' => $user, 'admob_coin' =>$admob_coin, 'access_type' => "Bearer"];
+                        $data['data'] = ['access_token' => $token, 'user_info' => $user, 'admob_coin' =>$admob_coin,'total_coin' =>$total_coin, 'total_point' =>$total_point, 'access_type' => "Bearer"];
                         $data['message'] = __('Your email is not verified. Please verify your email to get full access.');
                     }
                 } elseif ($user->active_status == STATUS_SUSPENDED) {

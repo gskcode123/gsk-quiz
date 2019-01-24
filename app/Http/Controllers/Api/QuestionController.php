@@ -6,6 +6,8 @@ use App\Model\Category;
 use App\Model\Question;
 use App\Model\QuestionOption;
 use App\Model\UserAnswer;
+use App\Model\UserCoin;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Carbon;
@@ -30,6 +32,7 @@ class QuestionController extends Controller
 
         $categories = Category::where('status', STATUS_ACTIVE)->orderBy('serial', 'ASC')->get();
         $data['user_available_coin'] = 0;
+        $data['user_available_point'] = calculate_score( Auth::user()->id);;
         if (isset(Auth::user()->userCoin->coin)) {
             $data['user_available_coin'] = Auth::user()->userCoin->coin;
         }
@@ -305,6 +308,7 @@ class QuestionController extends Controller
         }
         try {
             $rightAnswer = [];
+            $userCoins = UserCoin::where('user_id', Auth::user()->id)->first();
             $correctAnswer = QuestionOption::where(['question_id'=> $id, 'is_answer' => ANSWER_TRUE])->first();
             if(isset($correctAnswer)) {
                 $rightAnswer = [
@@ -328,11 +332,11 @@ class QuestionController extends Controller
 //                $diffTime = $checkTime->diffInSeconds($viewTime);
 //                //dd($sendTime,$checkTime, $diffTime);
 //                if ($diffTime <= (60 * $request->time_limit)) {
-                    if ($question->type == MULTIPLE_ANSWER) {
                         if ($option->is_answer == ANSWER_TRUE) {
                             $input['is_correct'] = ANSWER_TRUE;
                             $input['point'] = $question->point;
 
+                            $updatePoint = $userCoins->increment('coin', $question->coin);
                             $data = [
                                 'success' => true,
                                 'message' => __('Right Answer'),
@@ -344,7 +348,6 @@ class QuestionController extends Controller
                                 'right_answer' => $rightAnswer
                             ];
                         }
-                    }
 //                } else {
 //                    $data = [
 //                        'success' => false,
@@ -365,7 +368,8 @@ class QuestionController extends Controller
             } else {
                 $insert = UserAnswer::create($input);
             }
-            $data['score'] = calculate_score( Auth::user()->id);
+            $data['total_point'] = calculate_score( Auth::user()->id);
+            $data['total_coin'] = User::where('id',Auth::user()->id)->first()->userCoin->coin;
 
         } catch (\Exception $e) {
             return response()->json([
