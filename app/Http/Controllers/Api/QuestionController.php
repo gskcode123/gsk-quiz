@@ -91,7 +91,11 @@ class QuestionController extends Controller
             return response()->json($data);
         }
         $data = ['success' => false, 'data' => [], 'message' => __('Something went wrong')];
-
+        $data['user_available_coin'] = 0;
+        $data['user_available_point'] = calculate_score( Auth::user()->id);;
+        if (isset(Auth::user()->userCoin->coin)) {
+            $data['user_available_coin'] = Auth::user()->userCoin->coin;
+        }
         $category = Category::where('id',$id)->first();
         $limit = $category->qs_limit;
         $timeLimit = $category->time_limit;
