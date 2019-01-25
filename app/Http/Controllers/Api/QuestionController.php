@@ -52,7 +52,7 @@ class QuestionController extends Controller
                     'status' => $list->status,
                     'coin' => $list->coin,
                     'question_amount' => count_question($list->id),
-                    'is_locked' => $list->coin > 0 ? 1 : 0
+                    'is_locked' => check_category_unlock($list->id,$list->coin)
                 ];
             }
 

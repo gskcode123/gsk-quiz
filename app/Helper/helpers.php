@@ -1,6 +1,7 @@
 <?php
 
 use App\Model\AdminSetting;
+use App\Model\CategoryUnlock;
 use App\Model\Question;
 use App\Model\QuestionOption;
 use App\Model\UserAnswer;
@@ -348,6 +349,23 @@ if (!function_exists('calculate_score')) {
         }
 
         return $score;
+    }
+}
+
+if (!function_exists('check_category_unlock')) {
+    function check_category_unlock($category_id, $coin)
+    {
+        $is_locked = 0;
+        if ($coin > 0) {
+            $alreadyUnlock = CategoryUnlock::where(['user_id'=> Auth::user()->id, 'category_id' => $category_id, 'status' => 0])->first();
+            if(isset($alreadyUnlock)) {
+                $is_locked = 0;
+            } else {
+                $is_locked = 1;
+            }
+        }
+
+        return $is_locked;
     }
 }
 
