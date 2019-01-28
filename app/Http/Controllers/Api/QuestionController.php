@@ -317,7 +317,7 @@ class QuestionController extends Controller
             if(isset($correctAnswer)) {
                 $rightAnswer = [
                     'option_id' => $correctAnswer->id,
-                    'option_title' => $correctAnswer->option_title,
+//                    'option_title' => $correctAnswer->option_title,
                 ];
             }
             $question = Question::where(['id' => $id])->first();
