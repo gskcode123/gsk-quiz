@@ -86,10 +86,9 @@
                                             <label>{{__('Question Type')}} <span class="text-danger">*</span></label>
                                             <div class="qz-question-category">
                                                 <select class="form-control" name="type" id="question_type">
-                                                    <option value="">{{__('Select Type')}}</option>
                                                     @foreach(question_type() as $key => $value)
                                                         <option @if(isset($question) && ($question->type == $key)) selected
-                                                            @elseif((old('type') != null) && (old('type') == $key)) selected @endif value="{{ $key }}">{{$value}}</option>
+                                                             @endif value="{{ $key }}">{{$value}}</option>
                                                     @endforeach
                                                 </select>
                                                 @if ($errors->has('type'))
