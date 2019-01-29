@@ -46,7 +46,7 @@ class ProfileController extends Controller
                     'date' => date('d M y', strtotime($score->date)),
                     'score' => $score->score,
                     'total_score' => $score->total_score,
-                    'score_percentage' => ($score->score * $score->total_score)/100
+                    'score_percentage' => ($score->score * 100 )/$score->total_score
                 ];
             }
         }

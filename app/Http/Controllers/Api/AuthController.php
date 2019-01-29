@@ -198,7 +198,7 @@ class AuthController extends Controller
                 }
                 $token = $user->createToken($request->get('email'))->accessToken;
                 $data['success'] = true;
-                $data['data'] = ['access_token' => $token, 'access_type' => "Bearer",'admob_coin' =>$admob_coin, 'user_info' => $user];
+                $data['data'] = ['access_token' => $token, 'access_type' => "Bearer", 'admob_coin' =>$admob_coin, 'user_info' => $user];
                 $data['message'] = __('Successfully Signed up! Please verify your acccount');
 
                 return response()->json($data);
