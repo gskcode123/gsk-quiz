@@ -192,9 +192,13 @@ class AuthController extends Controller
             $mailService->send('email.verifyapp', $data, $userEmail, $userName, $subject);
 
             if ($user) {
+                $admob_coin = 0;
+                if(!empty(allsetting('admob_coin'))) {
+                    $admob_coin = allsetting('admob_coin');
+                }
                 $token = $user->createToken($request->get('email'))->accessToken;
                 $data['success'] = true;
-                $data['data'] = ['access_token' => $token, 'access_type' => "Bearer", 'user_info' => $user];
+                $data['data'] = ['access_token' => $token, 'access_type' => "Bearer",'admob_coin' =>$admob_coin, 'user_info' => $user];
                 $data['message'] = __('Successfully Signed up! Please verify your acccount');
 
                 return response()->json($data);
