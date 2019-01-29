@@ -249,12 +249,12 @@ if (!function_exists('role')) {
         return $myrole;
     }
 }
-if (!function_exists('question_type')) {
-    function question_type($val = null)
+if (!function_exists('option_type')) {
+    function option_type($val = null)
     {
         $data = array(
-            1 => __('Multiple Choise'),
-            2 => __('Puzzle'),
+            1 => __('Text'),
+            2 => __('Image'),
         );
         if ($val == null) {
             return $data;

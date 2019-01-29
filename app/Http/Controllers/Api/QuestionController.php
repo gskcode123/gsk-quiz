@@ -125,25 +125,30 @@ class QuestionController extends Controller
                     foreach ($question->question_option as $option) {
                         $item[] = [
                             'id' => $option->id,
-                            'question_option' => $option->option_title
+                            'question_option' => $option->option_title,
+                            'type' => 0
                         ];
                     }
                 } else {
                     $itemImage [] = [
                         'id' => isset($question->question_option[0]) ? $question->question_option[0]->id : '',
-                        'question_option' => isset($question->question_option[0]) ?  asset(path_question_option1_image() . $question->question_option[0]->option_image) : ''
+                        'question_option' => isset($question->question_option[0]) ?  asset(path_question_option1_image() . $question->question_option[0]->option_image) : '',
+                        'type' => 1
                     ];
                     $itemImage [] = [
                         'id' => isset($question->question_option[1]) ? $question->question_option[1]->id : '',
-                        'question_option' => isset($question->question_option[1]) ?  asset(path_question_option2_image() . $question->question_option[1]->option_image) : ''
+                        'question_option' => isset($question->question_option[1]) ?  asset(path_question_option2_image() . $question->question_option[1]->option_image) : '',
+                        'type' => 1
                     ];
                     $itemImage [] = [
                         'id' => isset($question->question_option[2]) ? $question->question_option[2]->id : '',
-                        'question_option' => isset($question->question_option[2]) ? asset(path_question_option3_image() . $question->question_option[2]->option_image) : ''
+                        'question_option' => isset($question->question_option[2]) ? asset(path_question_option3_image() . $question->question_option[2]->option_image) : '',
+                        'type' => 1
                     ];
                     $itemImage [] = [
                         'id' => isset($question->question_option[3]) ? $question->question_option[3]->id : '',
-                        'question_option' => isset($question->question_option[3]) ? asset(path_question_option4_image() . $question->question_option[3]->option_image) : ''
+                        'question_option' => isset($question->question_option[3]) ? asset(path_question_option4_image() . $question->question_option[3]->option_image) : '',
+                        'type' => 1
                     ];
                 }
 
@@ -153,7 +158,7 @@ class QuestionController extends Controller
                     'id' => $question->id,
                     'question_id' => encrypt($question->id),
                     'title' => $question->title,
-                    'type' => $question->type,
+                    'has_image' => !empty($question->image) ? 1 : 0,
                     'image' => asset(path_question_image() . $question->image),
                     'point' => $question->point,
                     'coin' => $question->coin,
@@ -161,6 +166,7 @@ class QuestionController extends Controller
                     'status' => $question->status,
                     'hints' => $question->hints,
                     'skip_coin' => $question->skip_coin,
+                    'option_type' => $question->type,
                     'options' => $question->type == 1 ? $item : $itemImage,
 //                    'options2' => $itemImage,
 //                    'options' => $question->question_option->toArray()
@@ -195,82 +201,6 @@ class QuestionController extends Controller
         return response()->json($data);
     }
 
-    /*
-     * singleCategory
-     *
-     * Show the Question list under this category
-     *
-     *
-     *
-     *
-     */
-
-//    public function singleQuestion($id)
-//    {
-//        try {
-//            $id = decrypt($id);
-//        } catch (\Exception $e) {
-//            $data = [
-//                'success' => false,
-//                'message' => __('Invalid Category id')
-//            ];
-//
-//            return response()->json($data);
-//        }
-//        $data = ['success' => false, 'data' => [], 'message' => __('Something went wrong')];
-//
-////        $question = Question::join('user_answers', 'user_answers.question_id', '=', 'questions.id')
-////            ->where(['questions.id' => $id, 'questions.status'=> STATUS_ACTIVE])
-////            ->whereNotIn('user_answers.question_id',[$id])
-////            ->whereNotIn('user_answers.user_id',[Auth::user()->id])
-////            ->first();
-//        $question = Question::where(['questions.id' => $id, 'questions.status'=> STATUS_ACTIVE])->first();
-////        dd($id,$question);
-//        $answers = QuestionOption::where('question_id', $id)->get();
-//
-//        if (isset($question) && isset($answers)) {
-//            $list = [
-//                'category' => $question->qsCategory->name,
-//                'category_id' => $question->qsCategory->id,
-//                'id' => $question->id,
-//                'question_id' => encrypt($question->id),
-//                'title' => $question->title,
-//                'type' => $question->type,
-//                'image' => asset(path_question_image() . $question->image),
-//                'point' => $question->point,
-//                'coin' => $question->coin,
-//                'status' => $question->status,
-//            ];
-//
-//            $timeLimit = Category::where('id', $question->category_id)->first()->time_limit;
-//            $list['time_limit'] = isset($question->time_limit) ? $question->time_limit : $timeLimit;
-//            foreach ($answers as $option) {
-//                $item[] = [
-//                    'id' => $option->id,
-//                    'option_title' => $option->option_title
-//                ];
-//            }
-//            $insert = UserAnswer::create([
-//                'user_id' => Auth::user()->id,
-//                'category_id' => $question->qsCategory->id,
-//                'question_id' => $question->id,
-//                'type' => $question->type,
-//                'status' => 0
-//            ]);
-//            $data = [
-//                'success' => true,
-//                'question' => $list,
-//                'options' => $item
-//            ];
-//        } else {
-//            $data = [
-//                'success' => false,
-//                'message' => __('No data found')
-//            ];
-//        }
-//
-//        return response()->json($data);
-//    }
 
     /*
      * submitAnswer

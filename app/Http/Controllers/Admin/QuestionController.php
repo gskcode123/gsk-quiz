@@ -81,7 +81,7 @@ class QuestionController extends Controller
     {
 //        dd($request->all());
         $rules = [
-            'title' => ['required', Rule::unique('questions')->ignore($request->edit_id, 'id')],
+//            'title' => ['required', Rule::unique('questions')->ignore($request->edit_id, 'id')],
             'category_id' => 'required',
             'skip_coin' => 'required|numeric|between:0,100',
             'hints' => 'required',
@@ -92,7 +92,7 @@ class QuestionController extends Controller
         ];
 
         $messages = [
-            'title.required' => __('Question Title field can not be empty'),
+//            'title.required' => __('Question Title field can not be empty'),
             'point.required' => __('Question point field can not be empty'),
             'status.required' => __('Status field can not be empty'),
             'options.required' => __('Option field can not be empty'),
@@ -111,19 +111,19 @@ class QuestionController extends Controller
             $rules['time_limit'] = 'numeric|between:1,10';
         }
         if (!empty($request->image)) {
-            $rules['image'] = 'mimes:jpeg,jpg,JPG,png,PNG,gif|max:4000';
+            $rules['image'] = 'mimes:jpeg,jpg,JPG,png,PNG,gif|max:3000';
         }
         if (!empty($request->option_image1)) {
-            $rules['option_image1'] = 'mimes:jpeg,jpg,JPG,png,PNG,gif|max:4000';
+            $rules['option_image1'] = 'mimes:jpeg,jpg,JPG,png,PNG,gif|max:3000';
         }
         if (!empty($request->option_image2)) {
-            $rules['option_image2'] = 'mimes:jpeg,jpg,JPG,png,PNG,gif|max:4000';
+            $rules['option_image2'] = 'mimes:jpeg,jpg,JPG,png,PNG,gif|max:3000';
         }
         if (!empty($request->option_image3)) {
-            $rules['option_image3'] = 'mimes:jpeg,jpg,JPG,png,PNG,gif|max:4000';
+            $rules['option_image3'] = 'mimes:jpeg,jpg,JPG,png,PNG,gif|max:3000';
         }
         if (!empty($request->option_image4)) {
-            $rules['option_image4'] = 'mimes:jpeg,jpg,JPG,png,PNG,gif|max:4000';
+            $rules['option_image4'] = 'mimes:jpeg,jpg,JPG,png,PNG,gif|max:3000';
         }
         if (empty($request->edit_id) && ($request->type == 2)) {
             $rules['option_image1'] = 'required';

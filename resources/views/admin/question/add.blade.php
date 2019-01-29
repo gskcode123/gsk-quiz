@@ -36,14 +36,23 @@
                         <div class="col-lg-12">
                             {{ Form::open(['route' => 'questionSave', 'files' => 'true']) }}
                                 <div class="row">
-                                    <div class="col-12">
+                                    <div class="col-6">
                                         <div class="form-group">
-                                            <label>{{__('Question')}} <span class="text-danger">*</span></label>
+                                            <label>{{__('Question Title')}} <span class="text-danger"></span></label>
                                             <input type="text" name="title" @if(isset($question)) value="{{ $question->title }}" @else value="{{ old('title') }}" @endif class="form-control" placeholder="Question">
                                             @if ($errors->has('title'))
                                                 <span class="text-danger">
                                                     <strong>{{ $errors->first('title') }}</strong>
                                                 </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>{{__('Question image')}}</label>
+                                            <input type="file" name="image" class="d-block">
+                                            @if(isset($question))
+                                                <img width="50" @if(isset($question->image)) src="{{ asset(path_question_image().$question->image)}}" @endif alt="">
                                             @endif
                                         </div>
                                     </div>
@@ -83,20 +92,13 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label>{{__('Question Type')}} <span class="text-danger">*</span></label>
-                                            <div class="qz-question-category">
-                                                <select class="form-control" name="type" id="question_type">
-                                                    @foreach(question_type() as $key => $value)
-                                                        <option @if(isset($question) && ($question->type == $key)) selected
-                                                             @endif value="{{ $key }}">{{$value}}</option>
-                                                    @endforeach
-                                                </select>
-                                                @if ($errors->has('type'))
-                                                    <span class="text-danger">
-                                                        <strong>{{ $errors->first('type') }}</strong>
-                                                    </span>
-                                                @endif
-                                            </div>
+                                            <label>{{__('Time Limit')}}</label>
+                                            <input type="text" @if(isset($question)) value="{{ $question->time_limit }}" @else value="{{ old('time_limit') }}" @endif name="time_limit" class="form-control" placeholder="Time limit in Minute">
+                                            @if ($errors->has('time_limit'))
+                                                <span class="text-danger">
+                                                    <strong>{{ $errors->first('time_limit') }}</strong>
+                                                </span>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -136,26 +138,6 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label>{{__('Time Limit')}}</label>
-                                            <input type="text" @if(isset($question)) value="{{ $question->time_limit }}" @else value="{{ old('time_limit') }}" @endif name="time_limit" class="form-control" placeholder="Time limit in Minute">
-                                            @if ($errors->has('time_limit'))
-                                                <span class="text-danger">
-                                                    <strong>{{ $errors->first('time_limit') }}</strong>
-                                                </span>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label>{{__('Thumbnail image')}} ({{__('If Necessary')}})</label>
-                                            <input type="file" name="image" class="d-block">
-                                            @if(isset($question))
-                                            <img width="50" @if(isset($question->image)) src="{{ asset(path_question_image().$question->image)}}" @endif alt="">
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
                                             <label>{{__('Activation Status')}}</label>
                                             <div class="qz-question-category">
                                                 <select name="status" class="form-control">
@@ -167,6 +149,24 @@
                                                 @if ($errors->has('status'))
                                                     <span class="text-danger">
                                                         <strong>{{ $errors->first('status') }}</strong>
+                                                    </span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>{{__('Option Type')}} <span class="text-danger">*</span></label>
+                                            <div class="qz-question-category">
+                                                <select class="form-control" name="type" id="question_type">
+                                                    @foreach(option_type() as $key => $value)
+                                                        <option @if(isset($question) && ($question->type == $key)) selected
+                                                                @endif value="{{ $key }}">{{$value}}</option>
+                                                    @endforeach
+                                                </select>
+                                                @if ($errors->has('type'))
+                                                    <span class="text-danger">
+                                                        <strong>{{ $errors->first('type') }}</strong>
                                                     </span>
                                                 @endif
                                             </div>
