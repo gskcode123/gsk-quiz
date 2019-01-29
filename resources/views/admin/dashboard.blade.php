@@ -79,9 +79,9 @@
                                                 @endforeach
                                             @endif
                                             <tr class="qz-table-footer">
-                                                <td colspan="2"><a href="{{ route('qsCategoryCreate') }}"><button class="btn btn-primary px-3">{{__('Add New')}}</button></a></td>
-                                                <td></td>
-                                                <td colspan="2"><h5><a href="{{ route('qsCategoryList') }}">{{__('See All Categories')}}</a></h5></td>
+                                                <td colspan="2"><a href="{{ route('qsCategoryCreate') }}"><button class="btn btn-primary px-md-3 px-1">{{__('Add New')}}</button></a></td>
+                                                {{--<td></td>--}}
+                                                <td colspan="3"><h5><a href="{{ route('qsCategoryList') }}">{{__('See All')}}</a></h5></td>
                                             </tr>
                                             </tbody>
                                         </table>

@@ -36,7 +36,7 @@
                         <div class="col-lg-12">
                             {{ Form::open(['route' => 'questionSave', 'files' => 'true']) }}
                                 <div class="row">
-                                    <div class="col-6">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label>{{__('Question Title')}} <span class="text-danger"></span></label>
                                             <input type="text" name="title" @if(isset($question)) value="{{ $question->title }}" @else value="{{ old('title') }}" @endif class="form-control" placeholder="Question">
@@ -194,7 +194,7 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-6 mb-md-0 mb-3">
                                                 @if(isset($qsOptions) && (isset($question)) && (isset($qsOptions[0])))
                                                     <input type="hidden" name="option1" value="{{$qsOptions[0]->id}}">
                                                     <img width="50" @if(isset($qsOptions[0]->option_image)) src="{{ asset(path_question_option1_image().$qsOptions[0]->option_image)}}" @endif alt="">
@@ -213,7 +213,7 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-6 mb-md-0 mb-3">
                                                 @if(isset($qsOptions) && (isset($question)) && (isset($qsOptions[1])))
                                                     <input type="hidden" name="option2" value="{{$qsOptions[1]->id}}">
                                                     <img width="50" @if(isset($qsOptions[1]->option_image)) src="{{ asset(path_question_option2_image().$qsOptions[1]->option_image)}}" @endif alt="">
@@ -232,7 +232,7 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-6 mb-md-0 mb-3">
                                                 @if(isset($qsOptions) && (isset($question)) && (isset($qsOptions[2])))
                                                     <input type="hidden" name="option3" value="{{$qsOptions[2]->id}}">
                                                     <img width="50" @if(isset($qsOptions[2]->option_image)) src="{{ asset(path_question_option3_image().$qsOptions[2]->option_image)}}" @endif alt="">
@@ -251,7 +251,7 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-6 mb-md-0 mb-3">
                                                 @if(isset($qsOptions) && (isset($question)) && (isset($qsOptions[3])))
                                                     <input type="hidden" name="option4" value="{{$qsOptions[3]->id}}">
                                                     <img width="50" @if(isset($qsOptions[3]->option_image)) src="{{ asset(path_question_option4_image().$qsOptions[3]->option_image)}}" @endif alt="">

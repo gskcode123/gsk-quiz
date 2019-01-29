@@ -290,7 +290,7 @@ table.table.category-table tbody td span{
 .qz-table-footer a {
     border-bottom: 1px solid #4f66b2;
     padding-top: 8px;
-    display: inline-block;
+    display: initial;
     font-size: 16px;
 }
 

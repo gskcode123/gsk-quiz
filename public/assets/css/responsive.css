@@ -47,9 +47,9 @@
 /*-------------- Start device screen 1024 --------------*/
 
 @media screen and (max-width: 1024px) {
-    .qz-table-footer a {
-        font-size: 18px;
-    }
+    /*.qz-table-footer a {*/
+        /*font-size: 18px;*/
+    /*}*/
     .qz-user-profile-from{
         margin-top: 50px;
     }
@@ -147,5 +147,8 @@
     }
     .user-body .card h5 {
         font-size: 16px;
+    }
+    .qz-table-footer h5{
+        text-align: left !important;
     }
 }
