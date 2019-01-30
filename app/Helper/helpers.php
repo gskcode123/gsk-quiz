@@ -303,11 +303,13 @@ if (!function_exists('answers')) {
 if (!function_exists('calculate_ranking')) {
     function calculate_ranking($user_id)
     {
+        $ranking = 0;
         $scores = UserAnswer::select(
             DB::raw('user_id, SUM(point) as score'))
             ->groupBy('user_id')
             ->orderBy('score', 'DESC')
             ->get();
+        $items = [];
         if(isset($scores)) {
             foreach ($scores as $score) {
                 $items[] = [
