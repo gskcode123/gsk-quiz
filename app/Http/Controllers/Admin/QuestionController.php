@@ -79,7 +79,6 @@ class QuestionController extends Controller
 
     public function questionSave(Request $request)
     {
-//        dd($request->all());
         $rules = [
 //            'title' => ['required', Rule::unique('questions')->ignore($request->edit_id, 'id')],
             'category_id' => 'required',
@@ -87,8 +86,8 @@ class QuestionController extends Controller
             'hints' => 'required',
             'type' => 'required',
             'status' => 'required',
-//            'options' => 'required',
             'point' => 'required|numeric|between:0,100',
+
         ];
 
         $messages = [
@@ -102,7 +101,19 @@ class QuestionController extends Controller
             'hints.required' => __('Hints field is required'),
         ];
         if ($request->type == 1) {
-//            $rules['options'] = 'required';
+            $rules['options.*'] = 'required';
+            foreach($request->ans_type as $ans_type) {
+                $ans_types[] =$ans_type;
+            }
+            if (!in_array(1,$ans_types)) {
+                return redirect()->back()->with('dismiss', __('Atleast one ans is rigth. '));
+            }
+        }
+
+        if ($request->type == 2) {
+            if (!in_array(1,[$request->ans_type1,$request->ans_type2,$request->ans_type3,$request->ans_type4])) {
+                return redirect()->back()->with('dismiss', __('Atleast one ans is rigth. '));
+            }
         }
         if (!empty($request->coin)) {
             $rules['coin'] = 'numeric|between:1,1000';
@@ -111,19 +122,19 @@ class QuestionController extends Controller
             $rules['time_limit'] = 'numeric|between:1,10';
         }
         if (!empty($request->image)) {
-            $rules['image'] = 'mimes:jpeg,jpg,JPG,png,PNG,gif|max:3000';
+            $rules['image'] = 'mimes:jpeg,jpg,JPG,png,PNG,gif|max:2000';
         }
         if (!empty($request->option_image1)) {
-            $rules['option_image1'] = 'mimes:jpeg,jpg,JPG,png,PNG,gif|max:3000';
+            $rules['option_image1'] = 'mimes:jpeg,jpg,JPG,png,PNG,gif|max:2000';
         }
         if (!empty($request->option_image2)) {
-            $rules['option_image2'] = 'mimes:jpeg,jpg,JPG,png,PNG,gif|max:3000';
+            $rules['option_image2'] = 'mimes:jpeg,jpg,JPG,png,PNG,gif|max:2000';
         }
         if (!empty($request->option_image3)) {
-            $rules['option_image3'] = 'mimes:jpeg,jpg,JPG,png,PNG,gif|max:3000';
+            $rules['option_image3'] = 'mimes:jpeg,jpg,JPG,png,PNG,gif|max:2000';
         }
         if (!empty($request->option_image4)) {
-            $rules['option_image4'] = 'mimes:jpeg,jpg,JPG,png,PNG,gif|max:3000';
+            $rules['option_image4'] = 'mimes:jpeg,jpg,JPG,png,PNG,gif|max:2000';
         }
         if (empty($request->edit_id) && ($request->type == 2)) {
             $rules['option_image1'] = 'required';
