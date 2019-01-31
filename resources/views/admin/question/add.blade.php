@@ -47,7 +47,7 @@
                                             @endif
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label>{{__('Question image')}}</label>
                                             <input type="file" name="image" class="d-block">
@@ -56,15 +56,33 @@
                                             @endif
                                         </div>
                                     </div>
-                                    <div class="col-12">
+                                    <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>{{__('Hints')}} <span class="text-danger">*</span></label>
+                                            <label>{{__('Hints')}} <span class="text-danger"></span></label>
                                             <input type="text" name="hints" @if(isset($question)) value="{{ $question->hints }}" @else value="{{ old('hints') }}" @endif class="form-control" placeholder=" Hints">
                                             @if ($errors->has('hints'))
                                                 <span class="text-danger">
                                                     <strong>{{ $errors->first('hints') }}</strong>
                                                 </span>
                                             @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>{{__('Question Type')}} <span class="text-danger">*</span></label>
+                                            <div class="qz-question-category">
+                                                <select class="form-control" name="type" id="question_type">
+                                                    @foreach(option_type() as $key => $value)
+                                                        <option @if(isset($question) && ($question->type == $key)) selected
+                                                                @endif value="{{ $key }}">{{$value}}</option>
+                                                    @endforeach
+                                                </select>
+                                                @if ($errors->has('type'))
+                                                    <span class="text-danger">
+                                                        <strong>{{ $errors->first('type') }}</strong>
+                                                    </span>
+                                                @endif
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -154,24 +172,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label>{{__('Option Type')}} <span class="text-danger">*</span></label>
-                                            <div class="qz-question-category">
-                                                <select class="form-control" name="type" id="question_type">
-                                                    @foreach(option_type() as $key => $value)
-                                                        <option @if(isset($question) && ($question->type == $key)) selected
-                                                                @endif value="{{ $key }}">{{$value}}</option>
-                                                    @endforeach
-                                                </select>
-                                                @if ($errors->has('type'))
-                                                    <span class="text-danger">
-                                                        <strong>{{ $errors->first('type') }}</strong>
-                                                    </span>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
+
                                     {{--<div class="col-lg-6">--}}
                                         {{--<div class="form-group">--}}
                                             {{--<label>{{__('Answer')}}</label>--}}
@@ -179,29 +180,43 @@
                                         {{--</div>--}}
                                     {{--</div>--}}
                                 </div>
-                                <div class="row" id="puzzle">
-                                    <div class="col-md-12">
+
+                                <div class="row" id="multiple_choise">
+                                    <div class="col-lg-12">
                                         <div class="row" id="">
-                                            <div class="col-md-6 qz-label-hide">
+                                            <div class="col-md-8 qz-label-hide">
                                                 <div class="form-group">
                                                     <label>{{__('Options')}}<span class="text-danger"></span></label>
                                                 </div>
                                             </div>
-                                            <div class="col-md-3 qz-label-hide">
+                                            <div class="col-md-4 qz-label-hide">
                                                 <div class="form-group">
                                                     <label>{{__('Answer Type')}}</label>
                                                 </div>
                                             </div>
+                                            {{--<div class="col-md-2 offset-lg-1">--}}
+                                                {{--<label for=""></label>--}}
+                                                {{--<button type="button" class="btn btn-primary btn-block" name="add" id="add">{{__('Add More')}}</button>--}}
+                                            {{--</div>--}}
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-6 mb-md-0 mb-3">
+                                        <div class="row" id="">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    @if(isset($qsOptions) && (isset($question)) && (isset($qsOptions[0])))
+                                                        <input type="hidden" name="text_option1" value="{{$qsOptions[0]->id}}">
+                                                    @endif
+                                                    <input type="text"  name="option_text1" class="form-control" placeholder="Answer"
+                                                    @if(isset($qsOptions) && (isset($question)) && (isset($qsOptions[0]))) value="{{$qsOptions[0]->option_title}}" @else value="{{old('option_text1')}}" @endif>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 mb-md-0 mb-2">
                                                 @if(isset($qsOptions) && (isset($question)) && (isset($qsOptions[0])))
                                                     <input type="hidden" name="option1" value="{{$qsOptions[0]->id}}">
                                                     <img width="50" @if(isset($qsOptions[0]->option_image)) src="{{ asset(path_question_option1_image().$qsOptions[0]->option_image)}}" @endif alt="">
                                                 @endif
                                                 <input type="file" name="option_image1">
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-md-4">
                                                 <div class="form-group">
                                                     <div class="qz-question-category">
                                                         <select name="ans_type1" class="form-control" >
@@ -212,15 +227,24 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-6 mb-md-0 mb-3">
+                                        <div class="row" id="dynamic_field">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    @if(isset($qsOptions) && (isset($question)) && (isset($qsOptions[1])))
+                                                        <input type="hidden" name="text_option2" value="{{$qsOptions[1]->id}}">
+                                                    @endif
+                                                    <input type="text"  name="option_text2" class="form-control" placeholder="Answer"
+                                                           @if(isset($qsOptions) && (isset($question)) && (isset($qsOptions[1]))) value="{{$qsOptions[1]->option_title}}" @else value="{{old('option_text2')}}" @endif>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 mb-md-0 mb-2">
                                                 @if(isset($qsOptions) && (isset($question)) && (isset($qsOptions[1])))
                                                     <input type="hidden" name="option2" value="{{$qsOptions[1]->id}}">
                                                     <img width="50" @if(isset($qsOptions[1]->option_image)) src="{{ asset(path_question_option2_image().$qsOptions[1]->option_image)}}" @endif alt="">
                                                 @endif
                                                 <input type="file" name="option_image2">
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-md-4">
                                                 <div class="form-group">
                                                     <div class="qz-question-category">
                                                         <select name="ans_type2" class="form-control" >
@@ -231,15 +255,24 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-6 mb-md-0 mb-3">
+                                        <div class="row" id="">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    @if(isset($qsOptions) && (isset($question)) && (isset($qsOptions[2])))
+                                                        <input type="hidden" name="text_option3" value="{{$qsOptions[2]->id}}">
+                                                    @endif
+                                                    <input type="text"  name="option_text3" class="form-control" placeholder="Answer"
+                                                           @if(isset($qsOptions) && (isset($question)) && (isset($qsOptions[2]))) value="{{$qsOptions[2]->option_title}}" @else value="{{old('option_text3')}}" @endif>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 mb-md-0 mb-2">
                                                 @if(isset($qsOptions) && (isset($question)) && (isset($qsOptions[2])))
                                                     <input type="hidden" name="option3" value="{{$qsOptions[2]->id}}">
                                                     <img width="50" @if(isset($qsOptions[2]->option_image)) src="{{ asset(path_question_option3_image().$qsOptions[2]->option_image)}}" @endif alt="">
                                                 @endif
                                                 <input type="file" name="option_image3">
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-md-4">
                                                 <div class="form-group">
                                                     <div class="qz-question-category">
                                                         <select name="ans_type3" class="form-control" >
@@ -250,111 +283,62 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-6 mb-md-0 mb-3">
+                                        <div class="row" id="">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    @if(isset($qsOptions) && (isset($question)) && (isset($qsOptions[3])))
+                                                        <input type="hidden" name="text_option4" value="{{$qsOptions[3]->id}}">
+                                                    @endif
+                                                    <input type="text"  name="option_text4" class="form-control" placeholder="Answer"
+                                                           @if(isset($qsOptions) && (isset($question)) && (isset($qsOptions[3]))) value="{{$qsOptions[3]->option_title}}" @else value="{{old('option_text4')}}" @endif>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 mb-md-0 mb-2">
                                                 @if(isset($qsOptions) && (isset($question)) && (isset($qsOptions[3])))
                                                     <input type="hidden" name="option4" value="{{$qsOptions[3]->id}}">
                                                     <img width="50" @if(isset($qsOptions[3]->option_image)) src="{{ asset(path_question_option4_image().$qsOptions[3]->option_image)}}" @endif alt="">
                                                 @endif
                                                 <input type="file" name="option_image4">
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-md-4">
                                                 <div class="form-group">
                                                     <div class="qz-question-category">
                                                         <select name="ans_type4" class="form-control" >
                                                             <option @if(isset($qsOptions) && (isset($question)) && (isset($qsOptions[3])) &&  ($qsOptions[3]->is_answer == 0)) selected @endif value="0">{{__('Wrong')}}</option>
-                                                            <option @if(isset($qsOptions) && (isset($question)) && (isset($qsOptions[3])) && ($qsOptions[3]->is_answer == 1)) selected @endif  value="1">{{__('Right')}}</option>
+                                                            <option @if(isset($qsOptions) && (isset($question)) && (isset($qsOptions[3])) &&  ($qsOptions[3]->is_answer == 1)) selected @endif  value="1">{{__('Right')}}</option>
                                                         </select>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="row" id="multiple_choise">
-                                    <div class="col-lg-12">
                                         <div class="row" id="">
-                                            <div class="col-md-6 qz-label-hide">
+                                            <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label>{{__('Options')}}<span class="text-danger"></span></label>
+                                                    @if(isset($qsOptions) && (isset($question)) && (isset($qsOptions[4])))
+                                                        <input type="hidden" name="text_option5" value="{{$qsOptions[4]->id}}">
+                                                    @endif
+                                                    <input type="text"  name="option_text5" class="form-control" placeholder="Answer"
+                                                           @if(isset($qsOptions) && (isset($question)) && (isset($qsOptions[4]))) value="{{$qsOptions[4]->option_title}}" @else value="{{old('option_text5')}}" @endif>
                                                 </div>
                                             </div>
-                                            <div class="col-md-3 qz-label-hide">
-                                                <div class="form-group">
-                                                    <label>{{__('Answer Type')}}</label>
-                                                </div>
+                                            <div class="col-md-4 mb-md-0 mb-2">
+                                                @if(isset($qsOptions) && (isset($question)) && (isset($qsOptions[4])))
+                                                    <input type="hidden" name="option5" value="{{$qsOptions[4]->id}}">
+                                                    <img width="50" @if(isset($qsOptions[4]->option_image)) src="{{ asset(path_question_option5_image().$qsOptions[4]->option_image)}}" @endif alt="">
+                                                @endif
+                                                <input type="file" name="option_image5">
                                             </div>
-                                            <div class="col-md-2 offset-lg-1">
-                                                <label for=""></label>
-                                                <button type="button" class="btn btn-primary btn-block" name="add" id="add">{{__('Add More')}}</button>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <div class="qz-question-category">
+                                                        <select name="ans_type5" class="form-control" >
+                                                            <option @if(isset($qsOptions) && (isset($question)) && (isset($qsOptions[4])) &&  ($qsOptions[4]->is_answer == 0)) selected @endif value="0">{{__('Wrong')}}</option>
+                                                            <option @if(isset($qsOptions) && (isset($question)) && (isset($qsOptions[4])) &&  ($qsOptions[4]->is_answer == 1)) selected @endif  value="1">{{__('Right')}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                            @if(empty($qsOptions))
-                                            <div class="row" id="">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <input type="text"  name="options[]" class="form-control" placeholder="Answer">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <div class="form-group">
-                                                        <div class="qz-question-category">
-                                                            <select name="ans_type[]" class="form-control" >
-                                                                <option value="0">{{__('Wrong')}}</option>
-                                                                <option value="1">{{__('Right')}}</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row" id="dynamic_field">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <input type="text"  name="options[]" class="form-control" placeholder="Answer">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <div class="form-group">
-                                                        <div class="qz-question-category">
-                                                            <select name="ans_type[]" class="form-control" >
-                                                                <option value="0">{{__('Wrong')}}</option>
-                                                                <option value="1">{{__('Right')}}</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @endif
-                                            @if(isset($qsOptions) && (isset($question)))
-                                                @php ($sl = 1)
-                                                @foreach($qsOptions as $opt)
-                                                <div class="row" id="optTitle{{$sl}}">
-                                                    <div class="col-md-6" >
-                                                        <div class="form-group">
-                                                            <input type="text" name="options[]" value="{{ $opt->option_title }}" class="form-control" placeholder="">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-3" >
-                                                        <div class="form-group">
-                                                            <div class="qz-question-category">
-                                                                <select name="ans_type[]" class="form-control" >
-                                                                    <option @if($opt->is_answer == 0) selected @endif value="0">{{__('Wrong')}}</option>
-                                                                    <option @if($opt->is_answer == 1) selected @endif value="1">{{__('Right')}}</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1">
-                                                        <div class="form-group">
-                                                            <button type="button" name="remove" id="{{ $sl }}" class="btn btn-danger btn_remove2">X</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                @php ($sl++)
-                                                @endforeach
-                                            <div class="row" id="dynamic_field">
-                                            </div>
-                                            @endif
                                     </div>
                                 </div>
                                 <div class="row">

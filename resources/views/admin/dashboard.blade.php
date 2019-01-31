@@ -92,7 +92,7 @@
                         <div class="col-lg-4">
                             <div class="qz-laderboard-area">
                                 <div class="qz-laderboard-title">
-                                    <h4>{{__('Laderboard')}}</h4>
+                                    <h4>{{__('Leaderboard')}}</h4>
                                 </div>
                                 <table class="table table-striped">
                                     <thead>

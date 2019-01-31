@@ -173,6 +173,10 @@ function path_question_option4_image()
 {
     return 'uploaded_file/files/img/question/options/option4/';
 }
+function path_question_option5_image()
+{
+    return 'uploaded_file/files/img/question/options/option5/';
+}
 function path_landing_blog_image()
 {
     return 'uploaded_file/files/img/landing/blog/';
@@ -253,8 +257,8 @@ if (!function_exists('option_type')) {
     function option_type($val = null)
     {
         $data = array(
-            1 => __('Text'),
-            2 => __('Image'),
+            1 => __('Multiple Choise'),
+//            2 => __('Puzzle'),
         );
         if ($val == null) {
             return $data;

@@ -83,7 +83,7 @@ class QuestionController extends Controller
 //            'title' => ['required', Rule::unique('questions')->ignore($request->edit_id, 'id')],
             'category_id' => 'required',
             'skip_coin' => 'required|numeric|between:0,100',
-            'hints' => 'required',
+//            'hints' => 'required',
             'type' => 'required',
             'status' => 'required',
             'point' => 'required|numeric|between:0,100',
@@ -100,21 +100,7 @@ class QuestionController extends Controller
             'skip_coin.required' => __('Skip coin field is required'),
             'hints.required' => __('Hints field is required'),
         ];
-        if ($request->type == 1) {
-            $rules['options.*'] = 'required';
-            foreach($request->ans_type as $ans_type) {
-                $ans_types[] =$ans_type;
-            }
-            if (!in_array(1,$ans_types)) {
-                return redirect()->back()->with('dismiss', __('Atleast one ans is rigth. '));
-            }
-        }
 
-        if ($request->type == 2) {
-            if (!in_array(1,[$request->ans_type1,$request->ans_type2,$request->ans_type3,$request->ans_type4])) {
-                return redirect()->back()->with('dismiss', __('Atleast one ans is rigth. '));
-            }
-        }
         if (!empty($request->coin)) {
             $rules['coin'] = 'numeric|between:1,1000';
         }
@@ -136,14 +122,35 @@ class QuestionController extends Controller
         if (!empty($request->option_image4)) {
             $rules['option_image4'] = 'mimes:jpeg,jpg,JPG,png,PNG,gif|max:2000';
         }
-        if (empty($request->edit_id) && ($request->type == 2)) {
-            $rules['option_image1'] = 'required';
-            $rules['option_image2'] = 'required';
-            $rules['option_image3'] = 'required';
-            $rules['option_image4'] = 'required';
+        if (!empty($request->option_image5)) {
+            $rules['option_image5'] = 'mimes:jpeg,jpg,JPG,png,PNG,gif|max:2000';
         }
 
         $this->validate($request, $rules,$messages);
+
+        if (empty($request->edit_id)) {
+            if(empty($request->title) && empty($request->image)) {
+                return redirect()->back()->with('dismiss', __('Must be input title or upload image'));
+            }
+            $text = $this->preg_grep_keys_values('~option_text~i', $request->all());
+            $image = $this->preg_grep_keys_values('~option_image~i', $request->all());
+            $textCount = count(array_filter($text));
+            $imgCount = count(array_filter($image));
+
+            if($textCount + $imgCount < 2) {
+                return redirect()->back()->with('dismiss', __('Atleast two options are required'));
+            }
+        }
+
+        if ((!empty($request->option_text1) && !empty($request->option_image1)) || (!empty($request->option_text2) && !empty($request->option_image2)) ||
+            (!empty($request->option_text3) && !empty($request->option_image3)) || (!empty($request->option_text4) && !empty($request->option_image4)) ||
+            (!empty($request->option_text5) && !empty($request->option_image5))) {
+
+            return redirect()->back()->with('dismiss', __('At a time only text or only image sholud be a option'));
+        }
+        if (!in_array(1,[$request->ans_type1,$request->ans_type2,$request->ans_type3,$request->ans_type4, $request->ans_type5])) {
+            return redirect()->back()->with('dismiss', __('Atleast one answer must be rigth. '));
+        }
         try {
             $data = [
                 'title' => $request->title,
@@ -176,23 +183,7 @@ class QuestionController extends Controller
             if (!empty($request->edit_id)) {
                 $update = Question::where(['id' => $request->edit_id])->update($data);
                 if ($update) {
-                    if ($request->type == 2) {
-                        app(CommonService::class)->saveOptionImage($request, $request->edit_id);
-                    } else {
-                        $questionOption = QuestionOption::where('question_id', $request->edit_id)->delete();
-                        if ($questionOption) {
-                            $options = $request->options;
-                            $types = $request->ans_type;
-                            $size = sizeof($options);
-                            for ($i = 0; $i < $size; $i++) {
-                                $insertOption = QuestionOption::create([
-                                    'question_id' => $request->edit_id,
-                                    'option_title' => $options[$i],
-                                    'is_answer' => $types[$i]
-                                ]);
-                            }
-                        }
-                    }
+                    app(CommonService::class)->saveOptions($request, $request->edit_id);
 
                     return redirect()->back()->with('success', __('Question Updated Successfully'));
                 } else {
@@ -206,20 +197,7 @@ class QuestionController extends Controller
                 }
                 $insert = Question::create($data);
                 if ($insert) {
-                    if ($request->type == 2) {
-                        app(CommonService::class)->saveOptionImage($request,$insert->id);
-                    } else {
-                        $options = $request->options;
-                        $types = $request->ans_type;
-                        $size = sizeof($options);
-                        for ($i = 0; $i < $size; $i++) {
-                            $insertOption = QuestionOption::create([
-                                'question_id' => $insert->id,
-                                'option_title' => $options[$i],
-                                'is_answer' => $types[$i]
-                            ]);
-                        }
-                    }
+                    app(CommonService::class)->saveOptions($request,$insert->id);
 
                     return redirect()->route('questionList')->with('success', __('Question Created Successfully'));
                 } else {
@@ -228,9 +206,15 @@ class QuestionController extends Controller
             }
 
         } catch (\Exception $e) {
-//            dd($e->getMessage());
             return redirect()->back()->with('dismiss', __('Something went wrong'));
         }
+    }
+
+    public function preg_grep_keys_values($pattern, $input, $flags = 0) {
+        return array_merge(
+            array_intersect_key($input, array_flip(preg_grep($pattern, array_keys($input), $flags))),
+            preg_grep($pattern, $input, $flags)
+        );
     }
 
     /*

@@ -119,36 +119,42 @@ class QuestionController extends Controller
             $totalCoin = 0;
             $totalPoint = 0;
             foreach ($availableQuestions as $question) {
-                $item = [];
                 $itemImage = [];
-                if ($question->type == 1) {
-                    foreach ($question->question_option as $option) {
-                        $item[] = [
-                            'id' => $option->id,
-                            'question_option' => $option->option_title,
-                            'type' => 0
-                        ];
-                    }
-                } else {
+                if(isset($question->question_option[0])) {
                     $itemImage [] = [
                         'id' => isset($question->question_option[0]) ? $question->question_option[0]->id : '',
-                        'question_option' => isset($question->question_option[0]) ?  asset(path_question_option1_image() . $question->question_option[0]->option_image) : '',
-                        'type' => 1
+                        'question_option' => isset($question->question_option[0]) && (!empty($question->question_option[0]->option_image)) ?  asset(path_question_option1_image() . $question->question_option[0]->option_image) : $question->question_option[0]->option_title,
+                        'type' => isset($question->question_option[0]) && (!empty($question->question_option[0]->option_image)) ? 1 : 0
                     ];
+                }
+                if(isset($question->question_option[1])) {
                     $itemImage [] = [
                         'id' => isset($question->question_option[1]) ? $question->question_option[1]->id : '',
-                        'question_option' => isset($question->question_option[1]) ?  asset(path_question_option2_image() . $question->question_option[1]->option_image) : '',
-                        'type' => 1
+                        'question_option' => isset($question->question_option[1]) && (!empty($question->question_option[1]->option_image)) ?  asset(path_question_option2_image() . $question->question_option[1]->option_image) : $question->question_option[1]->option_title,
+                        'type' => isset($question->question_option[1]) && (!empty($question->question_option[1]->option_image)) ? 1 : 0
                     ];
+                }
+
+
+                if(isset($question->question_option[2])) {
                     $itemImage [] = [
                         'id' => isset($question->question_option[2]) ? $question->question_option[2]->id : '',
-                        'question_option' => isset($question->question_option[2]) ? asset(path_question_option3_image() . $question->question_option[2]->option_image) : '',
-                        'type' => 1
+                        'question_option' => isset($question->question_option[2]) && (!empty($question->question_option[2]->option_image)) ? asset(path_question_option3_image() . $question->question_option[2]->option_image) : $question->question_option[2]->option_title,
+                        'type' => isset($question->question_option[2]) && (!empty($question->question_option[2]->option_image)) ? 1 : 0
                     ];
+                }
+                if(isset($question->question_option[3])) {
                     $itemImage [] = [
-                        'id' => isset($question->question_option[3]) ? $question->question_option[3]->id : '',
-                        'question_option' => isset($question->question_option[3]) ? asset(path_question_option4_image() . $question->question_option[3]->option_image) : '',
-                        'type' => 1
+                        'id' => isset($question->question_option[3])  ? $question->question_option[3]->id : '',
+                        'question_option' => isset($question->question_option[3]) && (!empty($question->question_option[3]->option_image)) ? asset(path_question_option4_image() . $question->question_option[3]->option_image) : $question->question_option[3]->option_title,
+                        'type' => isset($question->question_option[3]) && (!empty($question->question_option[3]->option_image)) ? 1 : 0
+                    ];
+                }
+                if(isset($question->question_option[4])) {
+                    $itemImage [] = [
+                        'id' => isset($question->question_option[4]) ? $question->question_option[4]->id : '',
+                        'question_option' => isset($question->question_option[4]) && (!empty($question->question_option[4]->option_image)) ? asset(path_question_option5_image() . $question->question_option[4]->option_image) : $question->question_option[4]->option_title,
+                        'type' => isset($question->question_option[4]) && (!empty($question->question_option[4]->option_image)) ? 1 : 0
                     ];
                 }
 
@@ -167,7 +173,7 @@ class QuestionController extends Controller
                     'hints' => $question->hints,
                     'skip_coin' => $question->skip_coin,
                     'option_type' => $question->type,
-                    'options' => $question->type == 1 ? $item : $itemImage,
+                    'options' => $itemImage,
 //                    'options2' => $itemImage,
 //                    'options' => $question->question_option->toArray()
                 ];

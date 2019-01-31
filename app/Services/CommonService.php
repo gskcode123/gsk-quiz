@@ -245,12 +245,28 @@ class CommonService
     }
 
 
-    public function saveOptionImage($request,$question_id)
+    public function saveOptions($request,$question_id)
     {
-        if (isset($request->ans_type1)) {
+        if (!empty($request->option_text1)) {
             $data1 = [
                 'question_id'=>$question_id,
                 'is_answer'=>$request->ans_type1,
+                'option_title'=>$request->option_text1,
+                'option_image'=>'',
+            ];
+            if (!empty($request->edit_id)) {
+                $option1 = QuestionOption::where('id', $request->text_option1)->first();
+            }
+            if (!empty($request->edit_id)) {
+                $option1->update($data1);
+            } else {
+                QuestionOption::create($data1);
+            }
+        } else {
+            $data1 = [
+                'question_id'=>$question_id,
+                'is_answer'=>$request->ans_type1,
+                'option_title'=>''
             ];
             if (!empty($request->edit_id)) {
                 $option1 = QuestionOption::where('id', $request->option1)->first();
@@ -270,10 +286,26 @@ class CommonService
             }
         }
 
-        if (isset($request->ans_type2)) {
+        if (!empty($request->option_text2)) {
             $data2 = [
                 'question_id'=>$question_id,
                 'is_answer'=>$request->ans_type2,
+                'option_title'=>$request->option_text2,
+                'option_image'=>'',
+            ];
+            if (!empty($request->edit_id)) {
+                $option2 = QuestionOption::where('id', $request->text_option2)->first();
+            }
+            if (!empty($request->edit_id)) {
+                $option2->update($data2);
+            } else {
+                QuestionOption::create($data2);
+            }
+        } else {
+            $data2 = [
+                'question_id'=>$question_id,
+                'is_answer'=>$request->ans_type2,
+                'option_title'=>''
             ];
             if (!empty($request->edit_id)) {
                 $option2 = QuestionOption::where('id', $request->option2)->first();
@@ -293,10 +325,26 @@ class CommonService
             }
         }
 
-        if (isset($request->ans_type3)) {
+        if (!empty($request->option_text3)) {
             $data3 = [
                 'question_id'=>$question_id,
                 'is_answer'=>$request->ans_type3,
+                'option_title'=>$request->option_text3,
+                'option_image'=>'',
+            ];
+            if (!empty($request->edit_id)) {
+                $option3 = QuestionOption::where('id', $request->text_option3)->first();
+            }
+            if (!empty($request->edit_id)) {
+                $option3->update($data3);
+            } else {
+                QuestionOption::create($data3);
+            }
+        } else {
+            $data3 = [
+                'question_id'=>$question_id,
+                'is_answer'=>$request->ans_type3,
+                'option_title'=>''
             ];
             if (!empty($request->edit_id)) {
                 $option3 = QuestionOption::where('id', $request->option3)->first();
@@ -316,10 +364,26 @@ class CommonService
             }
         }
 
-        if (isset($request->ans_type4)) {
+        if (!empty($request->option_text4)) {
             $data4 = [
                 'question_id'=>$question_id,
                 'is_answer'=>$request->ans_type4,
+                'option_title'=>$request->option_text4,
+                'option_image'=>'',
+            ];
+            if (!empty($request->edit_id)) {
+                $option4 = QuestionOption::where('id', $request->text_option4)->first();
+            }
+            if (!empty($request->edit_id)) {
+                $option4->update($data4);
+            } else {
+                QuestionOption::create($data4);
+            }
+        } else {
+            $data4 = [
+                'question_id'=>$question_id,
+                'is_answer'=>$request->ans_type4,
+                'option_title'=>''
             ];
             if (!empty($request->edit_id)) {
                 $option4 = QuestionOption::where('id', $request->option4)->first();
@@ -336,6 +400,45 @@ class CommonService
                 $option4->update($data4);
             } else {
                 QuestionOption::create($data4);
+            }
+        }
+
+        if (!empty($request->option_text5)) {
+            $data5 = [
+                'question_id'=>$question_id,
+                'is_answer'=>$request->ans_type5,
+                'option_title'=>$request->option_text5,
+                'option_image'=>'',
+            ];
+            if (!empty($request->edit_id)) {
+                $option5 = QuestionOption::where('id', $request->text_option5)->first();
+            }
+            if (!empty($request->edit_id)) {
+                $option5->update($data5);
+            } else {
+                QuestionOption::create($data5);
+            }
+        } else {
+            $data5 = [
+                'question_id'=>$question_id,
+                'is_answer'=>$request->ans_type5,
+                'option_title'=>''
+            ];
+            if (!empty($request->edit_id)) {
+                $option5 = QuestionOption::where('id', $request->option5)->first();
+            }
+            if (!empty($request['option_image5'])) {
+                $old_img = '';
+                if (!empty($option5->option_image)) {
+                    $old_img = $option5->option_image;
+                }
+                $option_image5 = fileUpload($request['option_image5'], path_question_option5_image(), $old_img);
+                $data5['option_image'] = $option_image5;
+            }
+            if (!empty($request->edit_id)) {
+                $option5->update($data5);
+            } else {
+                QuestionOption::create($data5);
             }
         }
     }
