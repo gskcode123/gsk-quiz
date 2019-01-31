@@ -258,7 +258,9 @@ class CommonService
                 $option1 = QuestionOption::where('id', $request->text_option1)->first();
             }
             if (!empty($request->edit_id)) {
-                $option1->update($data1);
+                if(isset($option1)) {
+                    $option1->update($data1);
+                }
             } else {
                 QuestionOption::create($data1);
             }
@@ -280,7 +282,9 @@ class CommonService
                 $data1['option_image'] = $option_image1;
             }
             if (!empty($request->edit_id)) {
-                $option1->update($data1);
+                if(isset($option1)) {
+                    $option1->update($data1);
+                }
             } else {
                 QuestionOption::create($data1);
             }
@@ -297,7 +301,9 @@ class CommonService
                 $option2 = QuestionOption::where('id', $request->text_option2)->first();
             }
             if (!empty($request->edit_id)) {
-                $option2->update($data2);
+                if(isset($option2)) {
+                    $option2->update($data2);
+                }
             } else {
                 QuestionOption::create($data2);
             }
@@ -319,7 +325,9 @@ class CommonService
                 $data2['option_image'] = $option_image2;
             }
             if (!empty($request->edit_id)) {
-                $option2->update($data2);
+                if(isset($option2)) {
+                    $option2->update($data2);
+                }
             } else {
                 QuestionOption::create($data2);
             }
@@ -336,7 +344,9 @@ class CommonService
                 $option3 = QuestionOption::where('id', $request->text_option3)->first();
             }
             if (!empty($request->edit_id)) {
-                $option3->update($data3);
+                if(isset($option3)) {
+                    $option3->update($data3);
+                }
             } else {
                 QuestionOption::create($data3);
             }
@@ -358,7 +368,9 @@ class CommonService
                 $data3['option_image'] = $option_image3;
             }
             if (!empty($request->edit_id)) {
-                $option3->update($data3);
+                if(isset($option3)) {
+                    $option3->update($data3);
+                }
             } else {
                 QuestionOption::create($data3);
             }
@@ -375,7 +387,10 @@ class CommonService
                 $option4 = QuestionOption::where('id', $request->text_option4)->first();
             }
             if (!empty($request->edit_id)) {
-                $option4->update($data4);
+                if(isset($option4)) {
+
+                    $option4->update($data4);
+                }
             } else {
                 QuestionOption::create($data4);
             }
@@ -397,7 +412,9 @@ class CommonService
                 $data4['option_image'] = $option_image4;
             }
             if (!empty($request->edit_id)) {
-                $option4->update($data4);
+                if(isset($option4)) {
+                    $option4->update($data4);
+                }
             } else {
                 QuestionOption::create($data4);
             }
@@ -414,7 +431,9 @@ class CommonService
                 $option5 = QuestionOption::where('id', $request->text_option5)->first();
             }
             if (!empty($request->edit_id)) {
-                $option5->update($data5);
+                if(isset($option5)) {
+                    $option5->update($data5);
+                }
             } else {
                 QuestionOption::create($data5);
             }
@@ -436,7 +455,9 @@ class CommonService
                 $data5['option_image'] = $option_image5;
             }
             if (!empty($request->edit_id)) {
-                $option5->update($data5);
+                if(isset($option5)) {
+                    $option5->update($data5);
+                }
             } else {
                 QuestionOption::create($data5);
             }
