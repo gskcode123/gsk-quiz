@@ -73,7 +73,7 @@
                                                                 <li class="ml-2 qz-check"><span class="flaticon-check-mark"></span></li>
                                                             </a>
                                                         @endif
-                                                        <a href="{{ route('questionDelete', $item->id) }}" data-toggle="tooltip" title="Delete" onclick="return confirm('Are you sure to delete this ?');"><li class="ml-2 qz-close"><span class="flaticon-error"></span></li></a>
+{{--                                                        <a href="{{ route('questionDelete', $item->id) }}" data-toggle="tooltip" title="Delete" onclick="return confirm('Are you sure to delete this ?');"><li class="ml-2 qz-close"><span class="flaticon-error"></span></li></a>--}}
                                                     </ul>
                                                 </td>
                                             </tr>

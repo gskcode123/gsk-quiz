@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Model\Category;
+use App\Model\Question;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -185,6 +186,10 @@ class CategoryController extends Controller
     public function qsCategoryDelete($id)
     {
         if(isset($id) && is_numeric($id)){
+            $qsCategory = Question::where('category_id',$id)->get();
+        if((!$qsCategory->isEmpty())) {
+            return redirect()->back()->with(['dismiss' => __("Under this category has some question.You can't delete this category")]);
+        }
             $item = Category::where('id', $id)->first();
             $destroy = $item->delete();
             if ($destroy) {

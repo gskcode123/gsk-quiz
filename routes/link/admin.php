@@ -38,7 +38,7 @@ Route::group(['middleware' => ['auth','admin','lang']], function() {
     Route::get('question-create', 'Admin\QuestionController@questionCreate')->name('questionCreate');
     Route::post('question-save', 'Admin\QuestionController@questionSave')->name('questionSave');
     Route::get('question-edit/{id}', 'Admin\QuestionController@questionEdit')->name('questionEdit');
-    Route::get('question-delete/{id}', 'Admin\QuestionController@questionDelete')->name('questionDelete');
+//    Route::get('question-delete/{id}', 'Admin\QuestionController@questionDelete')->name('questionDelete');
     Route::get('question-activate/{id}', 'Admin\QuestionController@questionActivate')->name('questionActivate');
     Route::get('question-deactivate/{id}', 'Admin\QuestionController@questionDectivate')->name('questionDectivate');
 
