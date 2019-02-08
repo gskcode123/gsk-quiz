@@ -36,13 +36,24 @@
                         <div class="col-lg-12">
                             {{ Form::open(['route' => 'questionSave', 'files' => 'true']) }}
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <div class="form-group">
                                             <label>{{__('Question Title')}} <span class="text-danger"></span></label>
                                             <input type="text" name="title" @if(isset($question)) value="{{ $question->title }}" @else value="{{ old('title') }}" @endif class="form-control" placeholder="Question">
                                             @if ($errors->has('title'))
                                                 <span class="text-danger">
                                                     <strong>{{ $errors->first('title') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>{{__('Video Link')}} <span class="text-danger"></span></label>
+                                            <input type="text" name="video_link" @if(isset($question)) value="{{ $question->video_link }}" @else value="{{ old('video_link') }}" @endif class="form-control" placeholder="Video link">
+                                            @if ($errors->has('video_link'))
+                                                <span class="text-danger">
+                                                    <strong>{{ $errors->first('video_link') }}</strong>
                                                 </span>
                                             @endif
                                         </div>
