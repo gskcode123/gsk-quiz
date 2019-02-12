@@ -39,7 +39,7 @@
                                 <div class="col-lg-6 text-center">
                                     <div class="qz-status-bar qz-status-bar1">
                                         <h4 class="qz-blance">{{$totalQuestion}}</h4>
-                                        <h5 class="qz-total-qustions">{{__('Total Qustions')}}</h5>
+                                        <h5 class="qz-total-qustions">{{__('Total Questions')}}</h5>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 text-center">

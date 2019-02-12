@@ -185,6 +185,8 @@ class CategoryController extends Controller
 
     public function qsCategoryDelete($id)
     {
+        return redirect()->back()->with(['dismiss'=>__('Delete feature is currently disable for demo.')]);
+
         if(isset($id) && is_numeric($id)){
             $qsCategory = Question::where('category_id',$id)->get();
         if((!$qsCategory->isEmpty())) {
