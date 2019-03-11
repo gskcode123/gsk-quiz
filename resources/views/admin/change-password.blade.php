@@ -34,7 +34,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <span class="text-danger">Currently this feature disable for demo </span>
-                        {{--<div class="col-lg-12">
+                        <div class="col-lg-12">
                             {{ Form::open(['route' => 'changePassword', 'files' => 'true']) }}
                                 <div class="row">
                                     <div class="col-lg-6">
@@ -60,7 +60,7 @@
                                     </div>
                                 </div>
                             {{ Form::close() }}
-                        </div>--}}
+                        </div>
                     </div>
                 </div>
             </div>
