@@ -110,13 +110,23 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label>{{__('Time Limit')}}</label>
-                                            <input type="text" @if(isset($question)) value="{{ $question->time_limit }}" @else value="{{ old('time_limit') }}" @endif name="time_limit" class="form-control" placeholder="Time limit in Minute">
-                                            @if ($errors->has('time_limit'))
-                                                <span class="text-danger">
-                                                    <strong>{{ $errors->first('time_limit') }}</strong>
-                                                </span>
-                                            @endif
+                                            <label>{{__('Sub Category')}} <span class="text-danger"></span></label>
+                                            <div class="qz-question-category">
+                                                <select name="sub_category_id" class="form-control">
+                                                    <option value="">{{__('Select Sub Category')}}</option>
+                                                    @if(isset($sub_categories[0]))
+                                                        @foreach($sub_categories as $sub_category)
+                                                            <option @if(isset($question) && isset($question->sub_category_id) && ($question->sub_category_id == $sub_category->id)) selected
+                                                                    @elseif((old('sub_category_id') != null) && (old('sub_category_id') == $sub_category->id)) selected @endif value="{{$sub_category->id}}">{{$sub_category->name}}</option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+                                                @if ($errors->has('sub_category_id'))
+                                                    <span class="text-danger">
+                                                        <strong>{{ $errors->first('sub_category_id') }}</strong>
+                                                    </span>
+                                                @endif
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -156,6 +166,17 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
+                                            <label>{{__('Time Limit')}}</label>
+                                            <input type="text" @if(isset($question)) value="{{ $question->time_limit }}" @else value="{{ old('time_limit') }}" @endif name="time_limit" class="form-control" placeholder="Time limit in Minute">
+                                            @if ($errors->has('time_limit'))
+                                                <span class="text-danger">
+                                                    <strong>{{ $errors->first('time_limit') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
                                             <label>{{__('Activation Status')}}</label>
                                             <div class="qz-question-category">
                                                 <select name="status" class="form-control">
@@ -173,12 +194,6 @@
                                         </div>
                                     </div>
 
-                                    {{--<div class="col-lg-6">--}}
-                                        {{--<div class="form-group">--}}
-                                            {{--<label>{{__('Answer')}}</label>--}}
-                                            {{--<input type="text" name="answer" class="form-control" placeholder="">--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
                                 </div>
 
                                 <div class="row" id="multiple_choise">
@@ -421,7 +436,6 @@
             });
 
             var url = window.location.pathname.split( '/' );
- console.log(url[1]);
 
             if (url[1] == 'question-edit') {
                 var type = $('#question_type :selected').val();
@@ -433,6 +447,21 @@
                 }
             }
 
+        });
+
+        $(document.body).on('change', 'select[name=category_id]', function () {
+            var id = $(this).val();
+            $.ajax({
+                url: "{{route('questionCreate')}}?val=" + id,
+                type: "get",
+                success: function (data) {
+                    console.log(data);
+                    $('select[name=sub_category_id]').html(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+
+                }
+            });
         });
     </script>
 @endsection

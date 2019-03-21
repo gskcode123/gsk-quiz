@@ -25,7 +25,9 @@ Route::group(['middleware' => ['auth','admin','lang']], function() {
 
     //Question Category
     Route::get('question-category-list', 'Admin\CategoryController@qsCategoryList')->name('qsCategoryList');
+    Route::get('question-sub-category-list-{id}', 'Admin\CategoryController@qsSubCategoryList')->name('qsSubCategoryList');
     Route::get('question-category-create', 'Admin\CategoryController@qsCategoryCreate')->name('qsCategoryCreate');
+    Route::get('question-sub-category-create/{id}', 'Admin\CategoryController@qsSubCategoryCreate')->name('qsSubCategoryCreate');
     Route::post('question-category-save', 'Admin\CategoryController@qsCategorySave')->name('qsCategorySave');
     Route::get('question-category-edit/{id}', 'Admin\CategoryController@qsCategoryEdit')->name('qsCategoryEdit');
     Route::get('question-category-delete/{id}', 'Admin\CategoryController@qsCategoryDelete')->name('qsCategoryDelete');

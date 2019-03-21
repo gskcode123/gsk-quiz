@@ -30,9 +30,9 @@ class QuestionController extends Controller
     {
         $data = ['success' => false, 'data' => [], 'message' => __('Something went wrong')];
 
-        $categories = Category::where('status', STATUS_ACTIVE)->orderBy('serial', 'ASC')->get();
+        $categories = Category::where('status', STATUS_ACTIVE)->orderBy('serial', 'ASC')->whereNull('parent_id')->get();
         $data['user_available_coin'] = 0;
-        $data['user_available_point'] = calculate_score( Auth::user()->id);;
+        $data['user_available_point'] = calculate_score( Auth::user()->id);
         if (isset(Auth::user()->userCoin->coin)) {
             $data['user_available_coin'] = Auth::user()->userCoin->coin;
         }
@@ -51,6 +51,7 @@ class QuestionController extends Controller
                     'serial' => $list->serial,
                     'status' => $list->status,
                     'coin' => $list->coin,
+                    'sub_category' => $list->count_sub_category->count(),
                     'question_amount' => count_question($list->id),
                     'is_locked' => check_category_unlock($list->id,$list->coin)
                 ];
@@ -69,6 +70,68 @@ class QuestionController extends Controller
     }
 
     /*
+     * questionSubCategory
+     *
+     * Question sub category list
+     *
+     *
+     *
+     *
+     */
+    public function questionSubCategory($id)
+    {
+        $data = ['success' => false, 'data' => [], 'message' => __('Something went wrong')];
+        try {
+            $id = decrypt($id);
+        } catch (\Exception $e) {
+            $data = [
+                'success' => false,
+                'message' => __('Invalid Category id')
+            ];
+
+            return response()->json($data);
+        }
+        $category = Category::findOrFail($id);
+        $categories = Category::where('status', STATUS_ACTIVE)->orderBy('serial', 'ASC')->where(['parent_id'=>$id])->get();
+        $data['user_available_coin'] = 0;
+        $data['user_available_point'] = calculate_score( Auth::user()->id);
+        $data['parent_category_name'] = $category->name;
+        if (isset(Auth::user()->userCoin->coin)) {
+            $data['user_available_coin'] = Auth::user()->userCoin->coin;
+        }
+        $item = [];
+        if (isset($categories)) {
+            foreach ($categories as $list) {
+                $item[] = [
+                    'id' => $list->id,
+                    'sub_category_id' => encrypt($list->id),
+                    'name' => $list->name,
+                    'description' => $list->description,
+                    'image' => asset(path_category_image() . $list->image),
+                    'qs_limit' => $list->qs_limit,
+                    'time_limit' => $list->time_limit,
+                    'max_limit' => $list->max_limit,
+                    'serial' => $list->serial,
+                    'status' => $list->status,
+                    'coin' => $list->coin,
+                    'question_amount' => count_question($list->id),
+                    'is_locked' => check_category_unlock($list->id,$list->coin)
+                ];
+            }
+
+            if (!empty($item)) {
+                $data['message'] = __('Category List');
+                $data['success'] = true;
+                $data['sub_category_list'] = $item;
+            }
+        } else {
+            $data ['success'] =  false;
+            $data['message'] = __('No data found');
+        }
+        return response()->json($data);
+    }
+
+    /*
      * singleCategory
      *
      * Show the Question list under this category
@@ -78,7 +141,7 @@ class QuestionController extends Controller
      *
      */
 
-    public function singleCategoryQuestion($id)
+    public function singleCategoryQuestion($type,$id)
     {
         try {
             $id = decrypt($id);
@@ -101,13 +164,24 @@ class QuestionController extends Controller
         $timeLimit = $category->time_limit;
         $availableQuestions = '';
 
-        $availableQuestions = Question::with('question_option')
-            ->where(['questions.category_id' => $id,'questions.status'=> STATUS_ACTIVE])
+        if($type ==1) {
+            $availableQuestions = Question::with('question_option')
+                ->where(['questions.category_id' => $id,'questions.status'=> STATUS_ACTIVE])
 //            ->whereNotIn('questions.id', UserAnswer::select('question_id')->where(['user_id' => Auth::id()]))
-            ->select('questions.*')
-            ->inRandomOrder()
-            ->limit($limit)
-            ->get();
+                ->select('questions.*')
+                ->inRandomOrder()
+                ->limit($limit)
+                ->get();
+        } else {
+            $availableQuestions = Question::with('question_option')
+                ->where(['questions.sub_category_id' => $id,'questions.status'=> STATUS_ACTIVE])
+//            ->whereNotIn('questions.id', UserAnswer::select('question_id')->where(['user_id' => Auth::id()]))
+                ->select('questions.*')
+                ->inRandomOrder()
+                ->limit($limit)
+                ->get();
+        }
+
         $data['hints_coin'] = 0;
         if (!empty(allsetting('hints_coin'))) {
             $data['hints_coin'] = allsetting('hints_coin');
@@ -160,7 +234,9 @@ class QuestionController extends Controller
 
                 $lists[] = [
                     'category' => $question->qsCategory->name,
+                    'sub_category' => isset($question->qsSubCategory->name) ? $question->qsSubCategory->name : '',
                     'category_id' => $question->qsCategory->id,
+                    'sub_category_id' => isset($question->qsSubCategory->id) ? $question->qsSubCategory->id : '',
                     'id' => $question->id,
                     'question_id' => encrypt($question->id),
                     'title' => $question->title,
@@ -194,13 +270,13 @@ class QuestionController extends Controller
             } else {
                 $data = [
                     'success' => false,
-                    'message' => __('No question found under this category')
+                    'message' => __('No question found.')
                 ];
             }
         } else {
             $data = [
                 'success' => false,
-                'message' => __('No question found under this category')
+                'message' => __('No question found.')
             ];
         }
 

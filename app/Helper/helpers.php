@@ -1,6 +1,7 @@
 <?php
 
 use App\Model\AdminSetting;
+use App\Model\Category;
 use App\Model\CategoryUnlock;
 use App\Model\Question;
 use App\Model\QuestionOption;
@@ -286,7 +287,12 @@ if (!function_exists('count_question')) {
     function count_question($cat_id)
     {
         $qs = 0;
-        $qs = Question::where(['status' => 1, 'category_id' => $cat_id])->count();
+        $category = Category::where('id',$cat_id)->first();
+        if (isset($category->parent_id)) {
+            $qs = Question::where(['status' => 1, 'sub_category_id' => $cat_id])->count();
+        } else {
+            $qs = Question::where(['status' => 1, 'category_id' => $cat_id])->count();
+        }
 
         return $qs;
     }
@@ -373,6 +379,14 @@ if (!function_exists('check_category_unlock')) {
 
         return $is_locked;
     }
+}
+
+function get_question_count($id) {
+    $item = Question::join('categories','categories.id','=','questions.sub_category_id')
+        ->where(['categories.id'=>$id])
+//        ->orWhere(['categories.parent_id'=>$id])
+        ->count();
+    return $item;
 }
 
 //google firebase

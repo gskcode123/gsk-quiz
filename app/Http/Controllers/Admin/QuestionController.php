@@ -58,12 +58,24 @@ class QuestionController extends Controller
      *
      */
 
-    public function questionCreate()
+    public function questionCreate(Request $request)
     {
         $data['pageTitle'] = __('Add Question');
         $data['menu'] = 'question';
-        $data['categories'] = Category::where('status', STATUS_ACTIVE)->orderBy('id','ASC')->get();
+        $data['categories'] = Category::where('status', STATUS_ACTIVE)->orderBy('id','ASC')->whereNull('parent_id')->get();
 
+        if ($request->ajax()) {
+            $data_genetare = '<option value="">' . __('Select Sub Category') . '</option>';
+            if (!empty($request->val)) {
+                $sub_cat = Category::orderBy('id', 'DESC')->where(['status' => STATUS_ACTIVE,'parent_id'=>$request->val])->get();
+                if (isset($sub_cat[0])) {
+                    foreach ($sub_cat as $sc) {
+                        $data_genetare .= '<option value="' . $sc->id . '">' . $sc->name . '</option>';
+                    }
+                }
+            }
+            return response()->json($data_genetare);
+        }
         return view('admin.question.add', $data);
     }
 
@@ -163,6 +175,7 @@ class QuestionController extends Controller
                 'status' => $request->status,
                 'skip_coin' => $request->skip_coin,
                 'hints' => $request->hints,
+                'sub_category_id' => $request->sub_category_id,
             ];
 
             if (!empty($request->coin)) {
@@ -231,10 +244,11 @@ class QuestionController extends Controller
     {
         $data['pageTitle'] = __('Edit Question');
         $data['menu'] = 'question';
-        $data['categories'] = Category::where('status', STATUS_ACTIVE)->orderBy('id','ASC')->get();
+        $data['categories'] = Category::where('status', STATUS_ACTIVE)->orderBy('id','ASC')->whereNull('parent_id')->get();
 
         if (!empty($id) && is_numeric($id)) {
             $data['question'] = Question::findOrFail($id);
+            $data['sub_categories'] = Category::orderBy('id', 'DESC')->where(['status' => STATUS_ACTIVE,'parent_id'=>$data['question']->category_id])->get();
             $data['qsOptions'] = QuestionOption::where('question_id', $id)->get();
         }
         return view('admin.question.add', $data);

@@ -29,7 +29,8 @@ Route::group(['middleware' =>['auth:api','api.lang'],'namespace'=>'Api'],functio
 
     //Category
     Route::get('category', 'QuestionController@questionCategory');
-    Route::get('category/{id}', 'QuestionController@singleCategoryQuestion');
+    Route::get('sub-category/{id}', 'QuestionController@questionSubCategory');
+    Route::get('category/{type?}/{id}', 'QuestionController@singleCategoryQuestion');
     Route::post('category-unlock', 'CategoryController@categoryUnlock');
 
     //Question

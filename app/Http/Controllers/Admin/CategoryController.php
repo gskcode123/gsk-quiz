@@ -24,9 +24,38 @@ class CategoryController extends Controller
     {
         $data['pageTitle'] = __('Category List');
         $data['menu'] = 'category';
-        $data['categories'] = Category::orderBy('serial', 'ASC')->get();
+        $data['categories'] = Category::orderBy('serial', 'ASC')->whereNull('parent_id')->get();
 
         return view('admin.category.list', $data);
+    }
+    /*
+     * qsSubCategoryList
+     *
+     * List of question sub category
+     *
+     *
+     *
+     *
+     */
+    public function qsSubCategoryList($id)
+    {
+        try {
+            $id = decrypt($id);
+        } catch (\Exception $e) {
+            return redirect()->back();
+        }
+        $category = Category::findOrFail($id);
+        if (isset($category)) {
+            $data['pageTitle'] = __('Sub Category Of ').$category->name;
+            $data['menu'] = 'category';
+            $data['parentId'] = $category;
+            $data['categories'] = Category::orderBy('serial', 'ASC')->where(['parent_id'=>$id])->get();
+
+            return view('admin.category.list', $data);
+        } else {
+            return redirect()->back();
+        }
+
     }
 
     /*
@@ -43,8 +72,39 @@ class CategoryController extends Controller
     {
         $data['pageTitle'] = __('Add Category');
         $data['menu'] = 'category';
+        $data['parentCategories'] = Category::whereNull('parent_id')->get();
 
         return view('admin.category.add', $data);
+    }
+
+    /*
+     * qsSubCategoryCreate
+     *
+     * Question sub category create page
+     *
+     *
+     *
+     *
+     */
+
+    public function qsSubCategoryCreate($id)
+    {
+        try {
+            $id = decrypt($id);
+        } catch (\Exception $e) {
+            return redirect()->back();
+        }
+        $category = Category::findOrFail($id);
+        if (isset($category)) {
+            $data['pageTitle'] = __('Add Sub Category Of ').$category->name;
+            $data['menu'] = 'category';
+            $data['parentCategories'] = Category::whereNull('parent_id')->get();
+            $data['parentId'] = $category;
+
+            return view('admin.category.add', $data);
+        } else {
+            return redirect()->back();
+        }
     }
 
     /*
@@ -93,6 +153,7 @@ class CategoryController extends Controller
                 'max_limit' => $request->max_limit,
                 'serial' => $request->serial,
                 'status' => $request->status,
+                'parent_id' => $request->parent_id,
             ];
             if (!empty($request->coin)) {
                 $data['coin'] = $request->coin;
@@ -101,6 +162,10 @@ class CategoryController extends Controller
             }
             if (!empty($request->edit_id)) {
                 $cat = Category::where('id', $request->edit_id)->first();
+                $alreadyParent = Category::where('parent_id',$request->edit_id)->get();
+                if (isset($request->parent_id) && isset($alreadyParent[0])) {
+                    return redirect()->back()->with('dismiss', __('This category is already a parent '));
+                }
             }
             if (!empty($request['image'])) {
                 $old_img = '';
@@ -112,7 +177,11 @@ class CategoryController extends Controller
             if (!empty($request->edit_id)) {
                 $update = Category::where(['id' => $request->edit_id])->update($data);
                 if ($update) {
-                    return redirect()->back()->with('success', __('Category Updated Successfully'));
+                    if (isset($data['parent_id'])) {
+                        return redirect()->back()->with('success', __('Sub Category Updated Successfully'));
+                    } else {
+                        return redirect()->back()->with('success', __('Category Updated Successfully'));
+                    }
                 } else {
                     return redirect()->back()->with('dismiss', __('Update Failed'));
                 }
@@ -138,8 +207,11 @@ class CategoryController extends Controller
                             }
                         }
                     }
-
-                    return redirect()->route('qsCategoryList')->with('success', __('Category Created Successfully'));
+                    if (isset($insert->parent_id)) {
+                        return redirect()->route('qsSubCategoryList', encrypt($insert->parent_id))->with('success', __('Sub Category Created Successfully'));
+                    } else {
+                        return redirect()->route('qsCategoryList')->with('success', __('Category Created Successfully'));
+                    }
                 } else {
                     return redirect()->route('qsCategoryList')->with('dismiss', __('Save Failed'));
                 }
@@ -164,12 +236,16 @@ class CategoryController extends Controller
 
     public function qsCategoryEdit($id)
     {
-        $data['pageTitle'] = __('Edit Category');
         $data['menu'] = 'category';
         if (!empty($id) && is_numeric($id)) {
             $data['category'] = Category::findOrFail($id);
         }
-
+        $data['parentCategories'] = Category::whereNull('parent_id')->get();
+        if (isset($data['category']->parent_id)) {
+            $data['pageTitle'] = __('Edit Sub Category');
+        } else {
+            $data['pageTitle'] = __('Edit Category');
+        }
         return view('admin.category.add', $data);
     }
 

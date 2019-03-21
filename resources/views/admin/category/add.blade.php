@@ -16,7 +16,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h2>@if(isset($category)) {{__('Edit Category')}} @else {{__('Add Category')}} @endif</h2>
+                        <h2>{{ isset($pageTitle) ? $pageTitle : '' }}</h2>
                         <span class="sidebarToggler">
                             <i class="fa fa-bars d-lg-none d-block"></i>
                         </span>
@@ -45,6 +45,21 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
+                                    <label>{{__('Sub Category')}}<span class="text-danger">*</span></label>
+                                    <div class="qz-question-category">
+                                        <select name="parent_id" class="form-control">
+                                            <option value="">{{__('Parent Category')}}</option>
+                                            @if (isset($parentCategories[0]))
+                                                @foreach($parentCategories as $value)
+                                                    <option @if(isset($category) && ($category->parent_id == $value->id)) selected
+                                                            @elseif(isset($parentId) && ($parentId->id == $value->id)) selected
+                                                            @elseif((old('parent_id') != null) && (old('parent_id') == $value->id)) selected @endif value="{{ $value->id }}">{{$value->name}}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label>{{__('Description')}}</label>
                                     <textarea name="description" id="" rows="6" class="form-control">@if(isset($category)){{$category->description}}@else{{old('description')}}@endif</textarea>
                                 </div>
@@ -67,7 +82,7 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label>{{__('Quize limit')}}<span class="text-danger">*</span></label>
+                                    <label>{{__('Quiz limit')}}<span class="text-danger">*</span></label>
                                     <input type="text" @if(isset($category)) value="{{$category->qs_limit}}" @else value="{{old('qs_limit')}}" @endif name="qs_limit" class="form-control" placeholder="Question limit for per Quiz test">
                                     @if ($errors->has('qs_limit'))
                                         <span class="text-danger">

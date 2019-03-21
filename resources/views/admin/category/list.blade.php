@@ -16,9 +16,9 @@
             <div class="row">
                 <div class="col-12">
                     <div class="d-flex justify-content-between">
-                        <h2>{{__('Category')}}</h2>
+                        <h2>{{ isset($pageTitle) ? $pageTitle : '' }}</h2>
                         <div class="d-flex align-items-center">
-                            <a href="{{route('qsCategoryCreate')}}" class="btn btn-primary px-3">{{__('Add New')}}</a>
+                            <a href="@if(isset($parentId)) {{route('qsSubCategoryCreate', encrypt($parentId->id))}} @else {{route('qsCategoryCreate')}} @endif" class="btn btn-primary px-3">{{__('Add New')}}</a>
                             <span class="sidebarToggler ml-4">
                                 <i class="fa fa-bars d-lg-none d-block"></i>
                             </span>
@@ -43,6 +43,7 @@
                                 <tr>
                                     <th class="all">{{__('SL.')}}</th>
                                     <th class="teblete">{{__('Title')}}</th>
+                                    @if(empty($parentId)) <th class="teblete">{{__('Sub Category')}}</th> @endif
                                     <th class="desktop">{{__('Questions')}}</th>
                                     <th class="desktop">{{__('Coin')}}</th>
                                     <th class="desktop">{{__('Priority')}}</th>
@@ -58,6 +59,12 @@
                                 <tr>
                                     <td>{{ $sl++ }}</td>
                                     <td>{{ $item->name }}</td>
+                                    @if(empty($parentId))
+                                        <td><a href="{{ route('qsSubCategoryList', encrypt($item->id)) }}">
+                                                {{ $item->count_sub_category->count() }}
+                                            </a>
+                                        </td>
+                                    @endif
                                     <td>{{ count_question($item->id) }}</td>
                                     <td>{{ $item->coin }}</td>
                                     <td>{{ $item->serial }}</td>
