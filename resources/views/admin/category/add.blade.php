@@ -45,7 +45,7 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label>{{__('Sub Category')}}<span class="text-danger">*</span></label>
+                                    <label>{{__('Parent Category')}}<span class="text-danger"></span></label>
                                     <div class="qz-question-category">
                                         <select name="parent_id" class="form-control">
                                             <option value="">{{__('Parent Category')}}</option>

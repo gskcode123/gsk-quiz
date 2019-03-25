@@ -142,7 +142,7 @@ class QuestionController extends Controller
 
         if (empty($request->edit_id)) {
             if(empty($request->title) && empty($request->image)) {
-                return redirect()->back()->with('dismiss', __('Must be input title or upload image'));
+                return redirect()->back()->withInput()->with('dismiss', __('Must be input title or upload image'));
             }
             $text = $this->preg_grep_keys_values('~option_text~i', $request->all());
             $image = $this->preg_grep_keys_values('~option_image~i', $request->all());
@@ -150,7 +150,7 @@ class QuestionController extends Controller
             $imgCount = count(array_filter($image));
 
             if($textCount + $imgCount < 2) {
-                return redirect()->back()->with('dismiss', __('Atleast two options are required'));
+                return redirect()->back()->withInput()->with('dismiss', __('Atleast two options are required'));
             }
         }
 
@@ -158,10 +158,10 @@ class QuestionController extends Controller
             (!empty($request->option_text3) && !empty($request->option_image3)) || (!empty($request->option_text4) && !empty($request->option_image4)) ||
             (!empty($request->option_text5) && !empty($request->option_image5))) {
 
-            return redirect()->back()->with('dismiss', __('At a time only text or only image sholud be a option'));
+            return redirect()->back()->withInput()->with('dismiss', __('At a time only text or only image sholud be a option'));
         }
         if (!in_array(1,[$request->ans_type1,$request->ans_type2,$request->ans_type3,$request->ans_type4, $request->ans_type5])) {
-            return redirect()->back()->with('dismiss', __('Atleast one answer must be rigth. '));
+            return redirect()->back()->withInput()->with('dismiss', __('Atleast one answer must be rigth. '));
         }
         try {
             $data = [

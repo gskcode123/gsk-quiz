@@ -164,7 +164,7 @@ class CategoryController extends Controller
                 $cat = Category::where('id', $request->edit_id)->first();
                 $alreadyParent = Category::where('parent_id',$request->edit_id)->get();
                 if (isset($request->parent_id) && isset($alreadyParent[0])) {
-                    return redirect()->back()->with('dismiss', __('This category is already a parent '));
+                    return redirect()->back()->withInput()->with('dismiss', __('This category is already a parent '));
                 }
             }
             if (!empty($request['image'])) {
@@ -274,7 +274,11 @@ class CategoryController extends Controller
             $item = Category::where('id', $id)->first();
             $destroy = $item->delete();
             if ($destroy) {
-                return redirect()->back()->with('success', __('Category Deleted successfully'));
+                if (isset($item->parent_id)) {
+                    return redirect()->back()->with('success', __('Sub Category Deleted successfully'));
+                } else {
+                    return redirect()->back()->with('success', __('Category Deleted successfully'));
+                }
             } else {
                 return redirect()->back()->with('dismiss', __('Something went wrong!'));
             }
