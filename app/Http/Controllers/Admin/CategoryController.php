@@ -263,10 +263,14 @@ class CategoryController extends Controller
     {
 
         if(isset($id) && is_numeric($id)){
-            $qsCategory = Question::where('category_id',$id)->get();
-        if((!$qsCategory->isEmpty())) {
-            return redirect()->back()->with(['dismiss' => __("Under this category has some question.You can't delete this category")]);
-        }
+            $qsCategory = Question::where('category_id',$id)->orWhere('sub_category_id',$id)->get();
+            $checkSubCategory = Category::where(['parent_id' => $id])->get();
+            if(isset($checkSubCategory[0])) {
+                return redirect()->back()->with(['dismiss' => __("Under this category has some sub category.You can't delete this category")]);
+            }
+            if((!$qsCategory->isEmpty())) {
+                return redirect()->back()->with(['dismiss' => __("Under this category has some question.You can't delete this category")]);
+            }
             $item = Category::where('id', $id)->first();
             $destroy = $item->delete();
             if ($destroy) {
