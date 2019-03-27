@@ -140,6 +140,12 @@ class QuestionController extends Controller
 
         $this->validate($request, $rules,$messages);
 
+        if ($request->category_id && empty($request->sub_category_id)) {
+            $subcategory = Category::where('parent_id',$request->category_id)->get();
+            if (isset($subcategory[0])) {
+                return redirect()->back()->withInput()->with('dismiss', __('Must be select a sub category of category'));
+            }
+        }
         if (empty($request->edit_id)) {
             if(empty($request->title) && empty($request->image)) {
                 return redirect()->back()->withInput()->with('dismiss', __('Must be input title or upload image'));

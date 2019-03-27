@@ -66,7 +66,7 @@
                                         <span class="flaticon-mail"></span>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary">{{__('Sign in')}}</button>
+                                <button type="submit" class="btn btn-primary">{{__('Submit')}}</button>
                             {{ Form::close() }}
                         </div>
                     </div>

@@ -96,7 +96,7 @@
                                                         <option value="">{{__('Select Category')}}</option>
                                                         @foreach($categories as $category)
                                                             <option @if(isset($question) && ($question->category_id == $category->id)) selected
-                                                                    @elseif((old('category_id') != null) && (old('category_id') == $category->id)) selected @endif value="{{$category->id}}">{{$category->name}}</option>
+                                                                    @elseif((old('category_id') != null) && (old('category_id') == $category->id))  @endif value="{{$category->id}}">{{$category->name}}</option>
                                                         @endforeach
                                                     </select>
                                                 @endif
