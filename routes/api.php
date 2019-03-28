@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 */
 
 Route::post('login','Api\AuthController@postLogin');
+Route::post('login-with-google','Api\AuthController@loginWithGoogle');
 Route::post('registration','Api\AuthController@postRegistration');
 Route::post('send-reset-password-code','Api\AuthController@sendToken');
 Route::post('reset-password','Api\AuthController@resetPassword');

@@ -33,7 +33,7 @@
             <div class="card-body">
                 <div class="container-fluid">
                     <div class="row">
-                        <span class="text-danger">Currently this feature disable for demo </span>
+                        {{--<span class="text-danger">Currently this feature disable for demo </span>--}}
                         <div class="col-lg-12">
                             {{ Form::open(['route' => 'changePassword', 'files' => 'true']) }}
                                 <div class="row">

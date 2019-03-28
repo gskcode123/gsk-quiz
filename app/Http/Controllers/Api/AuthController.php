@@ -114,6 +114,151 @@ class AuthController extends Controller
         return response()->json($data);
     }
 
+
+
+    /*
+     * loginWithGoogle
+     *
+     * User login With Google process
+     *
+     *
+     *
+     */
+
+    public function loginWithGoogle(Request $request)
+    {
+        $data = ['success' => false, 'data' => [], 'message' => __('Something went wrong !')];
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+        ]);
+
+        if ($validator->fails()) {
+            $errors = [];
+            $e = $validator->errors()->all();
+            foreach ($e as $error) {
+                $errors[] = $error;
+            }
+            $data['message'] = $errors;
+
+            return response()->json($data);
+        }
+        $user = User::where('email', $request->email)->first();
+        if (isset($user)) {
+
+            $admob_coin = 0;
+            $total_coin = 0;
+            $total_point = 0;
+            if (isset($user->userCoin->coin)) {
+                $total_coin = $user->userCoin->coin;
+            }
+            $total_point = calculate_score($user->id);
+            if (!empty(allsetting('admob_coin'))) {
+                $admob_coin = allsetting('admob_coin');
+            }
+            $token = $user->createToken($request->email)->accessToken;
+            if ($user->role == USER_ROLE_USER) {
+                if ($user->active_status == STATUS_SUCCESS) {
+                    if ($user->email_verified == STATUS_SUCCESS) {
+                        $data['success'] = true;
+                        $data['data'] = ['access_token' => $token, 'access_type' => "Bearer", 'admob_coin' =>$admob_coin, 'total_coin' =>$total_coin, 'total_point' =>$total_point, 'user_info' => $user];
+                        $data['message'] = __('Successfully Logged in');
+
+                    } else {
+                        $mail_key = randomNumber(6);
+                        $mailService = app(MailService::class);
+                        UserVerificationCode::where(['user_id' => $user->id])->update(['status' => STATUS_SUCCESS]);
+                        UserVerificationCode::create(['user_id' => $user->id, 'code' => $mail_key, 'type' => 1, 'status' => STATUS_PENDING, 'expired_at' => date('Y-m-d', strtotime('+15 days'))]);
+                        $userName = $user->name;
+                        $userEmail = $user->email;
+                        $companyName = isset($default['company']) && !empty($default['company']) ? $default['company'] : __('Quiz Test');
+                        $subject = __('Email Verification | :companyName', ['companyName' => $companyName]);
+                        $data['data'] = $user;
+                        $data['key'] = $mail_key;
+
+                        $mailService->send('email.verifyapp', $data, $userEmail, $userName, $subject);
+
+                        $data['success'] = true;
+                        $data['data'] = ['access_token' => $token, 'user_info' => $user, 'admob_coin' =>$admob_coin,'total_coin' =>$total_coin, 'total_point' =>$total_point, 'access_type' => "Bearer"];
+                        $data['message'] = __('Your email is not verified. Please verify your email to get full access.');
+                    }
+                } elseif ($user->active_status == STATUS_SUSPENDED) {
+                    $data['success'] = false;
+                    $data['message'] = __("Your Account has been suspended. please contact support team to active again");
+                } elseif ($user->active_status == STATUS_DELETED) {
+                    $data['success'] = false;
+                    $data['message'] = __("Your Account has been deleted. please contact support team to active again");
+                } elseif ($user->active_status == STATUS_PENDING) {
+                    $data['success'] = false;
+                    $data['message'] = __("Your Account has been Pending for admin approval. please contact support team to active again");
+                }
+            } else {
+                $data['success'] = false;
+                $data['message'] = __("You are not authorised");
+            }
+        } else {
+            try {
+                //verification key s for email and phone
+                $mail_key = $this->generate_email_verification_key();
+                if (empty($request->name)) {
+                    $data =['success' => false, 'message' => __('Please provide your name')];
+                    return response()->json($data);
+                }
+                $user = User::create([
+                    'name' => $request->get('name'),
+                    'email' => $request->get('email'),
+                    'password' => Hash::make($request->get('email')),
+                    'role' => USER_ROLE_USER,
+                    'active_status' => STATUS_SUCCESS,
+                    'email_verified' => STATUS_SUCCESS,
+                    'reset_code' => md5($request->get('email') . uniqid() . randomString(5)),
+                    'language' => 'en'
+                ]);
+
+                UserVerificationCode::create([
+                    'user_id' => $user->id,
+                    'code' => $mail_key,
+                    'type' => 1,
+                    'status' => STATUS_SUCCESS,
+                    'expired_at' => date('Y-m-d', strtotime('+10 days'))
+                ]);
+                $createCoinWallet = app(CommonService::class)->create_coin_wallet($user->id);
+                $mailService = app(MailService::class);
+                $userName = $user->name ;
+                $userEmail = $user->email;
+                $companyName = isset($default['company']) && !empty($default['company']) ? $default['company'] : __('Quiz Test');
+                $subject = __('Email Verification | :companyName', ['companyName' => $companyName]);
+                $data['data'] = $user;
+                $data['key'] = $mail_key;
+                $mailService->send('email.verifyapp', $data, $userEmail, $userName, $subject);
+
+                if ($user) {
+                    $total_coin =0;
+                    $total_point=0;
+                    $admob_coin = 0;
+                    if(!empty(allsetting('signup_coin'))) {
+                        $total_coin = allsetting('signup_coin');
+                    }
+                    if(!empty(allsetting('admob_coin'))) {
+                        $admob_coin = allsetting('admob_coin');
+                    }
+                    $token = $user->createToken($request->get('email'))->accessToken;
+                    $data['success'] = true;
+                    $data['data'] = ['access_token' => $token, 'access_type' => "Bearer", 'admob_coin' =>$admob_coin,'total_coin' =>$total_coin, 'total_point' =>$total_point, 'user_info' => $user];
+                    $data['message'] = __('Successfully Login with google account! ');
+
+                    return response()->json($data);
+                }
+
+                throw new ApiException(__('Registration failed. Please try again.'));
+            } catch(\Exception $e) {
+                $data =['success' => false, 'message' => __('Something went wrong')];
+                return response()->json($data);
+            }
+        }
+
+        return response()->json($data);
+    }
+
     /*
      * postRegistration
      *
