@@ -8,7 +8,7 @@ Route::group(['middleware' => ['auth','admin','lang']], function() {
     Route::get('/profile','Admin\ProfileController@userProfile')->name('userProfile');
     Route::get('/password-change','Admin\ProfileController@passwordChange')->name('passwordChange');
     Route::post('/update-profile','Admin\ProfileController@updateProfile')->name('updateProfile');
-    Route::post('/change-password','Admin\ProfileController@changePassword')->name('changePassword');
+//    Route::post('/change-password','Admin\ProfileController@changePassword')->name('changePassword');
 
     //leaderboard
     Route::get('/leader-board', 'Admin\DashboardController@leaderBoard')->name('leaderBoard');

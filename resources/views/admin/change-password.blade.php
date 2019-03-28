@@ -34,33 +34,33 @@
                 <div class="container-fluid">
                     <div class="row">
                         <span class="text-danger">Currently this feature disable for demo </span>
-                        <div class="col-lg-12">
-                            {{ Form::open(['route' => 'changePassword', 'files' => 'true']) }}
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label>{{__('Old Password')}}</label>
-                                            <input type="password" name="old_password" value ="" class="form-control" placeholder="">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label>{{__('New Password')}}</label>
-                                            <input type="password" name="password" value ="" class="form-control" placeholder="">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label>{{__('Confirm Password')}}</label>
-                                            <input type="password" name="password_confirmation" value ="" class="form-control" placeholder="">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <button type="submit" class="btn btn-primary btn-block add-category-btn mt-4">{{__('Save Change')}}</button>
-                                    </div>
-                                </div>
-                            {{ Form::close() }}
-                        </div>
+                        {{--<div class="col-lg-12">--}}
+                            {{--{{ Form::open(['route' => 'changePassword', 'files' => 'true']) }}--}}
+                                {{--<div class="row">--}}
+                                    {{--<div class="col-lg-6">--}}
+                                        {{--<div class="form-group">--}}
+                                            {{--<label>{{__('Old Password')}}</label>--}}
+                                            {{--<input type="password" name="old_password" value ="" class="form-control" placeholder="">--}}
+                                        {{--</div>--}}
+                                    {{--</div>--}}
+                                    {{--<div class="col-lg-6">--}}
+                                        {{--<div class="form-group">--}}
+                                            {{--<label>{{__('New Password')}}</label>--}}
+                                            {{--<input type="password" name="password" value ="" class="form-control" placeholder="">--}}
+                                        {{--</div>--}}
+                                    {{--</div>--}}
+                                    {{--<div class="col-lg-6">--}}
+                                        {{--<div class="form-group">--}}
+                                            {{--<label>{{__('Confirm Password')}}</label>--}}
+                                            {{--<input type="password" name="password_confirmation" value ="" class="form-control" placeholder="">--}}
+                                        {{--</div>--}}
+                                    {{--</div>--}}
+                                    {{--<div class="col-lg-4">--}}
+                                        {{--<button type="submit" class="btn btn-primary btn-block add-category-btn mt-4">{{__('Save Change')}}</button>--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
+                            {{--{{ Form::close() }}--}}
+                        {{--</div>--}}
                     </div>
                 </div>
             </div>
