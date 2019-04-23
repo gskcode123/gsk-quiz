@@ -33,19 +33,15 @@
     <![endif]-->
 </head>
 
-<body class="user-body">
+<body class="">
 
 <!-- Start user area -->
 <div class="container">
     <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="col-lg-8 offset-2">
-                    @if(isset($adm_setting['terms_conditions']))
-                        {!! $adm_setting['terms_conditions'] !!}
-                    @endif
-                </div>
-            </div>
+        <div class="col-md-8 offset-2">
+            @if(isset($adm_setting['terms_conditions']))
+                {!! $adm_setting['terms_conditions'] !!}
+            @endif
         </div>
     </div>
 </div>
