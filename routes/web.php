@@ -30,7 +30,8 @@ Route::get('verify-{verification_code}','AuthController@verifyEmail')->name('ver
 Route::get('forget-password-change/{reset_code}', 'AuthController@forgetPasswordChange')->name('forgetPasswordChange');
 Route::get('forget-password-reset', 'AuthController@forgetPasswordReset')->name('forgetPasswordReset');
 Route::post('forget-password-reset-process/{reset_code}', 'AuthController@forgetPasswordResetProcess')->name('forgetPasswordResetProcess');
-
+Route::get('privacy-and-policy', 'AuthController@privacyPolicy')->name('privacyPolicy');
+Route::get('terms-and-conditions', 'AuthController@termsCondition')->name('termsCondition');
 
 require base_path('routes/link/admin.php');
 

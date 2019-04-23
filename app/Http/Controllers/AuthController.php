@@ -355,4 +355,23 @@ class AuthController extends Controller
             }
         }
     }
+
+    // privacy and policy
+
+    public function privacyPolicy()
+    {
+        $data['pageTitle'] = __('Privacy Policy');
+        $data['adm_setting'] = allsetting();
+
+        return view('privacy.privacy', $data);
+    }
+    // terms and conditions
+
+    public function termsCondition()
+    {
+        $data['pageTitle'] = __('Terms & Conditions');
+        $data['adm_setting'] = allsetting();
+
+        return view('privacy.terms', $data);
+    }
 }

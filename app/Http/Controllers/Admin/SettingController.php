@@ -67,6 +67,12 @@ class SettingController extends Controller
             if (isset($request->signup_coin)) {
                 AdminSetting::updateOrCreate(['slug' => 'signup_coin'],['value' => $request->signup_coin]);
             }
+            if (isset($request->privacy_policy)) {
+                AdminSetting::updateOrCreate(['slug' => 'privacy_policy'],['value' => $request->privacy_policy]);
+            }
+            if (isset($request->terms_conditions)) {
+                AdminSetting::updateOrCreate(['slug' => 'terms_conditions'],['value' => $request->terms_conditions]);
+            }
             if (isset($request->logo)) {
 //                AdminSetting::updateOrCreate(['slug' => 'logo'], ['value' => uploadthumb($request->logo, path_image(), 'logo_', '', '', allsetting()['logo'])]);
                 AdminSetting::updateOrCreate(['slug' => 'logo'], ['value' => fileUpload($request['logo'], path_image(), allsetting()['logo'])]);

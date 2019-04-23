@@ -125,6 +125,18 @@
                                                  @endif width="100" class="img-fluid" alt="">
                                         </div>
                                     </div>
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label>{{__('Privacy and Policy')}}</label>
+                                            <textarea id="btEditor" name="privacy_policy">@if(isset($adm_setting['privacy_policy'])){{$adm_setting['privacy_policy']}}@else{{old('privacy_policy')}}@endif</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label>{{__('Terms and Conditions')}}</label>
+                                            <textarea id="btEditor2" name="terms_conditions">@if(isset($adm_setting['terms_conditions'])) {{$adm_setting['terms_conditions']}} @else {{old('terms_conditions')}} @endif</textarea>
+                                        </div>
+                                    </div>
                                     <div class="col-lg-4">
                                         <button type="submit" class="btn btn-primary btn-block add-category-btn mt-4">{{__('Save Change')}}</button>
                                     </div>
