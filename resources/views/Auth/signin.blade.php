@@ -78,6 +78,7 @@
 
                             <div class="qz-user-footer">
                                 <h4>{{__('Don\'t have account ?')}} <a href="{{route('userSignUp')}}">{{__('Sign Up')}}</a> </h4>
+                                <h5><a href="{{route('privacyPolicy')}}">{{__('Privacy Policy')}}</a> and <a href="{{route('termsCondition')}}">{{__('Terms & Conditions')}}</a> </h5>
 {{--                                <h4><a href="{{route('forgetPassword')}}">{{__('Forgot Password')}}</a> </h4>--}}
                                 {{--<p>--}}
                                     {{--Or sign in with--}}
