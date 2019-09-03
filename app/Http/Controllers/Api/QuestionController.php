@@ -167,7 +167,7 @@ class QuestionController extends Controller
         if($type ==1) {
             $availableQuestions = Question::with('question_option')
                 ->where(['questions.category_id' => $id,'questions.status'=> STATUS_ACTIVE])
-//            ->whereNotIn('questions.id', UserAnswer::select('question_id')->where(['user_id' => Auth::id()]))
+                ->whereNotIn('questions.id', UserAnswer::select('question_id')->where(['user_id' => Auth::id()]))
                 ->select('questions.*')
                 ->inRandomOrder()
                 ->limit($limit)
@@ -175,7 +175,7 @@ class QuestionController extends Controller
         } else {
             $availableQuestions = Question::with('question_option')
                 ->where(['questions.sub_category_id' => $id,'questions.status'=> STATUS_ACTIVE])
-//            ->whereNotIn('questions.id', UserAnswer::select('question_id')->where(['user_id' => Auth::id()]))
+                ->whereNotIn('questions.id', UserAnswer::select('question_id')->where(['user_id' => Auth::id()]))
                 ->select('questions.*')
                 ->inRandomOrder()
                 ->limit($limit)

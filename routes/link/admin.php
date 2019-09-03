@@ -23,6 +23,7 @@ Route::group(['middleware' => ['auth','admin','lang']], function() {
     Route::get('user-details/{id}', 'Admin\UserController@userDetails')->name('userDetails');
     Route::get('user-make-admin/{id}', 'Admin\UserController@userMakeAdmin')->name('userMakeAdmin');
     Route::get('user-make-user/{id}', 'Admin\UserController@userMakeUser')->name('userMakeUser');
+    Route::post('user-add-process', 'Admin\UserController@userAddProcess')->name('userAddProcess');
 
     //Question Category
     Route::get('question-category-list', 'Admin\CategoryController@qsCategoryList')->name('qsCategoryList');

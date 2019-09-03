@@ -57,7 +57,7 @@
                             <div class="qz-user-title">
                                 <h1>{{__('Sign in')}}</h1>
                             </div>
-{{--                            <h5>{{__('Hello there, Sign in and start managing your Admin Template')}}</h5>--}}
+                            <h5>{{__('Hello there, Sign in and start managing your Admin Template')}}</h5>
 
                             {{ Form::open(['route' => 'loginProcess']) }}
                             {{csrf_field()}}
@@ -80,12 +80,6 @@
                                 <h4>{{__('Don\'t have account ?')}} <a href="{{route('userSignUp')}}">{{__('Sign Up')}}</a> </h4>
                                 <h4><a href="{{route('forgetPassword')}}">{{__('Forgot Password ?')}}</a> </h4>
                                 <h5><a href="{{route('privacyPolicy')}}">{{__('Privacy Policy')}}</a> and <a href="{{route('termsCondition')}}">{{__('Terms & Conditions')}}</a> </h5>
-                                {{--<p>--}}
-                                    {{--Or sign in with--}}
-                                    {{--<a href="#" class="qz-fb"><i class="fa fa-facebook"></i></a>--}}
-                                    {{--<a href="#" class="qz-ing"><i class="fa fa-instagram"></i></a>--}}
-                                    {{--<a href="#" class="qz-gp"><i class="fa fa-google-plus"></i></a>--}}
-                                {{--</p>--}}
                             </div>
                         </div>
                     </div>
