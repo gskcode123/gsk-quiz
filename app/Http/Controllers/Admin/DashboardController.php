@@ -6,6 +6,7 @@ use App\Model\Category;
 use App\Model\Question;
 use App\Model\UserAnswer;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -27,15 +28,33 @@ class DashboardController extends Controller
         $data['menu'] = 'dashboard';
         $data['totalQuestion'] = 0;
         $data['totalCategory'] = 0;
+        $data['totalUser'] = 0;
         $data['totalQuestion'] = Question::where('status', STATUS_ACTIVE)->count();
         $data['totalCategory'] = Category::where('status', STATUS_ACTIVE)->count();
+        $data['totalUser'] = User::where(['active_status'=> STATUS_ACTIVE, 'role'=> USER_ROLE_USER])->count();
         $data['categories'] = Category::where('status', STATUS_ACTIVE)->orderBy('id', 'DESC')->limit(4)->get();
+        $data['questions'] = Question::where('status', STATUS_ACTIVE)->orderBy('id', 'DESC')->limit(4)->get();
         $data['leaders'] = UserAnswer::select(
             DB::raw('SUM(point) as score, user_id'))
             ->groupBy('user_id')
             ->orderBy('score', 'DESC')
             ->limit(5)
             ->get();
+        $monthlySales = UserAnswer::select(DB::raw('count(id) as totalUser'), DB::raw('MONTH(created_at) as months'))
+            ->whereYear('created_at', Carbon::now()->year)
+            ->groupBy('months')
+            ->get();
+        $allMonths = all_month();
+        if (isset($monthlySales[0])) {
+            foreach ($monthlySales as $sales) {
+                $data['sale'][$sales->months] = $sales->totalUser;
+            }
+        }
+        $allUsers= [];
+        foreach ($allMonths as $month) {
+            $allUsers[] =  isset($data['sale'][$month]) ? (int)$data['sale'][$month] : 0;
+        }
+        $data['monthly_user'] = $allUsers;
 
         return view('admin.dashboard', $data);
     }

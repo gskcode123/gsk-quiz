@@ -26,7 +26,7 @@
         </div>
     </div>
     <!-- End page title -->
-    @include('layout.message')
+    @include('layout.message_new')
     <!-- Start content area  -->
     <div class="qz-content-area">
         <div class="card add-category">

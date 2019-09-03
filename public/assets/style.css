@@ -755,5 +755,9 @@ button#add {
 .qz-src-result li a{
     color: #5d5d5f;
 }
+.for-email {
+    height: 65px !important;
+    line-height: 50px;
+}
 
 

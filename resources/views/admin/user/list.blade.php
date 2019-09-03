@@ -64,6 +64,7 @@
                                     <td>
                                         <ul class="d-flex justify-content-center">
                                             <a href="{{ route('userDetails', $item->id) }}" data-toggle="tooltip" title="User Details"><li class="qz-details"><span class="flaticon-pencil"></span></li></a>
+                                            <a href="{{ route('editUser', encrypt($item->id)) }}" data-toggle="tooltip" title="Edit"><li class=" ml-2 qz-details"><span class="flaticon-pencil"></span></li></a>
                                             @if($item->role == USER_ROLE_USER)
                                                 <a href="{{ route('userMakeAdmin', $item->id) }}" data-toggle="tooltip" title="Make Admin" onclick="return confirm('Are you sure to make his/her admin ?');">
                                                     <li class="ml-2 qz-check"><span class="flaticon-check-mark"></span></li>
@@ -71,6 +72,15 @@
                                             @else
                                                 <a href="{{ route('userMakeUser', $item->id) }}" data-toggle="tooltip" title="Make User" onclick="return confirm('Are you sure to make his/her user ?');">
                                                     <li class="ml-2 qz-edit"><span class="flaticon-check-mark"></span></li>
+                                                </a>
+                                            @endif
+                                            @if($item->active_status == STATUS_DELETED)
+                                                <a href="{{ route('userActivate', encrypt($item->id)) }}" data-toggle="tooltip" title="Activate" onclick="return confirm('Are you sure to active ?');">
+                                                    <li class="ml-2 qz-edit"><span class="flaticon-check-mark"></span></li>
+                                                </a>
+                                            @else
+                                                <a href="{{ route('userDelete', encrypt($item->id)) }}" data-toggle="tooltip" title="Delete" onclick="return confirm('Are you sure to delete this ?');">
+                                                    <li class="ml-2 qz-close"><span class="flaticon-error"></span></li>
                                                 </a>
                                             @endif
                                         </ul>

@@ -31,6 +31,15 @@ class CommonService
         $this->logger = app(Logger::class);
     }
 
+    public function checkValidId($id){
+        try {
+            $id = decrypt($id);
+        } catch (\Exception $e) {
+            return ['success'=>false];
+        }
+        return $id;
+    }
+
     public function save_login_setting($request)
     {
         $rules = [
@@ -81,6 +90,7 @@ class CommonService
                     'name' => $request->name,
                     'phone' => $request->phone,
                     'email' => $request->email,
+                    'country' => $request->country,
                     'password' => Hash::make($request->password),
                     'role' => isset($request->role) ? $request->role : USER_ROLE_USER,
                     'active_status' => STATUS_SUCCESS,

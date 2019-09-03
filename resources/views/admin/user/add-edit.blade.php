@@ -34,7 +34,11 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">
-                            {{ Form::open(['route' => 'userAddProcess', 'files' => 'true']) }}
+                            @if(isset($user))
+                                {{ Form::open(['route' => 'userUpdateProcess', 'files' => 'true']) }}
+                            @else
+                                {{ Form::open(['route' => 'userAddProcess', 'files' => 'true']) }}
+                            @endif
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group {{ $errors->has('name') ? ' has-error' : '' }}">
@@ -48,7 +52,7 @@
                                     <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }}">
                                         <label>{{__('Email')}}<span class="text-danger">*</span></label>
                                         @if(isset($user))
-                                            <span class="form-control">{{$user->email}}</span>
+                                            <span class="form-control for-email">{{$user->email}}</span>
                                         @else
                                             <input type="email" name="email" value="{{old('email')}}" class="form-control" placeholder="Email Address">
                                         @endif

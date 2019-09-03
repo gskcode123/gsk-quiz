@@ -57,7 +57,7 @@
                                             <tr>
                                                 <td>{{ $sl++ }}</td>
                                                 <td>{{ $item->qsCategory->name }}</td>
-                                                <td>{{ $item->title }}</td>
+                                                <td>{{ str_limit($item->title,30) }}</td>
                                                 <td>{{ answers($item->id) }}</td>
                                                 <td>{{ $item->point }}</td>
                                                 <td><span @if($item->status == 1) class="text-success" @else class="text-danger" @endif>{{ statusType($item->status) }}</span></td>

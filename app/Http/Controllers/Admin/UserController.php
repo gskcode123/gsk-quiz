@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Admin\UserSaveRequest;
+use App\Http\Requests\Admin\UserUpdateRequest;
+use App\Repository\UserRepository;
 use App\Services\CommonService;
 use App\User;
 use Illuminate\Http\Request;
@@ -122,6 +124,23 @@ class UserController extends Controller
         return view('admin.user.add-edit', $data);
     }
 
+    /*
+     *
+     * edit user
+     */
+    public function editUser($id)
+    {
+        $data['pageTitle'] = __('Update User');
+        $data['menu'] = 'userlist';
+        $id = app(CommonService::class)->checkValidId($id);
+        if (is_array($id)) {
+            return redirect()->back()->with(['dismiss' => __('User not found.')]);
+        }
+        $data['user'] = User::where('id',$id)->first();
+
+        return view('admin.user.add-edit', $data);
+    }
+
     /**
      * userAddProcess
      *
@@ -144,6 +163,82 @@ class UserController extends Controller
             }
 
             return redirect()->back()->withInput()->with('dismiss', $response['message']);
+        }
+        return redirect()->back();
+    }
+
+    /**
+     * userAddProcess
+     *
+     * update a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function userUpdateProcess(UserUpdateRequest $request)
+    {
+        if($request->edit_id) {
+            $id = $request->edit_id;
+            $userRepository = app(UserRepository::class);
+            $response = $userRepository->profileUpdate($request->all(),$id);
+            if ($response['status'] == false) {
+                return redirect()->back()->withInput()->with('dismiss', $response['message']);
+            } else {
+                return redirect()->route('userList')->with('success', __('User updated successfully'));
+            }
+        } else {
+            return redirect()->back()->with(['dismiss' => __('User not found')]);
+        }
+    }
+
+    /**
+     * userDelete
+     *
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     *
+     */
+    public function userDelete($id)
+    {
+        if (isset($id)) {
+            $id = app(CommonService::class)->checkValidId($id);
+            if (is_array($id)) {
+                return redirect()->back()->with(['dismiss' => __('User not found.')]);
+            }
+            $user = User::where(['id' => $id])->update(['active_status' => STATUS_DELETED]);
+            if (isset($user)) {
+                return redirect()->back()->with(['success' => __('User has been deleted successfully!')]);
+            } else {
+                return redirect()->back()->with(['dismiss' => __('Something went wrong. Please try again later!')]);
+            }
+        }
+        return redirect()->back();
+    }
+
+    /**
+     * userActivate
+     *
+     *
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+
+    public function userActivate($id)
+    {
+        if (isset($id)) {
+            $id = app(CommonService::class)->checkValidId($id);
+            if (is_array($id)) {
+                return redirect()->back()->with(['dismiss' => __('User not found.')]);
+            }
+            $user = User::where(['id' => $id])->update(['active_status' => STATUS_ACTIVE]);
+            if (isset($user)) {
+                return redirect()->back()->with(['success' => __('User has been activated successfully!')]);
+            } else {
+                return redirect()->back()->with(['dismiss' => __('Something went wrong. Please try again later!')]);
+            }
         }
         return redirect()->back();
     }
