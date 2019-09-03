@@ -16,10 +16,13 @@
             <div class="row">
                 <div class="col-12">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h2>{{__('User List')}}</h2>
-                        <span class="sidebarToggler">
-                            <i class="fa fa-bars d-lg-none d-block"></i>
-                        </span>
+                        <h2>{{ isset($pageTitle) ? $pageTitle : 'Users' }}</h2>
+                        <div class="d-flex align-items-center">
+                            <a href="" class="btn btn-primary px-3">{{__('Add New')}}</a>
+                            <span class="sidebarToggler ml-4">
+                                <i class="fa fa-bars d-lg-none d-block"></i>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>

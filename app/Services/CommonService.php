@@ -31,40 +31,6 @@ class CommonService
         $this->logger = app(Logger::class);
     }
 
-    // User
-    public function sendSmsVerificationCode()
-    {
-        $randno = randomNumber(6);
-        $smsText = 'Your '.allsetting()['app_title'].' verification code is here ' . $randno;
-        app(SmsService::class)->send(Auth::user()->phone, $smsText);
-        $update = User::where(['id' => Auth::user()->id])->update(['phone_verification' => $randno]);
-        if (!$update) {
-            return [
-                'success' => false,
-                'message' => __('Failed to send Sms!'),
-            ];
-        }
-
-        return [
-            'success' => true,
-            'message' => __('Sms sent successfully!'),
-        ];
-    }
-
-    /*Email Verification check*/
-    public function emailcurity($request)
-    {
-        $sms_ver_code = UserVerificationCode::where(['code' => $request->email_verification, 'status' => STATUS_PENDING, 'type' => 1])
-            ->where('expired_at', '>=', date('Y-m-d'))->first();
-        if (isset($sms_ver_code)) {
-            UserVerificationCode::where('id', $sms_ver_code->id)->update(['status' => STATUS_SUCCESS]);
-            User::where(['id' => $sms_ver_code->user_id])->update(['email_verified' => STATUS_SUCCESS]);
-        } else {
-            return ['success' => false, 'message' => __("Code doesn't match!"),];
-        }
-        return ['success' => true, 'message' => __("Email verified successfully.")];
-    }
-
     public function save_login_setting($request)
     {
         $rules = [
@@ -95,16 +61,6 @@ class CommonService
             'success' => false,
             'message' => 'Information Update Failed. Try Again!'
         ];
-    }
-
-    public function getQRCodeGoogleUrl($address, $title = null, $params = array())
-    {
-        $width = !empty($params['width']) && (int)$params['width'] > 0 ? (int)$params['width'] : 210;
-        $height = !empty($params['height']) && (int)$params['height'] > 0 ? (int)$params['height'] : 204;
-        $level = !empty($params['level']) && array_search($params['level'], array('L', 'M', 'Q', 'H')) !== false ? $params['level'] : 'M';
-
-        $urlencoded = $address;
-        return 'https://chart.googleapis.com/chart?chs=' . $width . 'x' . $height . '&chld=' . $level . '|0&cht=qr&chl=' . $urlencoded . '';
     }
 
     public function isPhoneVerified($user)
@@ -183,11 +139,6 @@ class CommonService
         return $user;
     }
 
-    private function sendVerificationSms($phone, $randno)
-    {
-        $smsText = 'Your '.allsetting()['app_title'].' verification code is here ' . $randno;
-        app(SmsService::class)->send($phone, $smsText);
-    }
 
     public function addOrDeductCoin($coin, $type)
     {

@@ -48,7 +48,7 @@
                 </div>
                 <div class="card-body">
                     <div class="row text-center">
-                        <div class="col-lg-4 offset-lg-4">
+                        <div class="col-lg-6 offset-lg-3">
                             <div class="logo">
                                 <a href="#">
                                     <img @if(!empty(allsetting('login_logo'))) src ="{{ asset(path_image().allsetting('login_logo')) }}" @else src="{{asset('assets/images/logo2.png')}}" @endif  alt="" class="img-fluid">
@@ -78,8 +78,8 @@
 
                             <div class="qz-user-footer">
                                 <h4>{{__('Don\'t have account ?')}} <a href="{{route('userSignUp')}}">{{__('Sign Up')}}</a> </h4>
+                                <h4><a href="{{route('forgetPassword')}}">{{__('Forgot Password ?')}}</a> </h4>
                                 <h5><a href="{{route('privacyPolicy')}}">{{__('Privacy Policy')}}</a> and <a href="{{route('termsCondition')}}">{{__('Terms & Conditions')}}</a> </h5>
-{{--                                <h4><a href="{{route('forgetPassword')}}">{{__('Forgot Password')}}</a> </h4>--}}
                                 {{--<p>--}}
                                     {{--Or sign in with--}}
                                     {{--<a href="#" class="qz-fb"><i class="fa fa-facebook"></i></a>--}}
