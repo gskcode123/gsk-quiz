@@ -137,7 +137,7 @@
                                         <label>{{__('Thumbnail image')}}</label>
                                         <input type="file" name="image" class="d-block">
                                         @if(isset($category))
-                                            <img width="50" @if(isset($category->image)) src="{{ asset(path_category_image().$category->image)}}" @endif alt="">
+                                            <img width="50" @if(isset($category->image) && (!empty($category->image))) src="{{ asset(path_category_image().$category->image)}}" @endif alt="">
                                         @endif
                                     </div>
                                 </div>

@@ -105,7 +105,7 @@
                                         <div class="form-group">
                                             <label>{{__('Company logo')}}</label>
                                             <input type="file" name="logo" class="d-block">
-                                            <img @if(isset($adm_setting['logo'])) src ="{{ asset(path_image().$adm_setting['logo']) }}"
+                                            <img @if(isset($adm_setting['logo']) && (!empty($adm_setting['logo']))) src ="{{ asset(path_image().$adm_setting['logo']) }}"
                                                  @endif width="100" class="img-fluid" alt="">
                                         </div>
                                     </div>
@@ -113,7 +113,7 @@
                                         <div class="form-group">
                                             <label>{{__('Login logo')}}</label>
                                             <input type="file" name="login_logo" class="d-block">
-                                            <img @if(isset($adm_setting['login_logo'])) src ="{{ asset(path_image().$adm_setting['login_logo']) }}"
+                                            <img @if(isset($adm_setting['login_logo']) && (!empty($adm_setting['login_logo']))) src ="{{ asset(path_image().$adm_setting['login_logo']) }}"
                                                  @endif width="100" class="img-fluid" alt="">
                                         </div>
                                     </div>
@@ -121,7 +121,7 @@
                                         <div class="form-group">
                                             <label>{{__('Fevicon')}}</label>
                                             <input type="file" name="favicon" class="d-block">
-                                            <img @if(isset($adm_setting['favicon'])) src ="{{ asset(path_image().$adm_setting['favicon']) }}"
+                                            <img @if(isset($adm_setting['favicon']) && (!empty($adm_setting['favicon']))) src ="{{ asset(path_image().$adm_setting['favicon']) }}"
                                                  @endif width="100" class="img-fluid" alt="">
                                         </div>
                                     </div>
