@@ -36,7 +36,7 @@
                         <div class="col-xl-5 col-lg-5">
                             <div class="qz-profile-card text-center">
                                 <div class="qz-edit-icon">
-                                    <a href="#">
+                                    <a href="{{ route('editUser', encrypt($user->id)) }}">
                                         <img src="{{ asset('assets/images/edit.png') }}" alt="" class="img-fluid">
                                     </a>
                                 </div>
@@ -63,7 +63,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="qz-user-status-card qz-user-status-card-bg3">
-                                        <h4>20</h4>
+                                        <h4>0</h4>
                                         <h6>{{__('Challenge played')}}</h6>
                                     </div>
                                 </div>
@@ -115,7 +115,7 @@
                                 </li>
                                 <li>
                                     <div class="row">
-                                        <div class="col-md-4 col-5">{{__('Full Address')}}</div>
+                                        <div class="col-4">{{__('Full Address')}}</div>
                                         <div class="col-1">:</div>
                                         <div class="col-md-7 col-6">{{$user->address}}</div>
                                     </div>

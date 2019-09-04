@@ -227,7 +227,7 @@
                                             <div class="col-md-4 mb-md-0 mb-2">
                                                 @if(isset($qsOptions) && (isset($question)) && (isset($qsOptions[0])))
                                                     <input type="hidden" name="option1" value="{{$qsOptions[0]->id}}">
-                                                    <img width="50" @if(isset($qsOptions[0]->option_image)) src="{{ asset(path_question_option1_image().$qsOptions[0]->option_image)}}" @endif alt="">
+                                                    <img width="50" @if(isset($qsOptions[0]->option_image) && !empty($qsOptions[0]->option_image)) src="{{ asset(path_question_option1_image().$qsOptions[0]->option_image)}}" @endif alt="">
                                                 @endif
                                                 <input type="file" name="option_image1">
                                             </div>
@@ -255,7 +255,7 @@
                                             <div class="col-md-4 mb-md-0 mb-2">
                                                 @if(isset($qsOptions) && (isset($question)) && (isset($qsOptions[1])))
                                                     <input type="hidden" name="option2" value="{{$qsOptions[1]->id}}">
-                                                    <img width="50" @if(isset($qsOptions[1]->option_image)) src="{{ asset(path_question_option2_image().$qsOptions[1]->option_image)}}" @endif alt="">
+                                                    <img width="50" @if(isset($qsOptions[1]->option_image) && !empty($qsOptions[1]->option_image)) src="{{ asset(path_question_option2_image().$qsOptions[1]->option_image)}}" @endif alt="">
                                                 @endif
                                                 <input type="file" name="option_image2">
                                             </div>
@@ -283,7 +283,7 @@
                                             <div class="col-md-4 mb-md-0 mb-2">
                                                 @if(isset($qsOptions) && (isset($question)) && (isset($qsOptions[2])))
                                                     <input type="hidden" name="option3" value="{{$qsOptions[2]->id}}">
-                                                    <img width="50" @if(isset($qsOptions[2]->option_image)) src="{{ asset(path_question_option3_image().$qsOptions[2]->option_image)}}" @endif alt="">
+                                                    <img width="50" @if(isset($qsOptions[2]->option_image) && !empty($qsOptions[2]->option_image)) src="{{ asset(path_question_option3_image().$qsOptions[2]->option_image)}}" @endif alt="">
                                                 @endif
                                                 <input type="file" name="option_image3">
                                             </div>
@@ -311,7 +311,7 @@
                                             <div class="col-md-4 mb-md-0 mb-2">
                                                 @if(isset($qsOptions) && (isset($question)) && (isset($qsOptions[3])))
                                                     <input type="hidden" name="option4" value="{{$qsOptions[3]->id}}">
-                                                    <img width="50" @if(isset($qsOptions[3]->option_image)) src="{{ asset(path_question_option4_image().$qsOptions[3]->option_image)}}" @endif alt="">
+                                                    <img width="50" @if(isset($qsOptions[3]->option_image) && !empty($qsOptions[3]->option_image)) src="{{ asset(path_question_option4_image().$qsOptions[3]->option_image)}}" @endif alt="">
                                                 @endif
                                                 <input type="file" name="option_image4">
                                             </div>
@@ -339,7 +339,7 @@
                                             <div class="col-md-4 mb-md-0 mb-2">
                                                 @if(isset($qsOptions) && (isset($question)) && (isset($qsOptions[4])))
                                                     <input type="hidden" name="option5" value="{{$qsOptions[4]->id}}">
-                                                    <img width="50" @if(isset($qsOptions[4]->option_image)) src="{{ asset(path_question_option5_image().$qsOptions[4]->option_image)}}" @endif alt="">
+                                                    <img width="50" @if(isset($qsOptions[4]->option_image) && !empty($qsOptions[4]->option_image)) src="{{ asset(path_question_option5_image().$qsOptions[4]->option_image)}}" @endif alt="">
                                                 @endif
                                                 <input type="file" name="option_image5">
                                             </div>

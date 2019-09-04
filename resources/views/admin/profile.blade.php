@@ -36,11 +36,11 @@
                     <div class="row">
                         <div class="col-xl-5">
                             <div class="qz-profile-card text-center">
-                                <div class="qz-edit-icon">
-                                    <a href="#">
-                                        <img src="{{ asset('assets/images/edit.png') }}" alt="" class="img-fluid">
-                                    </a>
-                                </div>
+                                {{--<div class="qz-edit-icon">--}}
+                                    {{--<a href="#">--}}
+                                        {{--<img src="{{ asset('assets/images/edit.png') }}" alt="" class="img-fluid">--}}
+                                    {{--</a>--}}
+                                {{--</div>--}}
                                 <div class="qz-profile-user-avater">
                                     <img @if(isset($user->photo)) src="{{ asset(pathUserImage().$user->photo)}}" @else src="{{asset('assets/images/avater.jpg')}}" @endif alt="" class="img-fluid">
                                 </div>

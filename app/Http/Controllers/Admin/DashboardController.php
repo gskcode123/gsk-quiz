@@ -40,21 +40,40 @@ class DashboardController extends Controller
             ->orderBy('score', 'DESC')
             ->limit(5)
             ->get();
-        $monthlySales = UserAnswer::select(DB::raw('count(id) as totalUser'), DB::raw('MONTH(created_at) as months'))
+        $monthlyUsers = UserAnswer::select(DB::raw('count(DISTINCT user_id) as totalUser'), DB::raw('MONTH(created_at) as months'))
             ->whereYear('created_at', Carbon::now()->year)
             ->groupBy('months')
+//            ->groupBy('user_id')
             ->get();
+
         $allMonths = all_month();
-        if (isset($monthlySales[0])) {
-            foreach ($monthlySales as $sales) {
-                $data['sale'][$sales->months] = $sales->totalUser;
+        if (isset($monthlyUsers[0])) {
+            foreach ($monthlyUsers as $usr) {
+                $data['user'][$usr->months] = $usr->totalUser;
             }
         }
         $allUsers= [];
         foreach ($allMonths as $month) {
-            $allUsers[] =  isset($data['sale'][$month]) ? (int)$data['sale'][$month] : 0;
+            $allUsers[] =  isset($data['user'][$month]) ? (int)$data['user'][$month] : 0;
         }
         $data['monthly_user'] = $allUsers;
+
+        $monthlyQuestions = Question::select(DB::raw('count(id) as totalQs'), DB::raw('MONTH(created_at) as months'))
+            ->where('status', STATUS_ACTIVE)
+            ->whereYear('created_at', Carbon::now()->year)
+            ->groupBy('months')
+            ->get();
+        $allMonth = all_months();
+        if (isset($monthlyQuestions[0])) {
+            foreach ($monthlyQuestions as $mQs) {
+                $data['qs'][$mQs->months] = $mQs->totalQs;
+            }
+        }
+        $allQuestions= [];
+        foreach ($allMonth as $month) {
+            $allQuestions[] =  isset($data['qs'][$month]) ? (int)$data['qs'][$month] : 0;
+        }
+        $data['all_questions'] = $allQuestions;
 
         return view('admin.dashboard', $data);
     }

@@ -44,7 +44,7 @@ class QuestionController extends Controller
                     'category_id' => encrypt($list->id),
                     'name' => $list->name,
                     'description' => $list->description,
-                    'image' => asset(path_category_image() . $list->image),
+                    'image' => !empty($list->image) ? asset(path_category_image() . $list->image) : "",
                     'qs_limit' => $list->qs_limit,
                     'time_limit' => $list->time_limit,
                     'max_limit' => $list->max_limit,
@@ -107,7 +107,7 @@ class QuestionController extends Controller
                     'sub_category_id' => encrypt($list->id),
                     'name' => $list->name,
                     'description' => $list->description,
-                    'image' => asset(path_category_image() . $list->image),
+                    'image' => !empty($list->image) ? asset(path_category_image() . $list->image) : "",
                     'qs_limit' => $list->qs_limit,
                     'time_limit' => $list->time_limit,
                     'max_limit' => $list->max_limit,
@@ -241,7 +241,7 @@ class QuestionController extends Controller
                     'question_id' => encrypt($question->id),
                     'title' => $question->title,
                     'has_image' => !empty($question->image) ? 1 : 0,
-                    'image' => asset(path_question_image() . $question->image),
+                    'image' => !empty($question->image) ? asset(path_question_image() . $question->image) : "",
                     'point' => $question->point,
                     'coin' => $question->coin,
                     'time_limit' => isset($question->time_limit) ? $question->time_limit : $timeLimit,
@@ -325,6 +325,12 @@ class QuestionController extends Controller
         try {
             $rightAnswer = [];
             $userCoins = UserCoin::where('user_id', Auth::user()->id)->first();
+            if(empty($userCoins)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'User coin account not found.',
+                ]);
+            }
             $correctAnswer = QuestionOption::where(['question_id'=> $id, 'is_answer' => ANSWER_TRUE])->first();
             if(isset($correctAnswer)) {
                 $rightAnswer = [
@@ -392,8 +398,8 @@ class QuestionController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-//                'message' => $e->getMessage(),
-                'message' => 'Something went wrong. Please try again!',
+                'message' => $e->getMessage(),
+//                'message' => 'Something went wrong. Please try again!',
             ]);
         }
 

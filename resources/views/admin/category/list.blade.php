@@ -42,6 +42,7 @@
                                 <thead>
                                 <tr>
                                     <th class="all">{{__('SL.')}}</th>
+                                    <th class="all">{{__('Id')}}</th>
                                     <th class="teblete">{{__('Title')}}</th>
                                     @if(empty($parentId)) <th class="teblete">{{__('Sub Category')}}</th> @endif
                                     <th class="desktop">{{__('Questions')}}</th>
@@ -58,6 +59,7 @@
                                     @foreach($categories as $item)
                                 <tr>
                                     <td>{{ $sl++ }}</td>
+                                    <td>{{ $item->id }}</td>
                                     <td>{{ $item->name }}</td>
                                     @if(empty($parentId))
                                         <td><a href="{{ route('qsSubCategoryList', encrypt($item->id)) }}">
@@ -75,7 +77,7 @@
                                             <a href="{{ route('qsCategoryEdit', $item->id) }}" data-toggle="tooltip" title="Edit"><li class="qz-edit"><span class="flaticon-pencil"></span></li></a>
                                             @if($item->status == STATUS_INACTIVE)
                                                 <a href="{{ route('qsCategoryActivate', $item->id) }}" data-toggle="tooltip" title="Activate">
-                                                    <li class="ml-2 qz-edit"><span class="flaticon-check-mark"></span></li>
+                                                    <li class="ml-2 qz-deactive"><span class="flaticon-check-mark"></span></li>
                                                 </a>
                                             @else
                                                 <a href="{{ route('qsCategoryDeactivate', $item->id) }}" data-toggle="tooltip" title="Dectivate">

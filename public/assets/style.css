@@ -234,10 +234,13 @@ ul#metismenu li span:before {
     margin-bottom: 50px;
 }
 .qz-status-bar1{
-    background: url(images/Bg.png)no-repeat center center / cover;    
+    background: url(images/Bg5.png)no-repeat center center / cover;
 }
 .qz-status-bar2{
-    background: url(images/Bg2.png)no-repeat center center / cover;    
+    background: url(images/Bg.png)no-repeat center center / cover;
+}
+.qz-status-bar3{
+    background: url(images/Bg2.png)no-repeat center center / cover;
 }
 .qz-blance{
     font-size: 34px;
@@ -366,8 +369,14 @@ table td .people img{
 .category-table td ul li span:before{
     font-size: 24px;
 }
+.category-table td ul li.qz-admin span:before{
+    color: #af98fc;
+}
+.category-table td ul li.qz-deactive span:before{
+    color: #fca223;
+}
 .category-table td ul li.qz-edit span:before{
-    color: #FC9C2C;
+    color: #07fce1;
 }
 .category-table td ul li.qz-details span:before{
     color: #007bff;

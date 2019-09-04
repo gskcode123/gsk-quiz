@@ -49,5 +49,7 @@ Route::group(['middleware' => ['auth','admin','lang']], function() {
     Route::get('question-delete/{id}', 'Admin\QuestionController@questionDelete')->name('questionDelete');
     Route::get('question-activate/{id}', 'Admin\QuestionController@questionActivate')->name('questionActivate');
     Route::get('question-deactivate/{id}', 'Admin\QuestionController@questionDectivate')->name('questionDectivate');
+    Route::get('excel-upload', 'Admin\QuestionController@qsExcelUpload')->name('qsExcelUpload');
+    Route::post('excel-upload-process', 'Admin\QuestionController@qsExcelUploadProcess')->name('qsExcelUploadProcess');
 
 });

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\Admin\ExcelUploadRequest;
 use App\Model\Category;
 use App\Model\Question;
 use App\Model\QuestionOption;
@@ -9,6 +10,7 @@ use App\Services\CommonService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Validation\Rule;
+use Maatwebsite\Excel\Facades\Excel;
 
 class QuestionController extends Controller
 {
@@ -94,11 +96,11 @@ class QuestionController extends Controller
         $rules = [
 //            'title' => ['required', Rule::unique('questions')->ignore($request->edit_id, 'id')],
             'category_id' => 'required',
-            'skip_coin' => 'required|numeric|between:0,100',
+            'skip_coin' => 'required|integer|numeric|between:0,100',
 //            'hints' => 'required',
             'type' => 'required',
             'status' => 'required',
-            'point' => 'required|numeric|between:0,100',
+            'point' => 'required|integer|numeric|between:0,100',
 
         ];
 
@@ -114,10 +116,10 @@ class QuestionController extends Controller
         ];
 
         if (!empty($request->coin)) {
-            $rules['coin'] = 'numeric|between:1,1000';
+            $rules['coin'] = 'numeric|integer|between:1,1000';
         }
         if (!empty($request->time_limit)) {
-            $rules['time_limit'] = 'numeric|between:1,10';
+            $rules['time_limit'] = 'numeric|integer|between:1,10';
         }
         if (!empty($request->image)) {
             $rules['image'] = 'mimes:jpeg,jpg,JPG,png,PNG,gif|max:2000';
@@ -167,7 +169,7 @@ class QuestionController extends Controller
             return redirect()->back()->withInput()->with('dismiss', __('At a time only text or only image sholud be a option'));
         }
         if (!in_array(1,[$request->ans_type1,$request->ans_type2,$request->ans_type3,$request->ans_type4, $request->ans_type5])) {
-            return redirect()->back()->withInput()->with('dismiss', __('Atleast one answer must be rigth. '));
+            return redirect()->back()->withInput()->with('dismiss', __('At least one answer must be right. '));
         }
         try {
             $data = [
@@ -320,5 +322,140 @@ class QuestionController extends Controller
             return redirect()->back()->with('success', 'Deactivated successfully.');
         }
         return redirect()->back()->with('dismiss', 'Operation failed !');
+    }
+    /*
+     * qsExcelUpload
+     *
+     * question excel upload
+     *
+     */
+    public function qsExcelUpload()
+    {
+        $data['pageTitle'] = __('Upload Questions');
+        $data['menu'] = 'question';
+
+        return view('admin.question.upload-excel', $data);
+    }
+    /*
+     * qsExcelUploadProcess
+     *
+     * question excel upload process
+     */
+    //upload excel file
+    public function qsExcelUploadProcess(ExcelUploadRequest $request)
+    {
+        try {
+            $extensions = array("xls","xlsx","xlm","xla","xlc","xlt","xlw","csv");
+
+            $result = array($request->file('excelfile')->getClientOriginalExtension());
+
+            if(in_array($result[0],$extensions)){
+                if ($request->hasFile('excelfile')) {
+                    $path = $request->file('excelfile')->getRealPath();
+                    $data = Excel::load($path)->get();
+
+                    if ($data->count()) {
+                        foreach ($data as $key => $row) {
+                            $already_save = Question::where('status', STATUS_ACTIVE)
+                                ->where(['title'=> $row->title])
+                                ->first();
+
+                            if ($already_save) {
+                                continue;
+                            }
+                            if(!empty($row->category_id)) {
+                                $category = Category::where(['id'=> $row->category_id, 'status'=> STATUS_ACTIVE])->first();
+                                if(empty($category)) {
+                                    continue;
+                                }
+
+                            }
+
+                            if (!empty($row->category_id) && (!empty($row->sub_category_id))) {
+                                $sub_category = Category::where(['id'=>$row->sub_category_id,'parent_id'=> $row->category_id, 'status'=> STATUS_ACTIVE])->first();
+                                if(empty($sub_category)) {
+                                    continue;
+                                }
+                            }
+                            if (!empty($row->point) && !is_numeric($row->point)) {
+                                return redirect()->back()->with('dismiss', __('The given point must be number'));
+                            }
+                            if (!empty($row->skip_coin) && !is_numeric($row->skip_coin)) {
+                                return redirect()->back()->with('dismiss', __('The given skip coin must be number'));
+                            }
+                            if (!empty($row->coin) && !is_numeric($row->coin)) {
+                                return redirect()->back()->with('dismiss', __('The given coin must be number'));
+                            }
+                            if (!empty($row->time_limit) && !is_numeric($row->time_limit)) {
+                                return redirect()->back()->with('dismiss', __('The given time limit must be number'));
+                            }
+                            if (!in_array(intval($row->ans_type1),[0,1])) {
+                                return redirect()->back()->with('dismiss', __('The given ans_type must be 0 or 1'));
+                            }
+                            if (!in_array(intval($row->ans_type2),[0,1])) {
+                                return redirect()->back()->with('dismiss', __('The given ans_type must be 0 or 1'));
+                            }
+                            if (!in_array(intval($row->ans_type3),[0,1])) {
+                                return redirect()->back()->with('dismiss', __('The given ans_type must be 0 or 1'));
+                            }
+                            if (!in_array(intval($row->ans_type4),[0,1])) {
+                                return redirect()->back()->with('dismiss', __('The given ans_type must be 0 or 1'));
+                            }
+                            if (!in_array(intval($row->ans_type5),[0,1])) {
+                                return redirect()->back()->with('dismiss', __('The given ans_type must be 0 or 1'));
+                            }
+                            $data_list = [
+                                'title' => $row->title,
+                                'category_id' => intval($row->category_id),
+                                'type' => 1,
+                                'time_limit' => !empty($row->time_limit) ? intval($row->time_limit) : null,
+                                'point' => intval($row->point),
+                                'skip_coin' => intval($row->skip_coin),
+                                'hints' => !empty($row->hints) ? $row->hints : null,
+                                'sub_category_id' => !empty($row->sub_category_id) ? intval($row->sub_category_id) : null,
+                                'coin' => !empty($row->coin) ? intval($row->coin) : 0,
+                            ];
+
+
+                            if (!empty($row->title) && (!empty($row->category_id)) && (!empty($row->point) && (!empty($row->skip_coin)))) {
+                                if (!in_array(1,[$row->ans_type1,$row->ans_type2,$row->ans_type3,$row->ans_type4, $row->ans_type5])) {
+                                    return redirect()->back()->withInput()->with('dismiss', __('At least one answer must be right. '));
+                                }
+                                $text = $this->preg_grep_keys_values('~option_text~i', $row->all());
+                                $textCount = count(array_filter($text));
+
+                                if($textCount < 2) {
+                                    return redirect()->back()->withInput()->with('dismiss', __('At least two options are required'));
+                                }
+                                $categoryLimit = Category::where('id', $row->category_id)->first()->max_limit;
+                                $addedQuestion = Question::where('category_id', $row->category_id)->count();
+                                if ($categoryLimit <= $addedQuestion) {
+                                    return redirect()->back()->with('dismiss', __('Questions limit exceeded'));
+                                }
+                                $save = Question::create($data_list);
+                                if ($save) {
+                                    app(CommonService::class)->saveOptions($row,$save->id);
+                                }
+                            } else {
+                                return redirect()->back()->with('dismiss', __('Data not found'));
+                            }
+                        }
+                        if (empty($save)) {
+                            return redirect()->back()->with('dismiss', __('No new row created'));
+                        }
+                    }
+                } else {
+                    return redirect()->back()->with('dismiss', __('File not found'));
+                }
+            } else {
+                return redirect()->back()->with('dismiss', __('The excel file must be a file of type: xlsx, xls, csv.'));
+            }
+
+        } catch (\Exception $e) {
+            return redirect()->back()->with('dismiss', $e->getMessage());
+//            return redirect()->back()->with('dismiss', __('Something went wrong'));
+        }
+
+        return redirect()->route('questionList')->with('success',__('Upload successful'));
     }
 }

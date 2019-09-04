@@ -18,7 +18,13 @@
                     <div class="d-flex justify-content-between">
                         <h2>{{__('Question')}}</h2>
                         <div class="d-flex align-items-center">
-                            <a href="{{ route('questionCreate') }}" class="btn btn-primary px-3">{{__('Add New')}}</a>
+                            <a href="{{asset('assets/demo-file.xlsx')}}" download class="btn btn-warning px-3" style="color:#fff;">
+                                <i class="fa fa-download"></i><span class="ml-1">{{__('Demo File')}}</span>
+                            </a>
+                            <a href="{{ route('qsExcelUpload') }}" class="ml-2 btn btn-success px-3">
+                                <i class="fa fa-upload"></i><span class="ml-1">{{__('Excel Upload')}}</span>
+                            </a>
+                            <a href="{{ route('questionCreate') }}" class="ml-2 btn btn-primary px-3">{{__('Add New')}}</a>
                             <span class="sidebarToggler ml-4">
                                 <i class="fa fa-bars d-lg-none d-block"></i>
                             </span>
@@ -66,7 +72,7 @@
                                                         <a href="{{ route('questionEdit', $item->id) }}" data-toggle="tooltip" title="Edit"><li class="qz-edit"><span class="flaticon-pencil"></span></li></a>
                                                         @if($item->status == STATUS_INACTIVE)
                                                             <a href="{{ route('questionActivate', $item->id) }}" data-toggle="tooltip" title="Activate">
-                                                                <li class="ml-2 qz-edit"><span class="flaticon-check-mark"></span></li>
+                                                                <li class="ml-2 qz-deactive"><span class="flaticon-check-mark"></span></li>
                                                             </a>
                                                         @else
                                                             <a href="{{ route('questionDectivate', $item->id) }}" data-toggle="tooltip" title="Dectivate">

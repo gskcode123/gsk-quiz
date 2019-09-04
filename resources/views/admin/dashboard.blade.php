@@ -47,7 +47,7 @@
                             </div>
                         </div>
                         <div class="col-lg-4 text-center">
-                            <div class="qz-status-bar qz-status-bar2">
+                            <div class="qz-status-bar qz-status-bar3">
                                 <h4 class="qz-blance">{{ $totalUser }}</h4>
                                 <h5 class="qz-total-qustions">{{__('Active Users')}}</h5>
                             </div>
@@ -58,7 +58,7 @@
                             <div class="qz-sec-title">
                                 <h5>{{__('Monthly Played User')}}</h5>
                             </div>
-                            <p class="subtitle">Current Year</p>
+                            <p class="subtitle">{{__('Current Year')}}</p>
                             <canvas id="myChart"></canvas>
                             <div class="row mt-5">
                                 <div class="col-12">
@@ -142,6 +142,15 @@
                     </div>
                     <div class="row mt-5">
                         <div class="col-lg-12">
+                            <div class="qz-sec-title">
+                                <h5>{{__('Monthly Added Question')}}</h5>
+                            </div>
+                            <p class="subtitle">{{__('Current Year')}}</p>
+                            <canvas id="myBarChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col-lg-12">
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="qz-sec-title">
@@ -204,10 +213,10 @@
                 labels: ["Dec", "Nov", "Oct", "Sep", "Aug", "Jul", "Jun","May", "Apr", "Mar", "Feb", "Jan"],
                 datasets: [{
                     label: "Played User",
-                    borderColor: "#DC3432",
-                    pointBorderColor: "#DC3432",
-                    pointBackgroundColor: "#DC3432",
-                    pointHoverBackgroundColor: "#DC3432",
+                    borderColor: "#3865f6",
+                    pointBorderColor: "#3865f6",
+                    pointBackgroundColor: "#3865f6",
+                    pointHoverBackgroundColor: "#3865f6",
                     pointHoverBorderColor: "#D1D1D1",
                     pointBorderWidth: 4,
                     pointHoverRadius: 2,
@@ -243,6 +252,65 @@
                     xAxes: [{
                         gridLines: {
                             zeroLineColor: "transparent"
+                        },
+                        ticks: {
+                            padding: 20,
+                            fontColor: "#928F8F",
+                            fontStyle: "bold"
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+    <script>
+        var ctx = document.getElementById('myBarChart').getContext("2d")
+        var myBarChart = new Chart(ctx, {
+            type: 'horizontalBar',
+            data: {
+                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul","Aug", "Sep", "Oct", "Nov", "Dec"],
+                datasets: [{
+                    label: "Questions",
+                    backgroundColor: "#5aa0ea",
+                    borderColor: "#D1D1D1",
+                    pointBorderColor: "#3865f6",
+                    pointBackgroundColor: "#3865f6",
+                    pointHoverBackgroundColor: "#3865f6",
+                    pointHoverBorderColor: "#D1D1D1",
+                    pointBorderWidth: 10,
+                    pointHoverRadius: 10,
+                    pointHoverBorderWidth: 1,
+                    pointRadius: 3,
+                    fill: true,
+                    borderWidth: 1,
+                    data: {!! json_encode($all_questions) !!}
+                }]
+            },
+            options: {
+                legend: {
+                    position: "bottom",
+                    display: true,
+                    labels: {
+                        fontColor: '#928F8F'
+                    }
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            fontColor: "#928F8F",
+                            fontStyle: "bold",
+                            beginAtZero: true,
+                            maxTicksLimit: 5,
+                            padding: 20
+                        },
+                        gridLines: {
+                            drawTicks: false,
+                            display: false
+                        }
+                    }],
+                    xAxes: [{
+                        gridLines: {
+                            zeroLineColor: "#3865f6"
                         },
                         ticks: {
                             padding: 20,
