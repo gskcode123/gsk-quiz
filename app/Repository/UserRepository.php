@@ -44,6 +44,9 @@ class UserRepository
             if (!empty($request['country'])) {
                 $userData['country'] = $request['country'];
             }
+            if (!empty($request['role'])) {
+                $userData['role'] = $request['role'];
+            }
             if (!empty($request['address'])) {
                 $userData['address'] = $request['address'];
             }
