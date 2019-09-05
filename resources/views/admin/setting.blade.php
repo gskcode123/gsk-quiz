@@ -16,7 +16,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h2>{{__('Setting')}}</h2>
+                        <h2>{{__('General Settings')}}</h2>
                         <span class="sidebarToggler">
                             <i class="fa fa-bars d-lg-none d-block"></i>
                         </span>
@@ -93,6 +93,18 @@
                                         <div class="form-group">
                                             <label>{{__('Primary Email')}}</label>
                                             <input type="text" name="primary_email" value ="@if(isset($adm_setting['primary_email'])) {{ $adm_setting['primary_email'] }} @endif" class="form-control" placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>{{__('Login Text')}}</label>
+                                            <input type="text" name="login_text" value ="@if(isset($adm_setting['login_text'])) {{ $adm_setting['login_text'] }} @endif" class="form-control" placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>{{__('Sign Up Text')}}</label>
+                                            <input type="text" name="signup_text" value ="@if(isset($adm_setting['signup_text'])) {{ $adm_setting['signup_text'] }} @endif" class="form-control" placeholder="">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">

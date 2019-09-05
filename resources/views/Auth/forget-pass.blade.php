@@ -68,6 +68,9 @@
                                 </div>
                                 <button type="submit" class="btn btn-primary">{{__('Submit')}}</button>
                             {{ Form::close() }}
+                            <div class="qz-user-footer">
+                                <h5><a href="{{route('login')}}">{{__('Login')}}</a> </h5>
+                            </div>
                         </div>
                     </div>
                 </div>

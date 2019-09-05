@@ -57,7 +57,13 @@
                             <div class="qz-user-title">
                                 <h1>{{__('Sign Up')}}</h1>
                             </div>
-                            <h5>{{__('Hello there, Sign up and Join with Us')}}</h5>
+                            <h5>
+                                @if(isset(allsetting()['signup_text']) && (!empty(allsetting('signup_text'))))
+                                    {{allsetting('signup_text')}}
+                                @else
+                                    {{__('Hello there, Sign up and Join with Us')}}
+                                @endif
+                            </h5>
                                 <span class="text-left">
                                     @include('layout.message')
                                 </span>

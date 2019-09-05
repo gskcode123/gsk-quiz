@@ -57,7 +57,13 @@
                             <div class="qz-user-title">
                                 <h1>{{__('Sign in')}}</h1>
                             </div>
-                            <h5>{{__('Hello there, Sign in and start managing your Admin Template')}}</h5>
+                            <h5>
+                                @if(isset(allsetting()['login_text']) && (!empty(allsetting('login_text'))))
+                                    {{allsetting('login_text')}}
+                                @else
+                                    {{__('Hello there, Sign in and start managing your Admin Template')}}
+                                @endif
+                            </h5>
 
                             {{ Form::open(['route' => 'loginProcess']) }}
                             {{csrf_field()}}

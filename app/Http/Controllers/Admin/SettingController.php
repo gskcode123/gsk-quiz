@@ -70,6 +70,12 @@ class SettingController extends Controller
             if (isset($request->privacy_policy)) {
                 AdminSetting::updateOrCreate(['slug' => 'privacy_policy'],['value' => $request->privacy_policy]);
             }
+            if (isset($request->login_text)) {
+                AdminSetting::updateOrCreate(['slug' => 'login_text'],['value' => $request->login_text]);
+            }
+            if (isset($request->signup_text)) {
+                AdminSetting::updateOrCreate(['slug' => 'signup_text'],['value' => $request->signup_text]);
+            }
             if (isset($request->terms_conditions)) {
                 AdminSetting::updateOrCreate(['slug' => 'terms_conditions'],['value' => $request->terms_conditions]);
             }

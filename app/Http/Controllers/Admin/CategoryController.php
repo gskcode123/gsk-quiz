@@ -129,11 +129,12 @@ class CategoryController extends Controller
 
         $messages = [
             'name.required' => __('Title field can not be empty'),
-            'name.unique' => __('This Name already taken'),
-            'serial.unique' => __('This Serial already taken'),
-            'qs_limit.required' => __('Quiz Limit field can not be empty'),
-            'max_limit.required' => __('Max Limit field can not be empty'),
-            'time_limit.required' => __('Time Limit field can not be empty'),
+            'name.unique' => __('This name already taken'),
+            'serial.unique' => __('This serial already taken'),
+            'qs_limit.required' => __('Quiz limit field can not be empty'),
+            'qs_limit.numeric' => __('Quiz limit must be a number'),
+            'max_limit.required' => __('Max limit field can not be empty'),
+            'time_limit.required' => __('Time limit field can not be empty'),
             'serial.required' => __('Serial field can not be empty'),
         ];
 
