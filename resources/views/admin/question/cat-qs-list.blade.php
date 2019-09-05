@@ -34,7 +34,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-12">
-                            <div class="table-responsive">
+                            <div class="">
                                 <table id="qz-question-table" class="table category-table table-bordered  text-center mb-0">
                                     <thead>
                                     <tr>

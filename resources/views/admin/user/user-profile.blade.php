@@ -58,13 +58,13 @@
                                 <div class="col-lg-4">
                                     <div class="qz-user-status-card qz-user-status-card-bg2">
                                         <h4>{{ calculate_score($user->id) }}</h4>
-                                        <h6>{{__('Total earn Point')}}</h6>
+                                        <h6>{{__('Total Earn Point')}}</h6>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="qz-user-status-card qz-user-status-card-bg3">
-                                        <h4>0</h4>
-                                        <h6>{{__('Challenge played')}}</h6>
+                                        <h4>@if(isset($user->userCoin->coin)) {{ $user->userCoin->coin }} @else 0 @endif</h4>
+                                        <h6>{{__('Total Earn Coin')}}</h6>
                                     </div>
                                 </div>
                             </div>

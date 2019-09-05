@@ -550,6 +550,7 @@ table.table.category-table tbody td {
     padding: 30px 15px;
     margin-top: 30px;
     border-radius: 5px;
+    height: 140px;
 }
 .qz-user-status-card h4 {
     font-size: 24px;
