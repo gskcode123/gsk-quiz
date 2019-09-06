@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Admin\ExcelUploadRequest;
+use App\Http\Requests\Admin\QuestionAddRequest;
 use App\Model\Category;
 use App\Model\Question;
 use App\Model\QuestionOption;
@@ -91,56 +92,8 @@ class QuestionController extends Controller
      *
      */
 
-    public function questionSave(Request $request)
+    public function questionSave(QuestionAddRequest $request)
     {
-        $rules = [
-//            'title' => ['required', Rule::unique('questions')->ignore($request->edit_id, 'id')],
-            'category_id' => 'required',
-            'skip_coin' => 'required|integer|numeric|between:0,100',
-//            'hints' => 'required',
-            'type' => 'required',
-            'status' => 'required',
-            'point' => 'required|integer|numeric|between:0,100',
-
-        ];
-
-        $messages = [
-//            'title.required' => __('Question Title field can not be empty'),
-            'point.required' => __('Question point field can not be empty'),
-            'status.required' => __('Status field can not be empty'),
-            'options.required' => __('Option field can not be empty'),
-            'category_id.required' => __('Must be select a category'),
-            'type.required' => __('Must be select a question type'),
-            'skip_coin.required' => __('Skip coin field is required'),
-            'hints.required' => __('Hints field is required'),
-        ];
-
-        if (!empty($request->coin)) {
-            $rules['coin'] = 'numeric|integer|between:1,1000';
-        }
-        if (!empty($request->time_limit)) {
-            $rules['time_limit'] = 'numeric|integer|between:1,10';
-        }
-        if (!empty($request->image)) {
-            $rules['image'] = 'mimes:jpeg,jpg,JPG,png,PNG,gif|max:2000';
-        }
-        if (!empty($request->option_image1)) {
-            $rules['option_image1'] = 'mimes:jpeg,jpg,JPG,png,PNG,gif|max:2000';
-        }
-        if (!empty($request->option_image2)) {
-            $rules['option_image2'] = 'mimes:jpeg,jpg,JPG,png,PNG,gif|max:2000';
-        }
-        if (!empty($request->option_image3)) {
-            $rules['option_image3'] = 'mimes:jpeg,jpg,JPG,png,PNG,gif|max:2000';
-        }
-        if (!empty($request->option_image4)) {
-            $rules['option_image4'] = 'mimes:jpeg,jpg,JPG,png,PNG,gif|max:2000';
-        }
-        if (!empty($request->option_image5)) {
-            $rules['option_image5'] = 'mimes:jpeg,jpg,JPG,png,PNG,gif|max:2000';
-        }
-
-        $this->validate($request, $rules,$messages);
 
         if ($request->category_id && empty($request->sub_category_id)) {
             $subcategory = Category::where('parent_id',$request->category_id)->get();
@@ -149,8 +102,9 @@ class QuestionController extends Controller
             }
         }
         if (empty($request->edit_id)) {
-            if(empty($request->title) && empty($request->image)) {
-                return redirect()->back()->withInput()->with('dismiss', __('Must be input title or upload image'));
+
+            if(empty($request->title) && empty($request->image) && empty($request->video_link)) {
+                return redirect()->back()->withInput($request->input())->with('dismiss', __('Must be input title or upload image or add video link'));
             }
             $text = $this->preg_grep_keys_values('~option_text~i', $request->all());
             $image = $this->preg_grep_keys_values('~option_image~i', $request->all());
@@ -158,8 +112,11 @@ class QuestionController extends Controller
             $imgCount = count(array_filter($image));
 
             if($textCount + $imgCount < 2) {
-                return redirect()->back()->withInput()->with('dismiss', __('Atleast two options are required'));
+                return redirect()->back()->withInput($request->input())->with('dismiss', __('At least two options are required'));
             }
+        }
+        if(!empty($request->image) && !empty($request->video_link)) {
+            return redirect()->back()->withInput($request->input())->with('dismiss', __('At a time you can not upload image and add video link'));
         }
 
         if ((!empty($request->option_text1) && !empty($request->option_image1)) || (!empty($request->option_text2) && !empty($request->option_image2)) ||
@@ -171,6 +128,7 @@ class QuestionController extends Controller
         if (!in_array(1,[$request->ans_type1,$request->ans_type2,$request->ans_type3,$request->ans_type4, $request->ans_type5])) {
             return redirect()->back()->withInput()->with('dismiss', __('At least one answer must be right. '));
         }
+
         try {
             $data = [
                 'title' => $request->title,
@@ -200,6 +158,11 @@ class QuestionController extends Controller
                     $old_img = $qs->image;
                 }
                 $data['image'] = fileUpload($request['image'], path_question_image(), $old_img);
+                $data['video_link'] = '';
+            }
+            if(!empty($request->video_link)) {
+                $data['video_link'] = $request->video_link;
+                $data['image'] = '';
             }
             if (!empty($request->edit_id)) {
                 $update = Question::where(['id' => $request->edit_id])->update($data);
@@ -214,7 +177,7 @@ class QuestionController extends Controller
                 $categoryLimit = Category::where('id', $request->category_id)->first()->max_limit;
                 $addedQuestion = Question::where('category_id', $request->category_id)->count();
                 if ($categoryLimit <= $addedQuestion) {
-                    return redirect()->route('questionList')->with('dismiss', __('Questions limit exceeded'));
+                    return redirect()->route('questionList')->withInput($request->input())->with('dismiss', __('Questions limit exceeded'));
                 }
                 $insert = Question::create($data);
                 if ($insert) {
@@ -227,7 +190,8 @@ class QuestionController extends Controller
             }
 
         } catch (\Exception $e) {
-            return redirect()->back()->with('dismiss', __('Something went wrong'));
+            return redirect()->back()->with('dismiss', $e->getMessage());
+//            return redirect()->back()->with('dismiss', __('Something went wrong'));
         }
     }
 

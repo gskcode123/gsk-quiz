@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Question extends Model
 {
-    protected $fillable = ['title', 'category_id', 'sub_category_id', 'serial', 'image', 'type', 'hints', 'skip_coin', 'answer', 'time_limit', 'point', 'coin', 'status'];
+    protected $fillable = ['title', 'category_id', 'sub_category_id', 'video_link', 'serial', 'image', 'type', 'hints', 'skip_coin', 'answer', 'time_limit', 'point', 'coin', 'status'];
 
     public function qsCategory()
     {
