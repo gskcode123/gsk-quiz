@@ -219,8 +219,8 @@ class CategoryController extends Controller
             }
 
         } catch (\Exception $e) {
-//            dd($e->getMessage());
-            return redirect()->back()->with('dismiss', __('Something went wrong'));
+            return redirect()->back()->with('dismiss',$e->getMessage());
+//            return redirect()->back()->with('dismiss', __('Something went wrong'));
         }
 
     }

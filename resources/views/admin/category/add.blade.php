@@ -36,7 +36,7 @@
                         <div class="col-md-12">
                             {{ Form::open(['route' => 'qsCategorySave', 'files' => 'true']) }}
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="form-group {{ $errors->has('name') ? ' has-error' : '' }}">
                                         <label>{{__('Title')}}<span class="text-danger">*</span></label>
                                         <input type="text" name="name" @if(isset($category)) value="{{$category->name}}" @else value="{{old('name')}}" @endif class="form-control" placeholder="Title">
@@ -132,19 +132,27 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>{{__('Thumbnail image')}}</label>
-                                        <input type="file" name="image" class="d-block">
-                                        @if(isset($category))
-                                            <img width="50" @if(isset($category->image) && (!empty($category->image))) src="{{ asset(path_category_image().$category->image)}}" @endif alt="">
-                                        @endif
-                                    </div>
-                                </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>{{__('Description')}}</label>
                                         <textarea name="description" id="" rows="6" class="form-control">@if(isset($category)){{$category->description}}@else{{old('description')}}@endif</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>{{__('Thumbnail Image')}}<span class="text-danger"></span></label>
+                                        <div id="file-upload" class="section">
+                                            <!--Default version-->
+                                            <div class="row section">
+                                                <div class="col s12 m12 l12">
+                                                    <input name="image" type="file" id="input-file-now" class="dropify" data-default-file="{{isset($category) && !empty($category->image) ? asset(path_category_image().$category->image) : ''}}" />
+                                                    @if ($errors->has('image'))
+                                                        <div class="text-danger">{{ $errors->first('image') }}</div>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                            <!--Default value-->
+                                        </div>
                                     </div>
                                 </div>
                             </div>

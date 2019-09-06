@@ -27,15 +27,16 @@
     <link rel="stylesheet" href="{{asset('assets/DataTables/css/responsive.dataTables.min.css')}}">
     {{-- editor--}}
     <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.css" rel="stylesheet">
-
     <!-- font family -->
     <link rel="stylesheet" href="{{asset('assets/css/proxima-nova.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/scrollbar.css')}}">
+    <!-- Modernizr Js -->
+    <script src="{{asset('assets/vendors/modernizr-js/modernizr.js')}}"></script>
+    <!--for image drag and drop-->
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/dropify/css/dropify.min.css')}}">
     <!-- Site Style -->
     <link rel="stylesheet" href="{{asset('assets/style.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/responsive.css')}}">
-    <!-- Modernizr Js -->
-    <script src="{{asset('assets/vendors/modernizr-js/modernizr.js')}}"></script>
     <!--[if lt IE 8]>
     <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -76,6 +77,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.scrollbar/0.2.11/jquery.scrollbar.min.js"></script>
 {{--Bootstrap editor--}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.js"></script>
+<!--drag and drop js-->
+<script src="{{asset('assets/dropify/js/dropify.min.js')}}"></script>
+<script src="{{asset('assets/dropify/js/form-file-uploads.js')}}"></script>
 <!-- main js -->
 <script src="{{asset('assets/js/main.js')}}"></script>
 <script>

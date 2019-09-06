@@ -649,7 +649,7 @@ table.table.category-table tbody td {
 }
 
 form input[type="file"]{
-    height: 35px !important;
+    height: 100% !important;
 }
 
 .user-body input.form-control::-webkit-input-placeholder {
