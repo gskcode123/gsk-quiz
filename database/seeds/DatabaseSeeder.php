@@ -15,5 +15,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(AdminSettingSeeder::class);
         $this->call(UserCoinSeeder::class);
+        $this->call(PaymentMethodSeeder::class);
+        $this->call(CoinSeeder::class);
     }
 }

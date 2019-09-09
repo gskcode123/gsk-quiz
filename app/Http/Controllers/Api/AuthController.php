@@ -10,6 +10,7 @@ use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -303,6 +304,7 @@ class AuthController extends Controller
             $data['message'] = $errors;
             return response()->json($data);
         }
+        DB::beginTransaction();
         try {
             //verification key s for email and phone
             $mail_key = $this->generate_email_verification_key();
@@ -345,16 +347,18 @@ class AuthController extends Controller
                 $data['success'] = true;
                 $data['data'] = ['access_token' => $token, 'access_type' => "Bearer", 'admob_coin' =>$admob_coin, 'user_info' => $user];
                 $data['message'] = __('Successfully Signed up! Please verify your acccount');
-
-                return response()->json($data);
+            } else {
+                throw new ApiException(__('Registration failed. Please try again.'));
             }
 
-            throw new ApiException(__('Registration failed. Please try again.'));
         } catch(\Exception $e) {
+            DB::rollback();
             $data =['success' => false, 'message' => __('Something went wrong')];
             return response()->json($data);
         }
 
+        DB::commit();
+        return response()->json($data);
     }
 
     /*
