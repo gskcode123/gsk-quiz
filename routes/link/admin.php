@@ -16,6 +16,7 @@ Route::group(['middleware' => ['auth','admin','lang'], 'namespace'=> 'Admin'], f
     // Setting
     Route::get('general-setting', 'SettingController@generalSetting')->name('generalSetting');
     Route::post('save-setting', 'SettingController@saveSettings')->name('saveSettings');
+    Route::post('save-payment-setting', 'SettingController@savePaymentSettings')->name('savePaymentSettings');
 
     //User Management
     Route::get('user-list', 'UserController@userList')->name('userList');

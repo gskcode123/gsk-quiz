@@ -134,6 +134,7 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>{{__('Company logo')}}</label>
+                                            <input type="hidden" name="app_title" value ="@if(isset($adm_setting['app_title'])) {{ $adm_setting['app_title'] }} @endif" class="form-control" placeholder="">
                                             <input type="file" name="logo" class="d-block">
                                             <img @if(isset($adm_setting['logo']) && (!empty($adm_setting['logo']))) src ="{{ asset(path_image().$adm_setting['logo']) }}"
                                                  @endif width="100" class="img-fluid" alt="">
@@ -162,30 +163,40 @@
                             {{ Form::close() }}
                         </div>
                         <div class="col-lg-12 tabcontent mt-5" id="Payment">
-                            {{ Form::open(['route' => 'saveSettings', 'files' => 'true']) }}
+                            {{ Form::open(['route' => 'savePaymentSettings', 'files' => 'true']) }}
                                 <div class="row">
                                     <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label>{{__('Company name')}}</label>
-                                            <input type="text" name="company_name" value ="@if(isset($adm_setting['company_name'])) {{ $adm_setting['company_name'] }} @endif" class="form-control" placeholder="">
+                                        <div class="form-group"><label>{{__('Braintree Mode')}}</label>
+                                            <select name="braintree_mode" id="" class="form-control">
+                                                <option value="sandbox" @if(isset($adm_setting['braintree_mode']) && ($adm_setting['braintree_mode'] == 'sandbox'))
+                                                selected  @endif >{{__("Sandbox")}}</option>
+                                                <option value="production" @if(isset($adm_setting['braintree_mode']) && ($adm_setting['braintree_mode'] == 'production'))
+                                                selected  @endif >{{__("Production")}}</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label>{{__('Coin for hints')}}</label>
-                                            <input type="text" name="hints_coin" value ="@if(isset($adm_setting['hints_coin'])) {{ $adm_setting['hints_coin'] }} @endif" class="form-control number-only no-regx" placeholder="">
+                                            <label>{{__('Braintree Merchant Id')}}</label>
+                                            <input type="text" name="braintree_marchant_id" value ="@if(isset($adm_setting['braintree_marchant_id'])) {{ $adm_setting['braintree_marchant_id'] }} @endif" class="form-control" placeholder="">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label>{{__('Ad Mob Coin')}}</label>
-                                            <input type="text" name="admob_coin" value ="@if(isset($adm_setting['admob_coin'])) {{ $adm_setting['admob_coin'] }} @endif" class="form-control number-only no-regx" placeholder="">
+                                            <label>{{__('Braintree Public Key')}}</label>
+                                            <input type="text" name="braintree_public_key" value ="@if(isset($adm_setting['braintree_public_key'])) {{ $adm_setting['braintree_public_key'] }} @endif" class="form-control" placeholder="">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label>{{__('Sign up Reward Coin')}}</label>
-                                            <input type="text" name="signup_coin" value ="@if(isset($adm_setting['signup_coin'])) {{ $adm_setting['signup_coin'] }} @endif" class="form-control number-only no-regx" placeholder="">
+                                            <label>{{__('Braintree Private Key')}}</label>
+                                            <input type="text" name="braintree_private_key" value ="@if(isset($adm_setting['braintree_private_key'])) {{ $adm_setting['braintree_private_key'] }} @endif" class="form-control" placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>{{__('Braintree Client Token')}}</label>
+                                            <input type="text" name="braintree_client_token" value ="@if(isset($adm_setting['braintree_client_token'])) {{ $adm_setting['braintree_client_token'] }} @endif" class="form-control" placeholder="">
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
@@ -200,6 +211,7 @@
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <label>{{__('Privacy and Policy')}}</label>
+                                            <input type="hidden" name="app_title" value ="@if(isset($adm_setting['app_title'])) {{ $adm_setting['app_title'] }} @endif" class="form-control" placeholder="">
                                             <textarea id="btEditor" name="privacy_policy">@if(isset($adm_setting['privacy_policy'])){{$adm_setting['privacy_policy']}}@else{{old('privacy_policy')}}@endif</textarea>
                                         </div>
                                     </div>

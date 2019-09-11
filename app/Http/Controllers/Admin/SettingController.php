@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\Admin\SettingRequest;
 use App\Model\AdminSetting;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -37,7 +38,7 @@ class SettingController extends Controller
     *
     */
 
-    public function saveSettings(Request $request)
+    public function saveSettings(SettingRequest $request)
     {
         try {
             if (isset($request->company_name)) {
@@ -88,6 +89,33 @@ class SettingController extends Controller
             }
             if (isset($request->login_logo)) {
                 AdminSetting::updateOrCreate(['slug' => 'login_logo'], ['value' => fileUpload($request['login_logo'], path_image(), allsetting()['login_logo'])]);
+            }
+
+            return redirect()->back()->with(['success' => __('Updated Successfully')]);
+        } catch (\Exception $e) {
+//            dd($e->getMessage());
+            return redirect()->back()->with(['dismiss' => __('Something went wrong')]);
+        }
+    }
+
+    // save payment setting
+    public function savePaymentSettings(Request $request)
+    {
+        try {
+            if (isset($request->braintree_mode)) {
+                AdminSetting::updateOrCreate(['slug' => 'braintree_mode'],['value' => $request->braintree_mode]);
+            }
+            if (isset($request->braintree_marchant_id)) {
+                AdminSetting::updateOrCreate(['slug' => 'braintree_marchant_id'],['value' => $request->braintree_marchant_id]);
+            }
+            if (isset($request->braintree_public_key)) {
+                AdminSetting::updateOrCreate(['slug' => 'braintree_public_key'],['value' => $request->braintree_public_key]);
+            }
+            if (isset($request->braintree_private_key)) {
+                AdminSetting::updateOrCreate(['slug' => 'braintree_private_key'],['value' => $request->braintree_private_key]);
+            }
+            if (isset($request->braintree_client_token)) {
+                AdminSetting::updateOrCreate(['slug' => 'braintree_client_token'],['value' => $request->braintree_client_token]);
             }
 
             return redirect()->back()->with(['success' => __('Updated Successfully')]);
