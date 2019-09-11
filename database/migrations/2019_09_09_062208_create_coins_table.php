@@ -17,7 +17,7 @@ class CreateCoinsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->decimal('amount',13,2)->default(0);
-            $table->decimal('available_amount',13,2)->default(0);
+            $table->decimal('sold_amount',13,2)->default(0);
             $table->decimal('price',13,2)->default(0);
             $table->tinyInteger('status')->default(1);
             $table->tinyInteger('is_active')->default(0);

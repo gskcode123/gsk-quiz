@@ -77,7 +77,7 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            @if(isset($categories))
+                                            @if(isset($categories[0]))
                                                 @php ($sl = 1)
                                                 @foreach($categories as $item)
                                                     <tr>
@@ -117,7 +117,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @if(isset($leaders))
+                                    @if(isset($leaders[0]))
                                         @php ($sl = 1)
                                         @foreach($leaders as $item)
                                             <tr>
@@ -168,7 +168,7 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            @if(isset($questions))
+                                            @if(isset($questions[0]))
                                                 @php ($sl = 1)
                                                 @foreach($questions as $question)
                                                     <tr>

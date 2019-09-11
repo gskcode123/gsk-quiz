@@ -51,7 +51,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @if(isset($users))
+                                @if(isset($users[0]))
                                     @php ($sl = 1)
                                     @foreach($users as $item)
                                 <tr>

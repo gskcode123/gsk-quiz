@@ -54,7 +54,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @if(isset($categories))
+                                @if(isset($categories[0]))
                                     @php ($sl = 1)
                                     @foreach($categories as $item)
                                 <tr>

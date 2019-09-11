@@ -168,7 +168,7 @@ class UserController extends Controller
     }
 
     /**
-     * userAddProcess
+     * userUpdateProcess
      *
      * update a newly created resource in storage.
      *

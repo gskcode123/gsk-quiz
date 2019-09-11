@@ -22,6 +22,7 @@ class CreateSellsTable extends Migration
             $table->integer('payment_id')->unsigned();
             $table->foreign('payment_id')->references('id')->on('payment_methods')->onDelete('cascade')->onUpdate('cascade');
             $table->decimal('amount',13,2)->default(0);
+            $table->decimal('price',13,2)->default(0);
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });

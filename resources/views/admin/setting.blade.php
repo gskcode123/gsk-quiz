@@ -33,7 +33,16 @@
             <div class="card-body">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-lg-12">
+                        <div class="col-md-12 v-tab">
+                            <div class="tab">
+                                <button class="tablinks" onclick="openCity(event, 'London')" id="defaultOpen">{{__('General')}}</button>
+                                <button class="tablinks" onclick="openCity(event, 'Paris')">{{__('Logo')}} </button>
+                                <button class="tablinks" onclick="openCity(event, 'Payment')">{{__('Payment')}}</button>
+                                <button class="tablinks" onclick="openCity(event, 'Privacy')">{{__('Privacy Policy')}}</button>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-12 tabcontent mt-5" id="London">
                             {{ Form::open(['route' => 'saveSettings', 'files' => 'true']) }}
                                 <div class="row">
                                     <div class="col-lg-6">
@@ -113,6 +122,15 @@
                                             <input type="text" name="copyright_text" value ="@if(isset($adm_setting['copyright_text'])) {{ $adm_setting['copyright_text'] }} @endif" class="form-control" placeholder="">
                                         </div>
                                     </div>
+                                    <div class="col-lg-4">
+                                        <button type="submit" class="btn btn-primary btn-block add-category-btn mt-4">{{__('Save Change')}}</button>
+                                    </div>
+                                </div>
+                            {{ Form::close() }}
+                        </div>
+                        <div class="col-lg-12 tabcontent mt-5" id="Paris">
+                            {{ Form::open(['route' => 'saveSettings', 'files' => 'true']) }}
+                                <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>{{__('Company logo')}}</label>
@@ -137,6 +155,48 @@
                                                  @endif width="100" class="img-fluid" alt="">
                                         </div>
                                     </div>
+                                    <div class="col-lg-4">
+                                        <button type="submit" class="btn btn-primary btn-block add-category-btn mt-4">{{__('Save Change')}}</button>
+                                    </div>
+                                </div>
+                            {{ Form::close() }}
+                        </div>
+                        <div class="col-lg-12 tabcontent mt-5" id="Payment">
+                            {{ Form::open(['route' => 'saveSettings', 'files' => 'true']) }}
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>{{__('Company name')}}</label>
+                                            <input type="text" name="company_name" value ="@if(isset($adm_setting['company_name'])) {{ $adm_setting['company_name'] }} @endif" class="form-control" placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>{{__('Coin for hints')}}</label>
+                                            <input type="text" name="hints_coin" value ="@if(isset($adm_setting['hints_coin'])) {{ $adm_setting['hints_coin'] }} @endif" class="form-control number-only no-regx" placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>{{__('Ad Mob Coin')}}</label>
+                                            <input type="text" name="admob_coin" value ="@if(isset($adm_setting['admob_coin'])) {{ $adm_setting['admob_coin'] }} @endif" class="form-control number-only no-regx" placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>{{__('Sign up Reward Coin')}}</label>
+                                            <input type="text" name="signup_coin" value ="@if(isset($adm_setting['signup_coin'])) {{ $adm_setting['signup_coin'] }} @endif" class="form-control number-only no-regx" placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <button type="submit" class="btn btn-primary btn-block add-category-btn mt-4">{{__('Save Change')}}</button>
+                                    </div>
+                                </div>
+                            {{ Form::close() }}
+                        </div>
+                        <div class="col-lg-12 tabcontent mt-5" id="Privacy">
+                            {{ Form::open(['route' => 'saveSettings', 'files' => 'true']) }}
+                                <div class="row">
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <label>{{__('Privacy and Policy')}}</label>
@@ -164,4 +224,22 @@
 @endsection
 
 @section('script')
+    <script>
+        function openCity(evt, cityName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        // Get the element with id="defaultOpen" and click on it
+        document.getElementById("defaultOpen").click();
+    </script>
 @endsection

@@ -12,6 +12,6 @@ class CoinSeeder extends Seeder
      */
     public function run()
     {
-        Coin::create(['name'=>'Default Coin', 'amount' => 500, 'available_amount'=> 500, 'price'=>10,'is_active'=> 1]);
+        Coin::create(['name'=>'Default Coin', 'amount' => 500, 'sold_amount'=> 0, 'price'=>10,'is_active'=> 1]);
     }
 }

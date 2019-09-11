@@ -48,7 +48,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @if(isset($items))
+                                    @if(isset($items[0]))
                                         @php ($sl = 1)
                                         @foreach($items as $item)
                                             <tr>
