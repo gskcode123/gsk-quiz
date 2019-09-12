@@ -28,11 +28,13 @@ class AppServiceProvider extends ServiceProvider
             return is_string($value) && preg_match('/^.*(?=.{3,})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[\d\X]).*$/', $value);
         });
         bcscale(8);
-
-        Braintree_Configuration::environment(env('BRAINTREE_ENV'));
-        Braintree_Configuration::merchantId(env('BRAINTREE_MERCHANT_ID'));
-        Braintree_Configuration::publicKey(env('BRAINTREE_PUBLIC_KEY'));
-        Braintree_Configuration::privateKey(env('BRAINTREE_PRIVATE_KEY'));
+        if(Schema::hasTable('admin_settings')) {
+            $allSetting = allsetting();
+            Braintree_Configuration::environment(isset($allSetting['braintree_mode']) ? $allSetting['braintree_mode'] : env('BRAINTREE_ENV'));
+            Braintree_Configuration::merchantId(isset($allSetting['braintree_marchant_id']) ? $allSetting['braintree_marchant_id'] : env('BRAINTREE_MERCHANT_ID'));
+            Braintree_Configuration::publicKey(isset($allSetting['braintree_public_key']) ? $allSetting['braintree_public_key'] : env('BRAINTREE_PUBLIC_KEY'));
+            Braintree_Configuration::privateKey(isset($allSetting['braintree_private_key']) ? $allSetting['braintree_private_key'] : env('BRAINTREE_PRIVATE_KEY'));
+        }
     }
 
     /**
