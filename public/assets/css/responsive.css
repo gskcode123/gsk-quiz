@@ -12,10 +12,10 @@
         padding: 30px 0;
     }
     .qz-total-qustions {
-        font-size: 28px;
+        font-size: 24px;
     }
     .qz-blance {
-        font-size: 40px;
+        font-size: 26px;
     }
     .qz-user-status-card h6 {
         font-size: 18px;
@@ -34,10 +34,10 @@
         padding: 30px 0;
     }
     .qz-total-qustions {
-        font-size: 24px;
+        font-size: 18px;
     }
     .qz-blance {
-        font-size: 26px;
+        font-size: 18px;
     }
     .qz-user-status-card h6 {
         font-size: 14px;
@@ -53,7 +53,12 @@
     .qz-user-profile-from{
         margin-top: 50px;
     }
-
+    .qz-total-qustions {
+        font-size: 18px;
+    }
+    .qz-blance {
+        font-size: 18px;
+    }
 
 }
 
@@ -143,7 +148,10 @@
 
 @media screen and (max-width: 320px) {
     .qz-total-qustions {
-        font-size: 24px;
+        font-size: 16px;
+    }
+    .qz-blance {
+        font-size: 18px;
     }
     .user-body .card h5 {
         font-size: 16px;

@@ -103,7 +103,7 @@ function fileUpload($new_file, $path, $old_file_name = null)
     if (isset($old_file_name) && $old_file_name != "" && file_exists($path . $old_file_name)) {
         unlink($path . '/' . $old_file_name);
     }
-    $input['imagename'] = time() . '.' . $new_file->getClientOriginalExtension();
+    $input['imagename'] = uniqid() . time() . '.' . $new_file->getClientOriginalExtension();
     $destinationPath = public_path($path);
     $new_file->move($destinationPath, $input['imagename']);
 

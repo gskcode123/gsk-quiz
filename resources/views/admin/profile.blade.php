@@ -106,12 +106,29 @@
                                         <label>{{__('Full Address')}}</label>
                                         <input type="text" name="address" value="{{$user->address}}" class="form-control" placeholder="">
                                     </div>
-                                    <div class="form-group">
-                                        <label>{{__('Image')}}</label>
-                                        <input type="file" name="photo" class=" d-block">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>{{__('Profile Image')}}<span class="text-danger"></span></label>
+                                                <div id="file-upload" class="section">
+                                                    <!--Default version-->
+                                                    <div class="row section">
+                                                        <div class="col s12 m12 l12">
+                                                            <input name="photo" type="file" id="input-file-now" class="dropify"
+                                                                   data-default-file="{{isset($user) && !empty($user->photo) ? asset(pathUserImage().$user->photo) : ''}}" />
+                                                        </div>
+                                                    </div>
+                                                    <!--Default value-->
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <button type="submit" class="btn btn-primary btn-block add-category-btn"> {{__('Update')}} </button>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <button type="submit" class="btn btn-primary btn-block add-category-btn"> {{__('Update')}} </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 {{ Form::close() }}
                             </div>

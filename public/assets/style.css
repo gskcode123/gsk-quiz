@@ -228,27 +228,38 @@ ul#metismenu li span:before {
 
 /* Start status bar */
 .qz-status-bar{
-    border-radius: 5px;
-    padding: 50px 30px;
+    padding: 20px 0px;
     color: #fff;
     margin-bottom: 50px;
+    border-top-left-radius: 40px;
+    border-bottom-left-radius: 40px;
+    border-top-right-radius: 75px;
 }
 .qz-status-bar1{
     background: url(images/Bg5.png)no-repeat center center / cover;
 }
 .qz-status-bar2{
-    background: url(images/Bg.png)no-repeat center center / cover;
+    background: url(images/bg_4.png)no-repeat center center / cover;
 }
 .qz-status-bar3{
+    background: url(images/bg_9.png)no-repeat center center / cover;
+}
+.qz-status-bar4{
+    background: url(images/bg_7.png)no-repeat center center / cover;
+}
+.qz-status-bar5{
     background: url(images/Bg2.png)no-repeat center center / cover;
 }
+.qz-status-bar6{
+    background: url(images/bg_8.png)no-repeat center center / cover;
+}
 .qz-blance{
-    font-size: 34px;
+    font-size: 18px;
     font-weight: 700;
-    margin-bottom: 10px;
+    margin-bottom: 4px;
 }
 .qz-total-qustions {
-    font-size: 26px;
+    font-size: 18px;
     font-weight: 500;
 }
 
@@ -886,3 +897,7 @@ body {font-family: "Lato", sans-serif;}
 
 /* end tab */
 
+/* remove remove button from dropify drag and drop */
+.dropify-wrapper.has-preview .dropify-clear {
+    display: none;
+}
