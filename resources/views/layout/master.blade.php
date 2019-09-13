@@ -43,6 +43,10 @@
 </head>
 
 <body>
+<div class="loader-wraper">
+    <img src="{{asset('assets/images/loader.gif')}}" alt="">
+</div>
+
 <!-- Start wrapper -->
 <div class="qz-wrapper">
 @yield('left-sidebar')
@@ -54,6 +58,8 @@
     <!-- End main content -->
 </div>
 <!-- End wrapper -->
+
+
 
 
 <!-- Jquery plugins -->

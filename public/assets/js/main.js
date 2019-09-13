@@ -1,13 +1,10 @@
+/*------------- preloader js --------------*/
+$(window).on('load', function() {
+    $('.loader-wraper').fadeOut(300);
+});
+
 $(document).ready(function() {
     "use strict";
-
-    /*------------- preloader js --------------*/
-    $(window).on('load', function() {
-        setTimeout(function() {
-            $('.loader-wraper').fadeOut();
-        }, 3000);
-    });
-
 
     /*------------ Start site menu  ------------*/
 
