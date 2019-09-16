@@ -50,6 +50,7 @@ Route::group(['middleware' =>['auth:api','api.lang'],'namespace'=>'Api'],functio
     Route::post('earn-coin', 'CoinController@earnCoin');
 
     //available coin
+    Route::get('coin-setting', 'CoinController@coinSetting');
     Route::get('available-coin', 'CoinController@availabeCoin');
     Route::get('payment-methods', 'CoinController@paymentMethod');
     Route::post('buy-coin', 'CoinController@buyCoin');

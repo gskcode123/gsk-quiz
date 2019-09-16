@@ -157,4 +157,17 @@ class CoinController extends Controller
         }
         return response()->json($data);
     }
+
+    // coin setting
+    public function coinSetting()
+    {
+        $adm_setting = allsetting();
+        $data['braintree_mode'] = isset($adm_setting['braintree_mode']) ? $adm_setting['braintree_mode'] : '';
+        $data['braintree_marchant_id'] = isset($adm_setting['braintree_marchant_id']) ? $adm_setting['braintree_marchant_id'] : '';
+        $data['braintree_public_key'] = isset($adm_setting['braintree_public_key']) ? $adm_setting['braintree_public_key'] : '';
+        $data['braintree_private_key'] = isset($adm_setting['braintree_private_key']) ? $adm_setting['braintree_private_key'] : '';
+        $data['braintree_client_token'] = isset($adm_setting['braintree_client_token']) ? $adm_setting['braintree_client_token'] : '';
+
+        return response()->json($data);
+    }
 }
