@@ -18,7 +18,6 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <h2>{{ isset($pageTitle) ? $pageTitle : '' }}</h2>
                         <div class="d-flex align-items-center">
-                            <a href="{{route('coinAdd')}}" class="btn btn-primary px-3">{{__('Add New')}}</a>
                             <span class="sidebarToggler ml-4">
                                 <i class="fa fa-bars d-lg-none d-block"></i>
                             </span>
@@ -58,7 +57,7 @@
                                     <td>{{ $item->user->name }}</td>
                                     <td>{{ $item->coin->name }}</td>
                                     <td>{{ $item->amount }}</td>
-                                    <td>{{ $item->price }}</td>
+                                    <td>{{ $item->price }}$</td>
                                     <td>{{ $item->payment->name }}</td>
                                     <td>{{ date('d M y', strtotime($item->created_at)) }}</td>
                                 </tr>
