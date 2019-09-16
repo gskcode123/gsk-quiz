@@ -53,21 +53,36 @@
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6 col-sm-6 text-center">
-                            <div class="qz-status-bar qz-status-bar4">
-                                <h4 class="qz-blance">{{ $totalCoin }}</h4>
-                                <h5 class="qz-total-qustions">{{__('Total Coin')}}</h5>
+                            <div class="qz-status-bar qz-status-bar-b">
+                                <div class="das-img">
+                                    <img src="{{asset('assets/images/icon/total_coin.svg')}}" alt="">
+                                </div>
+                                <div class="dash-text">
+                                    <h4 class="qz-blance">{{ $totalCoin }}</h4>
+                                    <h5 class="qz-total-qustions">{{__('Total Coin')}}</h5>
+                                </div>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6 col-sm-6 text-center">
-                            <div class="qz-status-bar qz-status-bar5">
-                                <h4 class="qz-blance">{{ $totalSale }}</h4>
-                                <h5 class="qz-total-qustions">{{__('Total Sold Coin')}}</h5>
+                            <div class="qz-status-bar qz-status-bar-b">
+                                <div class="das-img">
+                                    <img src="{{asset('assets/images/icon/total_sold_coin.svg')}}" alt="">
+                                </div>
+                                <div class="dash-text">
+                                    <h4 class="qz-blance">{{ $totalSale }}</h4>
+                                    <h5 class="qz-total-qustions">{{__('Total Sold Coin')}}</h5>
+                                </div>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6 col-sm-6 text-center">
-                            <div class="qz-status-bar qz-status-bar6">
-                                <h4 class="qz-blance">{{ $todaySale }}</h4>
-                                <h5 class="qz-total-qustions">{{__('Today\'s Sold Coin')}}</h5>
+                            <div class="qz-status-bar qz-status-bar-b">
+                                <div class="das-img">
+                                    <img src="{{asset('assets/images/icon/todays_sold_coin.svg')}}" alt="">
+                                </div>
+                                <div class="dash-text">
+                                    <h4 class="qz-blance">{{ $todaySale }}</h4>
+                                    <h5 class="qz-total-qustions">{{__('Today\'s Sold Coin')}}</h5>
+                                </div>
                             </div>
                         </div>
                     </div>

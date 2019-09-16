@@ -248,15 +248,13 @@ ul#metismenu li span:before {
 
 /* Start status bar */
 .qz-status-bar{
-    padding: 20px 0px;
+    padding: 35px 0px;
     color: #fff;
     margin-bottom: 50px;
-    border-top-left-radius: 40px;
-    border-bottom-left-radius: 40px;
-    border-top-right-radius: 75px;
+    border-radius: 10px;
 }
 .qz-status-bar1{
-    background: url(images/Bg5.png)no-repeat center center / cover;
+    background: url(images/bg_8.png)no-repeat center center / cover;
 }
 .qz-status-bar2{
     background: url(images/bg_4.png)no-repeat center center / cover;
@@ -274,12 +272,12 @@ ul#metismenu li span:before {
     background: url(images/bg_8.png)no-repeat center center / cover;
 }
 .qz-blance{
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 700;
-    margin-bottom: 4px;
+    margin-bottom: 7px;
 }
 .qz-total-qustions {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 500;
 }
 
@@ -287,6 +285,26 @@ ul#metismenu li span:before {
     top: 20px !important;
 }
 
+.qz-status-bar-b {
+    box-shadow: 0px 0px 10px 3px #ddd;
+}
+.qz-status-bar-b .qz-blance{
+    color: #414141;
+}
+
+.qz-status-bar-b .qz-total-qustions{
+    color:#333;
+}
+.qz-status-bar-b{
+    align-items: center;
+    display: flex;
+    padding: 35px;
+}
+.das-img img{
+    width: 60px;
+    height: 60px;
+    margin-right: 10px;
+}
 /* start sec title */
 .qz-sec-title h5{
     margin-bottom: 15px;
