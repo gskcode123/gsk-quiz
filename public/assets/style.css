@@ -254,13 +254,13 @@ ul#metismenu li span:before {
     border-radius: 10px;
 }
 .qz-status-bar1{
-    background: url(images/bg_8.png)no-repeat center center / cover;
+    background: url(images/Bg5.png)no-repeat center center / cover;
 }
 .qz-status-bar2{
-    background: url(images/bg_4.png)no-repeat center center / cover;
+    background: url(images/Bg.png)no-repeat center center / cover;
 }
 .qz-status-bar3{
-    background: url(images/bg_9.png)no-repeat center center / cover;
+    background: url(images/Bg2.png)no-repeat center center / cover;
 }
 .qz-status-bar4{
     background: url(images/bg_7.png)no-repeat center center / cover;
@@ -299,6 +299,7 @@ ul#metismenu li span:before {
     align-items: center;
     display: flex;
     padding: 35px;
+    margin-top: -30px;
 }
 .das-img img{
     width: 60px;
@@ -942,7 +943,8 @@ body {font-family: "Lato", sans-serif;}
 
 
 .login-card{
-    height: auto;
+    height: 1000px;
+    max-height: 1000px;
 }
 
 .login-c-body{
