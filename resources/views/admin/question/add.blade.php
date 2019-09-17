@@ -47,14 +47,23 @@
                                             @endif
                                         </div>
                                         <div class="form-group">
-                                            <label>{{__('Video Link')}} <span class="text-danger"></span></label>
-                                            <input type="text" name="video_link" @if(isset($question)) value="{{ $question->video_link }}" @else value="{{ old('video_link') }}" @endif class="form-control" placeholder="Video link">
-                                            @if ($errors->has('video_link'))
+                                            <label>{{__('Point')}} <span class="text-danger">*</span></label>
+                                            <input type="text" @if(isset($question)) value="{{ $question->point }}" @else value="{{ old('point') }}" @endif name ="point" class="form-control" placeholder="Point">
+                                            @if ($errors->has('point'))
                                                 <span class="text-danger">
-                                                        <strong>{{ $errors->first('video_link') }}</strong>
-                                                    </span>
+                                                        <strong>{{ $errors->first('point') }}</strong>
+                                                </span>
                                             @endif
                                         </div>
+                                        {{--<div class="form-group">--}}
+                                            {{--<label>{{__('Video Link')}} <span class="text-danger"></span></label>--}}
+                                            {{--<input type="text" name="video_link" @if(isset($question)) value="{{ $question->video_link }}" @else value="{{ old('video_link') }}" @endif class="form-control" placeholder="Video link">--}}
+                                            {{--@if ($errors->has('video_link'))--}}
+                                                {{--<span class="text-danger">--}}
+                                                        {{--<strong>{{ $errors->first('video_link') }}</strong>--}}
+                                                    {{--</span>--}}
+                                            {{--@endif--}}
+                                        {{--</div>--}}
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
@@ -119,11 +128,11 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label>{{__('Point')}} <span class="text-danger">*</span></label>
-                                            <input type="text" @if(isset($question)) value="{{ $question->point }}" @else value="{{ old('point') }}" @endif name ="point" class="form-control" placeholder="Point">
-                                            @if ($errors->has('point'))
+                                            <label>{{__('Time Limit')}}</label>
+                                            <input type="text" @if(isset($question)) value="{{ $question->time_limit }}" @else value="{{ old('time_limit') }}" @endif name="time_limit" class="form-control" placeholder="Time limit in Minute">
+                                            @if ($errors->has('time_limit'))
                                                 <span class="text-danger">
-                                                        <strong>{{ $errors->first('point') }}</strong>
+                                                    <strong>{{ $errors->first('time_limit') }}</strong>
                                                 </span>
                                             @endif
                                         </div>
@@ -185,19 +194,6 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label>{{__('Time Limit')}}</label>
-                                            <input type="text" @if(isset($question)) value="{{ $question->time_limit }}" @else value="{{ old('time_limit') }}" @endif name="time_limit" class="form-control" placeholder="Time limit in Minute">
-                                            @if ($errors->has('time_limit'))
-                                                <span class="text-danger">
-                                                    <strong>{{ $errors->first('time_limit') }}</strong>
-                                                </span>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
                                             <label>{{__('Activation Status')}}</label>
                                             <div class="qz-question-category">
                                                 <select name="status" class="form-control">
@@ -213,6 +209,10 @@
                                                 @endif
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
                                     </div>
                                     <div class="col-md-6">
                                     </div>

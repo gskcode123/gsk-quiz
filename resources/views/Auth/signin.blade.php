@@ -40,14 +40,10 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
-            <div class="card">
-                <div class="card">
-                    <div class="card-body">
-                        @include('layout.message')
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="row text-center">
+            <div class="card login-card">
+                <div class="card-body login-c-body">
+                    @include('layout.message')
+                    <div class="row text-center mt-3">
                         <div class="col-lg-6 offset-lg-3">
                             <div class="logo">
                                 <a href="#">

@@ -103,7 +103,7 @@ class QuestionController extends Controller
         }
         if (empty($request->edit_id)) {
 
-            if(empty($request->title) && empty($request->image) && empty($request->video_link)) {
+            if(empty($request->title) && empty($request->image)) {
                 return redirect()->back()->withInput($request->input())->with('dismiss', __('Must be input title or upload image or add video link'));
             }
             $text = $this->preg_grep_keys_values('~option_text~i', $request->all());
@@ -115,9 +115,9 @@ class QuestionController extends Controller
                 return redirect()->back()->withInput($request->input())->with('dismiss', __('At least two options are required'));
             }
         }
-        if(!empty($request->image) && !empty($request->video_link)) {
-            return redirect()->back()->withInput($request->input())->with('dismiss', __('At a time you can not upload image and add video link'));
-        }
+//        if(!empty($request->image) && !empty($request->video_link)) {
+//            return redirect()->back()->withInput($request->input())->with('dismiss', __('At a time you can not upload image and add video link'));
+//        }
 
         if ((!empty($request->option_text1) && !empty($request->option_image1)) || (!empty($request->option_text2) && !empty($request->option_image2)) ||
             (!empty($request->option_text3) && !empty($request->option_image3)) || (!empty($request->option_text4) && !empty($request->option_image4)) ||
