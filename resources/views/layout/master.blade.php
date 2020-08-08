@@ -43,9 +43,9 @@
 </head>
 
 <body>
-<div class="loader-wraper">
+<!-- <div class="loader-wraper">
     <img src="{{asset('assets/images/loader.gif')}}" alt="">
-</div>
+</div> -->
 
 <!-- Start wrapper -->
 <div class="qz-wrapper">
